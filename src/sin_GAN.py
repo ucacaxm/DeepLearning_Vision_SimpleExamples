@@ -59,8 +59,8 @@ class GAN(object):
     def __init__(self):
         # Parameters
         self.learning_rate = 0.001
-        self.training_epochs = 1000
-        self.batch_size = 100
+        self.training_epochs = 2000
+        self.batch_size = 500
         self.display_step = 100
         self.n_input = 2
 
@@ -82,6 +82,10 @@ class GAN(object):
         self.g_param = [v for v in vars if v.name.startswith('G/')]
         self.optimizer_d = tf.train.AdamOptimizer(learning_rate=self.learning_rate).minimize(self.cost_d, var_list=self.d_param)
         self.optimizer_g = tf.train.AdamOptimizer(learning_rate=self.learning_rate).minimize(self.cost_g, var_list=self.g_param)
+
+        self.sess = tf.Session()
+        tf.local_variables_initializer().run(session=self.sess)
+        tf.global_variables_initializer().run(session=self.sess)
 
 
     def discriminator(self, input):
@@ -134,11 +138,6 @@ class GAN(object):
 
 
     def train(self):
-        # Launch the graph
-        #with tf.Session() as sess:
-        self.sess = tf.Session()
-        tf.local_variables_initializer().run(session=sess)
-        tf.global_variables_initializer().run(session=sess)
 
         # Training cycle
         for epoch in range(self.training_epochs):
@@ -162,14 +161,10 @@ class GAN(object):
 
     def display(self):
         plt.figure(1)
-
-
         data_noise = noise(self.batch_size, 10.0)
         g = self.sess.run( self.G, feed_dict={self.x_gene: data_noise})
-
         for i in range( self.batch_size):
             plt.plot(g[i, 0], g[i, 1], 'ro', color='green')
-
         t2 = np.arange(0.0, 4.0*math.pi, 0.02)
         plt.plot(t2, np.cos(t2), 'r--', color='blue')
         plt.show()
@@ -193,6 +188,7 @@ class GAN(object):
 def main():
     gan = GAN()
     gan.display_real()
+    gan.display()
     gan.train()
     gan.display()
     ga.close()
