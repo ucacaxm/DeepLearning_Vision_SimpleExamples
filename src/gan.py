@@ -10,17 +10,31 @@ import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
 
+
+data_radius = 3.0
+data_center = (4.0,6.0)
+data_xlim  = (0, 10)
+data_ylim  = (0, 10)
+
+
 def one_sample():
-    x = [ 4.0*math.pi*np.random.ranf(), 1 ]
-    x[1] = math.cos(x[0]) + np.random.ranf()*(1.0-math.cos(x[0]))
+    theta = 2.0*math.pi*np.random.ranf()
+    r = data_radius*np.random.ranf()
+    x = [ data_center[0]+r * math.cos(theta), data_center[1]+r * math.sin(theta) ]
+#    x = [ 2.0*math.pi*np.random.ranf(), 1 ]
     return x
 
+def draw_sampleFrontiere(plt):
+    ax = plt.gca()
+    circle = plt.Circle( data_center, data_radius, color='blue', fill=False)
+    ax.add_artist(circle)
 
 def next_batch(n):
     x = np.zeros( shape=(n,2), dtype=np.float32)
     for i in range(0, n):
         x[i] = one_sample()
     return x
+
 
 def noise(n, rangee):
 #    return np.linspace(-range, range, n) + np.random.random(n)*0.01
@@ -132,16 +146,23 @@ class GAN(object):
             'out': tf.Variable(tf.random_normal([n_ouput]))
         }
 
-        # Construct model
-        gen = multilayer_perceptron(input, weights, biases)
-        return gen
+        layer_1 = tf.add(tf.matmul(input, weights['h1']), biases['b1'])
+        layer_1 = tf.nn.softplus(layer_1)
+
+        # Hidden layer with ??? activation
+        layer_2 = tf.add(tf.matmul(layer_1, weights['h2']), biases['b2'])
+        layer_2 = tf.nn.softplus(layer_2)
+
+        # Output layer with linear activation
+        out_layer = tf.matmul(layer_2, weights['out']) + biases['out']
+        return out_layer
 
 
     def train(self):
 
         # Training cycle
         for epoch in range(self.training_epochs):
-            total_batch = 200
+            total_batch = 300
 
             #update discriminator
             batch_x = next_batch(self.batch_size)
@@ -160,24 +181,26 @@ class GAN(object):
 
 
     def display(self):
-        plt.figure(1)
+        plt.figure(2)
+        plt.title("generated data")
         data_noise = noise(self.batch_size, 10.0)
         g = self.sess.run( self.G, feed_dict={self.x_gene: data_noise})
         for i in range( self.batch_size):
             plt.plot(g[i, 0], g[i, 1], 'ro', color='green')
-        t2 = np.arange(0.0, 4.0*math.pi, 0.02)
-        plt.plot(t2, np.cos(t2), 'r--', color='blue')
+        draw_sampleFrontiere(plt)
         plt.show()
 
 
     def display_real(self):
         plt.figure(1)
+        plt.title("real data")
+        ax = plt.gca()
+        ax.set_xlim(data_xlim)
+        ax.set_ylim(data_ylim)
         xb = next_batch(1000)
         for i in range(1000):
             plt.plot(xb[i, 0], xb[i, 1], 'ro', color='red')
-
-        t2 = np.arange(0.0, 4.0*math.pi, 0.02)
-        plt.plot(t2, np.cos(t2), 'r--', color='blue')
+        draw_sampleFrontiere(plt)
         plt.show()
 
 
