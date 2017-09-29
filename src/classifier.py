@@ -11,7 +11,7 @@ import tensorflow as tf
 import matplotlib.pyplot as plt
 
 def one_sample():
-    x = [ 8.0*3.141592*np.random.ranf(), 2.0*np.random.ranf()-1 ]
+    x = [ 2.0*3.141592*np.random.ranf(), 2.0*np.random.ranf()-1 ]
     if (math.cos(x[0]) < x[1]):
         y = [ 0, 1]
     else:

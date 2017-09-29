@@ -73,9 +73,9 @@ class GAN(object):
     def __init__(self):
         # Parameters
         self.learning_rate = 0.001
-        self.training_epochs = 2000
-        self.batch_size = 500
-        self.display_step = 100
+        self.training_epochs = 20000
+        self.batch_size = 50
+        self.display_step = 200
         self.n_input = 2
 
         with tf.variable_scope('G'):
@@ -176,6 +176,7 @@ class GAN(object):
             # Display logs per epoch step
             if epoch % self.display_step == 0:
                 print("Epoch:", '%04d' % (epoch + 1), "cost_d=", "{:.9f}".format(cost_d), "cost_g=", "{:.9f}".format(cost_g) )
+                #self.display()
 
         print("Optimization Finished!")
 
