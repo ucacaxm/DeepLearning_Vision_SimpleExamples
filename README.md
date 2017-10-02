@@ -2,8 +2,13 @@
 Simple examples of learning with TensorFlow ...
 
 ## Classifier
-sin_classifier classify 2D points (x,y). Points upper than sin(x) are from class 1 (y>sin(x)), points lower than sin(x) are from class 2 (y<sin(x)).
+classifier.py: classify 2D points (x,y). Points upper than sin(x) are from class 1 (y>sin(x)), points lower than sin(x) are from class 2 (y<sin(x)).
 
 
 ## GAN
-sin_GAN learn to generate 2D points (x,y) positionned above sin(x).
+gan.py: GAN learn to generate 2D points (x,y) positionned above sin(x). => does not work yet !
+
+## DLib
+dlib_facial_landmarks.py
+dlib_video_facial_landmarks.py
+=> test of DLib to get landmarks on faces from photos and video
