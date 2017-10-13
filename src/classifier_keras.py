@@ -17,11 +17,11 @@ from keras.optimizers import SGD
 
 
 def one_sample():
-    x = [ 2.0*3.141592*np.random.ranf(), 2.0*np.random.ranf()-1 ]
+    x = np.array( [ 2.0*3.141592*np.random.ranf(), 2.0*np.random.ranf()-1 ])
     if (math.cos(x[0]) < x[1]):
-        y = [ 0, 1]
+        y = np.array([ 0, 1])
     else:
-        y = [1, 0]
+        y = np.array([1, 0])
     return x,y
 
 
@@ -61,6 +61,11 @@ def main():
 	
     x_test, y_test = next_batch(128)
     score = model.evaluate(x_test, y_test, batch_size=128)
+    print("score=", score)
+    
+    single_x_test, single_y_result = one_sample()
+    q = model.predict( np.array( [single_x_test,] )  )
+    print(single_x_test, "is classified as ", q, " and real result is ", single_y_result)
 
 if __name__ == "__main__":
         main()
