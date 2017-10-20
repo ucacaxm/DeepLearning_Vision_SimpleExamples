@@ -65,7 +65,25 @@ def main():
     
     single_x_test, single_y_result = one_sample()
     q = model.predict( np.array( [single_x_test,] )  )
-    print(single_x_test, "is classified as ", q, " and real result is ", single_y_result)
+    print(single_x_test, "is classified as ", q[0], " and real result is ", single_y_result)
+
+
+    plt.figure(1)
+    x_test, y_sol = next_batch(1000)
+    p = model.predict( x_test  )
+    for i in range(1000):
+        s = y_sol[i]
+        #if ( np.argmax(s)==1):
+        if ( np.argmax(s)!= np.argmax(p[i]) ) :
+        #if (p[i]==1):
+            plt.plot( x_test[i,0], x_test[i,1], 'ro', color='red')
+        else:
+            if (np.argmax(p[i])==1):
+                plt.plot(x_test[i, 0], x_test[i, 1], 'ro', color='green')
+            else:
+                plt.plot(x_test[i, 0], x_test[i, 1], 'ro', color='blue')
+    plt.show()
+
 
 if __name__ == "__main__":
         main()

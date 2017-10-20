@@ -1,0 +1,9 @@
+*.egg-info
+*.pyc
+.idea
+./logs
+*~
+.vscode
+__pycache__
+./debug
+./vrac
