@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 
 import os
 #os.environ["KERAS_BACKEND"] = "theano"
-#os.environ["KERAS_BACKEND"] = "theano"
+#os.environ["KERAS_BACKEND"] = "tensorflow"
 
 
 import keras
@@ -30,7 +30,7 @@ import theano.tensor as T
 
 
 def one_sample():
-    x = np.array( [ 2.0*3.141592*np.random.ranf(), 2.0*np.random.ranf()-1 ])
+    x = np.array( [ 8.0*3.141592*np.random.ranf(), 2.0*np.random.ranf()-1 ])
     if (math.cos(x[0]) < x[1]):
         y = np.array([ 0, 1])
     else:
@@ -53,38 +53,28 @@ def superF(x):
     # pos = K.relu(x)
     # neg = K.relu(-x)
     # return K.concatenate([pos, neg], axis=1)
-    #x2 = Lambda(lambda x: x ** 2)
-    #x3 = Lambda(lambda x: x ** 3)
     x1 = x
     x2 = K.sin(x)
     x3 = K.square(x)
     x4 = K.pow(x, 5)
-    return K.concatenate([x1,x2, x3, x4], axis=1)
+    x5 = K.tanh(x)
+    return K.concatenate([x1,x2, x3, x4,x5], axis=1)
 
 def superF_output_shape(input_shape):
     shape = list(input_shape)
     print(input_shape, " ", shape, "  shape[-1]=", shape[-1])
     assert len(shape) == 2  # only valid for 2D tensors
-    shape[-1] *= 4
+    shape[-1] *= 5
     return tuple(shape)
 
 
 def main():
-
-    # model = Sequential()
-    # model.add(Dense(64, activation='relu', input_dim=2))
-    # model.add(Dropout(0.5))
-    # model.add(Dense(64, activation='relu'))
-    # model.add(Dropout(0.5))
-    # model.add(Dense(2, activation='softmax'))
-    # sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
-    # model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
-
  
     # Options pour la constructio du reseau
     idim=2
     odim=2
-    batch_norm = True		  
+    batch_norm = False
+    lambda_layer = True
     n_layers = 2
     hidden_size = 128
     activation = 'relu' #'tanh', 'relu'
@@ -98,40 +88,8 @@ def main():
     W_regularizer = None
 
 
+
     #### CONSTRUCTION DU RESEAU
-    model = Sequential()
-    #model.add( Input( shape=(None,idim), name='input') )
-    #model.add(Dense(64, activation='relu', input_dim=2))
-
-    #model.add(Lambda(lambda x: x + 0, input_shape=(None,idim)))
-    model.add(Dense(2, activation='relu', input_dim=2))
-    #model.add( Flatten(input_shape=(idim,)) )
-    #model.add( Flatten(input_dim=idim) )
-    model.add(    Lambda(superF, output_shape=superF_output_shape)  )
-
-
-    # first = Sequential()
-    # first.add(Lambda(lambda x: x + 0, input_shape=(None,idim)))
-
-    # second = Sequential()
-    # second.add(Lambda(lambda x: x ** 2, input_shape=(None,idim)))
-
-    # model.add(Lambda(lambda x: x + 0, input_shape=(None,idim)))
-    # model.add(  Concatenate([first,  second]) )
-
-    if batch_norm:
-        model.add(BatchNormalization())
-
-    for i in range(n_layers):
-        model.add( Dense(hidden_size, activation=activation, name='h'+str(i+1), kernel_constraint=W_constraint, kernel_regularizer=W_regularizer) )
-        if batch_norm and i != n_layers - 1:
-            model.add(BatchNormalization())
- 
-    model.add( Dense(odim, activation=activation, name='out', kernel_constraint=W_constraint, kernel_regularizer=W_regularizer) )
-    if batch_norm and i != n_layers - 1:
-        model.add(BatchNormalization())
-    
-
     # x = Input( shape=(None,idim), name='x')
     # if batch_norm:
     #     h = BatchNormalization()(x)
@@ -153,6 +111,32 @@ def main():
     # main model
     #model = Model(input=[x], output=h)
 
+    x = Input( shape=(None,idim), name='x')
+    if batch_norm:
+        h = BatchNormalization()(x)
+    else:
+        h = x
+    for i in range(n_layers):
+        h = Dense(hidden_size, inputs=h, kernel_constraint=W_constraint, activation=activation, name='h'+str(i+1), W_regularizer=W_regularizer)
+        if batch_norm and i != n_layers - 1:
+            h = BatchNormalization()(h)
+
+    model.add(Dense(128, activation='softmax', input_dim=2))
+    if lambda_layer:
+        model.add(    Lambda(superF, output_shape=superF_output_shape)  )
+
+    if batch_norm:
+        model.add(BatchNormalization())
+
+    for i in range(n_layers):
+        model.add( Dense(hidden_size, activation=activation, name='h'+str(i+1), kernel_constraint=W_constraint, kernel_regularizer=W_regularizer) )
+        if batch_norm:
+            model.add(BatchNormalization())
+ 
+    model.add( Dense(odim, activation='softmax', name='out', kernel_constraint=W_constraint, kernel_regularizer=W_regularizer) )
+    if batch_norm:
+        model.add(BatchNormalization())
+    
     sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
     model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
     model.summary()
@@ -166,6 +150,7 @@ def main():
     for epoch in range(training_epochs):
         x_train, y_train = next_batch(128)
         model.fit(x_train, y_train, epochs=20, batch_size=128)
+
 
     ####################################################
     ### Test, predict and graph

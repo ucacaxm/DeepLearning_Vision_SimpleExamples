@@ -91,7 +91,7 @@ def main():
     #### CONSTRUCTION DU RESEAU
     model = Sequential()
     #model.add(Dense(hidden_size, activation=activation, input_dim=2))
-    model.add(Dense(64, activation=activation, input_dim=2))
+    model.add(Dense(128, activation='softmax', input_dim=2))
     if lambda_layer:
         model.add(    Lambda(superF, output_shape=superF_output_shape)  )
 
