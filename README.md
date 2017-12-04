@@ -8,8 +8,20 @@
 Install [Anaconda](https://www.anaconda.com/download/), take the one with python 3 and then
 * conda create -n p35 python=3.5 
 * activate p35
+
+NumPy
 * conda install -c anaconda numpy 
+
+MatPlotLib
+* conda install -c conda-forge matplotlib
+* conda install -c conda-forge/label/broken matplotlib
+* conda install -c conda-forge/label/testing matplotlib
+* conda install -c conda-forge/label/rc matplotlib 
+
+DLib
 * conda install -c menpo dlib 
+
+TensorFlow
 * pip install --ignore-installed --upgrade tensorflow 
 or
 * pip install --ignore-installed --upgrade tensorflow-gpu 
