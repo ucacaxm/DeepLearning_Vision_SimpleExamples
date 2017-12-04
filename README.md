@@ -1,7 +1,7 @@
 # Various Simple Examples of Deep Learning / Vision
 
-* Deep Learning with (Keras)[https://keras.io/] used on top of [TensorFlow](https://www.tensorflow.org/)
-* Vision with [DLib](http://dlib.net/)
+* Deep Learning with [Keras](https://keras.io) used on top of [TensorFlow](https://www.tensorflow.org)
+* Vision with [DLib](http://dlib.net)
 
 ## Installation
 
