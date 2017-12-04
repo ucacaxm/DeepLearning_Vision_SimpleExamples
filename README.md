@@ -3,6 +3,19 @@
 * Deep Learning with TensorFlow/Keras
 * Vision with DLib
 
+## Installation
+
+Install [Anaconda](https://www.anaconda.com/download/), take the one with python 3 and then
+* conda create -n p35 python=3.5 
+* activate p35
+* conda install -c anaconda numpy 
+* conda install -c menpo dlib 
+* pip install --ignore-installed --upgrade tensorflow 
+or
+* pip install --ignore-installed --upgrade tensorflow-gpu 
+
+
+
 
 ## Classifier
 * classifier.py: classify 2D points (x,y). Points upper than sin(x) are from class 1 (y>sin(x)), points lower than sin(x) are from class 2 (y<sin(x)).
