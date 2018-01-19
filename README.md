@@ -38,7 +38,7 @@ or
 
 #Images
 * classifier_image_CNN_keras: Convolution nural network with keras
-* classifier_generater_tf_mnist.py (BEGONIN Florian 11400915 / GRANDJEAN Valentin 11402835)
+* classifier_generator_tf_mnist.py (BEGONIN Florian 11400915 / GRANDJEAN Valentin 11402835)
 Classification ET génération d'image (une sorte d'auto-encoder sur des images)
 
 L'execution du fichier mnist.py permet d'entrainer un réseau neuronal convolutif sur la base de données MNIST.
