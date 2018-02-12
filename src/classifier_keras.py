@@ -10,6 +10,17 @@ import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
 
+import sys
+import os
+sys.path.append( os.getcwd() + '\\..\\build\\src\\Debug')
+sys.path.append( os.getcwd() + '.')
+print( "Add path to _pysimea.pyd, sys.path=" )
+print( sys.path )
+
+#os.environ["KERAS_BACKEND"] = "theano"
+os.environ["KERAS_BACKEND"] = "tensorflow"
+
+
 import keras
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation
@@ -17,7 +28,7 @@ from keras.optimizers import SGD
 
 
 def one_sample():
-    x = np.array( [ 8.0*3.141592*np.random.ranf(), 2.0*np.random.ranf()-1 ])
+    x = np.array( [ 2.0*3.141592*np.random.ranf(), 2.0*np.random.ranf()-1 ])
     if (math.cos(x[0]) < x[1]):
         y = np.array([ 0, 1])
     else:
@@ -43,18 +54,18 @@ def main():
     # in the first layer, you must specify the expected input data shape:
     # here, 2-dimensional vectors.
 	#The last output has to be the number of class
-    model.add(Dense(64, activation='relu', input_dim=2))
-    #model.add(Dropout(0.5))
-    model.add(Dense(64, activation='relu'))
-    #model.add(Dropout(0.5))
+    model.add(Dense(128, activation='relu', input_dim=2))
+    model.add(Dropout(0.5))
+    model.add(Dense(128, activation='relu'))
+    model.add(Dropout(0.5))
     model.add(Dense(2, activation='softmax'))
 
-    sgd = SGD(lr=0.0000001, decay=1e-6, momentum=0.9, nesterov=True)
+    sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
     model.compile(loss='categorical_crossentropy',
                   optimizer=sgd,
                   metrics=['accuracy'])
 				  
-    training_epochs = 50
+    training_epochs = 150
     for epoch in range(training_epochs):
         x_train, y_train = next_batch(128)
         model.fit(x_train, y_train, epochs=20, batch_size=128)

@@ -37,7 +37,7 @@ or
 * classifier_keras_v2-sequential.py: more elaborate network, sequential representation of keras
 
 #Images
-* classifier_image_CNN_keras: Convolution nural network with keras
+* classifier_image_CNN_keras: Convolution neural network (ConvNet) with keras
 * classifier_generator_tf_mnist.py (BEGONIN Florian 11400915 / GRANDJEAN Valentin 11402835)
 Classification ET génération d'image (une sorte d'auto-encoder sur des images)
 
