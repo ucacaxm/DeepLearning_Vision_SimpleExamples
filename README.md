@@ -29,7 +29,7 @@ or
 
 
 
-## Classifier
+## Classifier in src/classifier
 
 #Classify 2D points (x,y). Points upper than sin(x) are from class 1 (y>sin(x)), points lower than sin(x) are from class 2 (y<sin(x)).
 * classifier_keras.py: with keras, simple network
@@ -53,9 +53,9 @@ Taper 3 mettra fin à l'execution du programme.
 
 
 
-## GAN
+## GAN in src/gan
+* classifier_generator_tf_mnist: learn a classifier + a generator of images from the number as input
 * gan.py: GAN learn to generate 2D points (x,y) positionned above sin(x). 
-
 => does not work yet !
 
 
