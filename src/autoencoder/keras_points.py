@@ -17,6 +17,7 @@ os.environ["KERAS_BACKEND"] = "tensorflow"
 from keras.layers import Input, Dense
 from keras.models import Model
 from keras.callbacks import TensorBoard
+from keras.optimizers import SGD
 
 
 class Circle(object):
@@ -71,17 +72,18 @@ class AutoEncoder(object):
         self.data = dat
 
         self.input = Input(shape=(self.data.dim(),) )
-        self.encoded = Dense(64, activation='relu')(self.input)
-        self.encoded = Dense(128, activation='relu')(self.encoded)
+        self.encoded = Dense(64, activation='tanh')(self.input)
+        self.encoded = Dense(128, activation='tanh')(self.encoded)
 
-        self.decoded = Dense(128, activation='relu')(self.encoded)
-        self.decoded = Dense(64, activation='relu')(self.decoded)
-        self.decoded = Dense(self.data.dim(), activation='sigmoid')(self.decoded)
+        self.decoded = Dense(128, activation='tanh')(self.encoded)
+        self.decoded = Dense(64, activation='tanh')(self.decoded)
+        self.decoded = Dense(self.data.dim())(self.decoded)
 
         # this model maps an input to its reconstruction
         self.autoencoder = Model(self.input, self.decoded)
 
-        self.autoencoder.compile(optimizer='adadelta', loss='binary_crossentropy')
+        sgd = SGD(lr=0.001, decay=1e-6, momentum=0.9, nesterov=True)
+        self.autoencoder.compile(optimizer=sgd, loss='mse', metrics=['accuracy'])
 
         self.tensorboard = TensorBoard(log_dir="logs/{}".format(time()))
 
@@ -92,15 +94,16 @@ class AutoEncoder(object):
         print("decode")
 
     def train(self):
-        training_epochs = 50
+        training_epochs = 200
+        batch_size = 128
         for epoch in range(training_epochs):
-            x_train = self.data.next_batch(64)
+            x_train = self.data.next_batch(batch_size)
             x_train_noise = self.data.add_noise(x_train, 0.5)
-            x_test = self.data.next_batch(64)
+            x_test = self.data.next_batch(batch_size)
             x_test_noise = self.data.add_noise(x_test, 0.5)
             self.autoencoder.fit(x_train_noise, x_train,
                                     epochs=100,
-                                    batch_size=64,
+                                    batch_size=batch_size,
                                     shuffle=True,
                                     validation_data=(x_test_noise, x_test),
                                     callbacks=[self.tensorboard])
@@ -134,6 +137,18 @@ class AutoEncoder(object):
         x = self.data.add_noise(xsrc,0.5)
         p = self.autoencoder.predict(x)
 
+        for i in range(1000):
+            plt.scatter(x[i, 0], x[i, 1], s=3, color='blue')
+            plt.scatter(p[i, 0], p[i, 1], s=3, color='red')
+            #plt.axvline( x[i, 0], x[i, 1], p[i, 0], p[i, 1] )
+        self.data.draw_sampleFrontiere(plt)
+        plt.show()
+
+
+        for i in range(0, x.shape[0]):
+           x[i, 0] = np.random.ranf() * 10
+           x[i, 1] = np.random.ranf() * 10
+        p = self.autoencoder.predict(x)
         for i in range(1000):
             plt.scatter(x[i, 0], x[i, 1], s=3, color='blue')
             plt.scatter(p[i, 0], p[i, 1], s=3, color='red')
