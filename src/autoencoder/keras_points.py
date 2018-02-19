@@ -94,19 +94,22 @@ class AutoEncoder(object):
         print("decode")
 
     def train(self):
-        training_epochs = 200
+        training_epochs = 10000
         batch_size = 128
         for epoch in range(training_epochs):
             x_train = self.data.next_batch(batch_size)
             x_train_noise = self.data.add_noise(x_train, 0.5)
             x_test = self.data.next_batch(batch_size)
             x_test_noise = self.data.add_noise(x_test, 0.5)
-            self.autoencoder.fit(x_train_noise, x_train,
-                                    epochs=100,
-                                    batch_size=batch_size,
-                                    shuffle=True,
-                                    validation_data=(x_test_noise, x_test),
-                                    callbacks=[self.tensorboard])
+            r = self.autoencoder.train_on_batch( x_train_noise, x_train)
+            if (epoch % 10==0):
+                print("train_on_batch: epoch=", epoch, " loss=", r)
+            # self.autoencoder.fit(x_train_noise, x_train,
+            #                         epochs=100,
+            #                         batch_size=batch_size,
+            #                         shuffle=True,
+            #                         validation_data=(x_test_noise, x_test),
+            #                         callbacks=[self.tensorboard])
         print("Optimization Finished!")
 
 
@@ -148,6 +151,15 @@ class AutoEncoder(object):
         for i in range(0, x.shape[0]):
            x[i, 0] = np.random.ranf() * 10
            x[i, 1] = np.random.ranf() * 10
+        p = self.autoencoder.predict(x)
+        for i in range(1000):
+            plt.scatter(x[i, 0], x[i, 1], s=3, color='blue')
+            plt.scatter(p[i, 0], p[i, 1], s=3, color='red')
+            #plt.axvline( x[i, 0], x[i, 1], p[i, 0], p[i, 1] )
+        self.data.draw_sampleFrontiere(plt)
+        plt.show()
+
+        x = p
         p = self.autoencoder.predict(x)
         for i in range(1000):
             plt.scatter(x[i, 0], x[i, 1], s=3, color='blue')
