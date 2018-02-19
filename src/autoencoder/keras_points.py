@@ -80,6 +80,7 @@ class AutoEncoder(object):
         self.batch_size = 50
         self.display_step = 200
         self.data = dat
+        self.noise = 0.0
 
         self.input = Input(shape=(self.data.dim(),) )
         self.encoded = Dense(64, activation='tanh')(self.input)
@@ -108,12 +109,14 @@ class AutoEncoder(object):
         batch_size = 128
         for epoch in range(training_epochs):
             x_train = self.data.next_batch(batch_size)
-            x_train_noise = self.data.add_noise(x_train, 0.5)
-            x_test = self.data.next_batch(batch_size)
-            x_test_noise = self.data.add_noise(x_test, 0.5)
+            x_train_noise = self.data.add_noise(x_train, self.noise)
+            #x_train_noise = x_train
             r = self.autoencoder.train_on_batch( x_train_noise, x_train)
             if (epoch % 10==0):
                 print("train_on_batch: epoch=", epoch, " loss=", r)
+
+            #x_test = self.data.next_batch(batch_size)
+            #x_test_noise = self.data.add_noise(x_test, noise)
             # self.autoencoder.fit(x_train_noise, x_train,
             #                         epochs=100,
             #                         batch_size=batch_size,
@@ -130,7 +133,7 @@ class AutoEncoder(object):
         ax.set_xlim(self.data.xlim)
         ax.set_ylim(self.data.ylim)
         xb = self.data.next_batch(1000)
-        yb = self.data.add_noise(xb, 0.5)
+        yb = self.data.add_noise(xb, self.noise)
         for i in range(1000):
             plt.scatter(xb[i, 0], xb[i, 1], s=2, color='red')
             plt.scatter(yb[i, 0], yb[i, 1], s=2, color='blue')
@@ -138,41 +141,41 @@ class AutoEncoder(object):
         plt.show()
 
 
-    def display_corrected(self):
+    def display_autoencodedDataOfManifold(self, noise=0.5):
         plt.figure(1)
         plt.title("real data")
         ax = plt.gca()
         ax.set_xlim(self.data.xlim)
         ax.set_ylim(self.data.ylim)
 
-        #x = np.array([2.0 * 3.141592 * np.random.ranf(), 2.0 * np.random.ranf() - 1])
         xsrc = self.data.next_batch(1000)
-        x = self.data.add_noise(xsrc,0.5)
+        x = self.data.add_noise(xsrc, noise)
         p = self.autoencoder.predict(x)
-
         for i in range(1000):
             plt.scatter(x[i, 0], x[i, 1], s=3, color='blue')
             plt.scatter(p[i, 0], p[i, 1], s=3, color='red')
-            #plt.axvline( x[i, 0], x[i, 1], p[i, 0], p[i, 1] )
         self.data.draw_sampleFrontiere(plt)
         plt.show()
 
+    def display_autoencodedDataOfAllSpace(self, n=1):
+        plt.figure(1)
+        plt.title("real data")
+        ax = plt.gca()
+        ax.set_xlim(self.data.xlim)
+        ax.set_ylim(self.data.ylim)
 
+        x = self.data.next_batch(1000)
         for i in range(0, x.shape[0]):
-           x[i, 0] = np.random.ranf() * 10
-           x[i, 1] = np.random.ranf() * 10
-        p = self.autoencoder.predict(x)
-        for i in range(1000):
-            plt.scatter(x[i, 0], x[i, 1], s=3, color='blue')
-            plt.scatter(p[i, 0], p[i, 1], s=3, color='red')
-            #plt.axvline( x[i, 0], x[i, 1], p[i, 0], p[i, 1] )
-        self.data.draw_sampleFrontiere(plt)
-        plt.show()
+            x[i, 0] = np.random.ranf() * 10
+            x[i, 1] = np.random.ranf() * 10
+        xorig = x
 
-        x = p
-        p = self.autoencoder.predict(x)
+        for a in range(0,n-1):
+            p = self.autoencoder.predict(x)
+            x = p
+
         for i in range(1000):
-            plt.scatter(x[i, 0], x[i, 1], s=3, color='blue')
+            plt.scatter(xorig[i, 0], xorig[i, 1], s=3, color='blue')
             plt.scatter(p[i, 0], p[i, 1], s=3, color='red')
             #plt.axvline( x[i, 0], x[i, 1], p[i, 0], p[i, 1] )
         self.data.draw_sampleFrontiere(plt)
@@ -188,7 +191,8 @@ def main():
     ae = AutoEncoder(pcg)
     ae.display_real()
     ae.train()
-    ae.display_corrected()
+    ae.display_autoencodedDataOfManifold()
+    ae.display_autoencodedDataOfAllSpace(8)
     ae.close()
 
 
