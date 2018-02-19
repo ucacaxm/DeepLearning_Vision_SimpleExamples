@@ -7,6 +7,7 @@ import os
 from time import time
 
 import matplotlib.pyplot as plt
+from matplotlib.patches import Ellipse
 import numpy as np
 
 #os.environ["KERAS_BACKEND"] = "theano"
@@ -22,29 +23,38 @@ from keras.optimizers import SGD
 
 class Circle(object):
     def __init__(self):
-        self.data_radius = 3.0
-        self.data_center = (4.0,6.0)
-        self.data_xlim  = (0, 10)
-        self.data_ylim  = (0, 10)
+        self.radius = (3.0, 1.0)            # elipse radius
+        self.center = (4.0, 6.0)            # elipse center
+        self.xlim  = (0, 12)
+        self.ylim  = (0, 12)
 
     def dim(self):
         return 2
 
+    @property
     def one_sample(self):
-         theta = 2.0*math.pi*np.random.ranf()
-         r = self.data_radius*np.random.ranf()
-         x = [ self.data_center[0]+r * math.cos(theta), self.data_center[1]+r * math.sin(theta) ]
-         return x
+        r = 1.5
+        a = 0.0
+        b = 0.0
+        while r > 1.0:
+            a = (2.0*np.random.ranf()-1.0)
+            b = (2.0*np.random.ranf()-1.0)
+            r = math.sqrt( a*a + b*b )
+        a = self.center[0] + self.radius[0] * a
+        b = self.center[1] + self.radius[1] * b
+        x = [a,b]
+        return x
 
     def next_batch(self, n):
         x = np.zeros( shape=(n,2), dtype=np.float32)
         for i in range(0, n):
-            x[i] = self.one_sample()
+            x[i] = self.one_sample
         return x
 
     def draw_sampleFrontiere(self, plt):
         ax = plt.gca()
-        circle = plt.Circle( self.data_center, self.data_radius, color='blue', fill=False)
+        #circle = plt.Circle(self.center, self.radius, color='blue', fill=False)
+        circle = Ellipse(xy=self.center, width=self.radius[0]*2, height=self.radius[1]*2, color='blue', fill=False)
         ax.add_artist(circle)
 
     def add_noise(self, x, rangee):
@@ -73,9 +83,9 @@ class AutoEncoder(object):
 
         self.input = Input(shape=(self.data.dim(),) )
         self.encoded = Dense(64, activation='tanh')(self.input)
-        self.encoded = Dense(3, activation='tanh')(self.encoded)
+        self.encoded = Dense(5, activation='tanh')(self.encoded)
 
-        self.decoded = Dense(3, activation='tanh')(self.encoded)
+        self.decoded = Dense(5, activation='tanh')(self.encoded)
         self.decoded = Dense(64, activation='tanh')(self.decoded)
         self.decoded = Dense(self.data.dim())(self.decoded)
 
@@ -117,8 +127,8 @@ class AutoEncoder(object):
         plt.figure(1)
         plt.title("real data")
         ax = plt.gca()
-        ax.set_xlim(self.data.data_xlim)
-        ax.set_ylim(self.data.data_ylim)
+        ax.set_xlim(self.data.xlim)
+        ax.set_ylim(self.data.ylim)
         xb = self.data.next_batch(1000)
         yb = self.data.add_noise(xb, 0.5)
         for i in range(1000):
@@ -132,8 +142,8 @@ class AutoEncoder(object):
         plt.figure(1)
         plt.title("real data")
         ax = plt.gca()
-        ax.set_xlim(self.data.data_xlim)
-        ax.set_ylim(self.data.data_ylim)
+        ax.set_xlim(self.data.xlim)
+        ax.set_ylim(self.data.ylim)
 
         #x = np.array([2.0 * 3.141592 * np.random.ranf(), 2.0 * np.random.ranf() - 1])
         xsrc = self.data.next_batch(1000)
