@@ -73,9 +73,9 @@ class AutoEncoder(object):
 
         self.input = Input(shape=(self.data.dim(),) )
         self.encoded = Dense(64, activation='tanh')(self.input)
-        self.encoded = Dense(128, activation='tanh')(self.encoded)
+        self.encoded = Dense(3, activation='tanh')(self.encoded)
 
-        self.decoded = Dense(128, activation='tanh')(self.encoded)
+        self.decoded = Dense(3, activation='tanh')(self.encoded)
         self.decoded = Dense(64, activation='tanh')(self.decoded)
         self.decoded = Dense(self.data.dim())(self.decoded)
 
