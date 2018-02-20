@@ -1,3 +1,10 @@
+################################################################"
+# classifier of simple points clouds: 2 classes
+# status: working
+# todo: option to save trained network at the end/reload pretrained network instead of computing it
+################################################################"
+
+
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
@@ -7,7 +14,6 @@ import urllib
 
 import math
 import numpy as np
-import tensorflow as tf
 import matplotlib.pyplot as plt
 
 import sys

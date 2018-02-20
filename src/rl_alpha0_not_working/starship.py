@@ -1,10 +1,9 @@
-import sys
-import os
+import math
+import random
+
 import numpy as np
 import pygame
-import math
 from pygame.locals import *
-import random
 
 
 class Vec2(object):

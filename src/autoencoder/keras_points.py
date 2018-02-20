@@ -1,6 +1,12 @@
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+################################################################"
+# autoencoder of elliptic point cloud
+# status: working
+# todo: option to save trained network at the end/reload pretrained network instead of computing it
+################################################################"
+
+# from __future__ import absolute_import
+# from __future__ import division
+# from __future__ import print_function
 
 import math
 import os
@@ -12,7 +18,6 @@ import numpy as np
 
 #os.environ["KERAS_BACKEND"] = "theano"
 from setuptools.command.saveopts import saveopts
-
 os.environ["KERAS_BACKEND"] = "tensorflow"
 
 from keras.layers import Input, Dense, Convolution1D
