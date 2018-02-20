@@ -118,14 +118,11 @@ class AutoEncoder(object):
         print("decode")
 
     def train(self):
-        training_epochs = 10000
-        batch_size = 128
-        for epoch in range(training_epochs):
-            x_train = self.data.next_batch(batch_size)
+        for epoch in range(self.training_epochs):
+            x_train = self.data.next_batch(self.batch_size)
             x_train_noise = self.data.add_noise(x_train, self.noise)
-            #x_train_noise = x_train
             r = self.autoencoder.train_on_batch( x_train_noise, x_train)
-            if (epoch % 10==0):
+            if (epoch % self.display_step==0):
                 print("train_on_batch: epoch=", epoch, " loss=", r)
 
             #x_test = self.data.next_batch(batch_size)
