@@ -15,7 +15,7 @@ from setuptools.command.saveopts import saveopts
 
 os.environ["KERAS_BACKEND"] = "tensorflow"
 
-from keras.layers import Input, Dense
+from keras.layers import Input, Dense, Convolution1D
 from keras.models import Model
 from keras.callbacks import TensorBoard
 from keras.optimizers import SGD
@@ -84,6 +84,7 @@ class AutoEncoder(object):
 
         self.input = Input(shape=(self.data.dim(),) )
         self.encoded = Dense(64, activation='tanh')(self.input)
+        #self.encoded = Convolution1D(32,2, padding='same')(self.encoded)
         self.encoded = Dense(5, activation='tanh')(self.encoded)
 
         self.decoded = Dense(5, activation='tanh')(self.encoded)
@@ -92,6 +93,18 @@ class AutoEncoder(object):
 
         # this model maps an input to its reconstruction
         self.autoencoder = Model(self.input, self.decoded)
+
+
+        # self.encoded = Sequential()
+        # self.encoded.add(Dense(64, activation='tanh', input_dim=self.data.dim()))
+        # #self.encoded.add(Dropout(0.5))
+        # self.encoded.add(Dense(5, activation='tanh'))
+        #
+        # self.decoded = Sequential()
+        # self.encoded.add(Dense(5, activation='tanh', input_dim=self.encoded))
+        #
+        # self.autoencoder = Model(self.encoded.input, self.decoded)
+
 
         sgd = SGD(lr=0.001, decay=1e-6, momentum=0.9, nesterov=True)
         self.autoencoder.compile(optimizer=sgd, loss='mse', metrics=['accuracy'])
