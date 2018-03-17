@@ -48,7 +48,8 @@ class Alpha0:
         self.epoch = 10
         self.nite = 1000
         self.action_range = 5.0  # 0.01
-        self.m_quit = False
+        self.b_quit = False
+        self.b_random = True
 
         self.reward = np.empty(self.game.sizeOfBatch(), dtype=float)
         self.done = np.empty(self.game.sizeOfBatch(), dtype=bool)
@@ -106,17 +107,21 @@ class Alpha0:
     def train(self):
         print("train is not implemented")
 
+    def stepModelAction(self):
+        print("model")
+
     def run(self):
         self.observation = self.game.reset()
-        while not self.m_quit:
+        while not self.b_quit:
             if not self.game.paused():
-                if self.game.isLearning():
+                if self.game.eventKey( ord('l') ):
                     self.train()
+                elif self.game.eventKey( ord('m') ):
+                    self.stepModelAction()
                 else:
                     self.stepRandomAction()
-                    # self.stepModelAction()
 
-            self.m_quit = self.game.manageEvent()
+            self.b_quit = self.game.manageEvent()
             self.game.drawSceneMenuAndSwap()
             # print("py! Save&close...")
             # self.model.save_weights("debug/model.h5", overwrite=True)

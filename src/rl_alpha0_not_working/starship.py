@@ -1,9 +1,12 @@
 import math
 import random
-
 import numpy as np
 import pygame
 from pygame.locals import *
+
+np.set_printoptions(threshold=np.inf)
+np.set_printoptions(precision=4)
+np.set_printoptions(suppress=True)
 
 
 class Vec2(object):
@@ -173,10 +176,10 @@ class Vec2(object):
 
 
 class Particle:
-    def __init__(self, x ,y):
+    def __init__(self, x ,y, vx, vy):
         self.m = 1.0
         self.p = Vec2(x,y)
-        self.v = Vec2(0,0)
+        self.v = Vec2(vx,vy)
         self.f = Vec2(0,0)
         self.lastf = Vec2(0,0)
 
@@ -190,7 +193,14 @@ class Particle:
     def addForce(self, f):
         self.f += f
 
+    def setForce(self, f):
+        self.f = f
 
+    def setVelocity(self, v):
+        self.v = v
+
+    def setPosition(self, p):
+        self.p = p
 
 
 
@@ -201,36 +211,33 @@ class Starship:
     
 
     def init(self,name,w,h,px,py,f=0):
-        self.m_isLearning = False
         self.m_paused = False
         self.m_quit = False
         self.m_print = False
         self.target = Vec2(w/2, h/2)
         self.starship = np.empty( self.sizeOfBatch(), dtype=Particle )
-        self.reward = np.empty( self.sizeOfBatch(), dtype=float )
+        self.rew = np.empty(self.sizeOfBatch(), dtype=float)
         self.done = np.empty( self.sizeOfBatch(), dtype=bool )
         self.obs = np.empty( (self.sizeOfBatch(),self.sizeOfObservationArray()), dtype=float )
+        self.act = np.empty( (self.sizeOfBatch(),self.sizeOfActionArray()), dtype=float )
         self.w = w
         self.h = h
-        for i in range(self.sizeOfBatch()):
-            self.initOneAgent(i)
+        self.reset()
         pygame.init()
         self.screen = pygame.display.set_mode((w, h))
         pygame.font.init()
         self.myfont = pygame.font.SysFont('Comic Sans MS', 10)
+
+    def printDebug(self):
         print("Starship::init...ok")
         print("obs=",self.obs)
-        print("reward=",self.reward)
+        print("reward=", self.rew)
         print("done=",self.done)
-
-    def initOneAgent(self,i):
-        self.starship[i] = Particle(random.random()*(self.w-1), random.random()*(self.h-1))
-        self.computeRewardDoneObs(i)
 
     def sizeOfActionArray(self):
         return 2
 
-    def sizeOfObservationArray(self):
+    def sizeOfObservationArray(self):       # position(x,y) and velocity(vx,vy)
         return 4
 
     def sizeOfBatch(self):
@@ -239,24 +246,41 @@ class Starship:
     def paused(self):
         return self.m_paused;
 
-    def isLearning(self):
-        return self.m_isLearning;
-
-    def setLearning(self, l):
-        self.m_isLearning = l
-
-    def resetOne(self, i):
-        self.initOneAgent(i)
+    def resetOneAgent(self, i, obsone):
+        self.starship[i] = Particle( self.target.x-obsone[0], self.target.y-obsone[1], obsone[2], obsone[3]);           # obs = target - p
+        self.act[i] = [0,0]
         self.computeRewardDoneObs(i)
-        return self.obs[i]
+
+    def resetOneAgentRandom(self, i):
+        obsone = [ random.random()*(self.w-1)-self.target.x, random.random()*(self.h-1)-self.target.y, 0, 0 ]
+        self.resetOneAgent( i, obsone )
 
     def reset(self):
-        for i in range(self.sizeOfBatch()):
-            self.resetOne(i)
+        self.resetOneAgentRandom(0)
+        for i in range(1,self.sizeOfBatch()):
+            self.resetOneAgent( i, self.obs[0] )
+
+        self.printDebug();
         return self.obs
     
     def getStarship(self, i):
         return self.starship[i]
+
+    def setReward(self, rew=0.0):
+        for i in range(self.sizeOfBatch()):
+            self.rew[i] = rew
+
+    def computeRewardDoneObs(self, i):
+        p = self.starship[i].p
+        o = self.target-p               # vector(position, target)
+        v = self.starship[i].v
+        self.obs[i] = [ o.x, o.y, v.x, v.y ]
+        self.rew[i] += 1000.0 / (1.0 + o.length())
+        if (p.x<0 or p.y<0 or p.x>=self.w or p.y>=self.h):
+            self.done[i] = True
+            #print("done: "+str(i)+"  p="+str(p.x)+" "+str(p.y))
+        else:
+            self.done[i] = False
 
     def drawSceneMenuAndSwap(self):
         if not self.m_quit:
@@ -274,50 +298,73 @@ class Starship:
                 pygame.draw.circle( self.screen, color, (int(p.x), int(p.y)), 5, 0 )
                 pygame.draw.line( self.screen, colorv, (int(p.x), int(p.y)), (int(p.x+3*v.x), int(p.y+3*v.y)) )
                 pygame.draw.line( self.screen, colorf, (int(p.x), int(p.y)), (int(p.x+3*f.x), int(p.y+3*f.y)) )
-                textsurface = self.myfont.render( str(int(self.reward[i])), False, (255, 0, 50))
+                textsurface = self.myfont.render(str(int(self.rew[i])), False, (255, 0, 50))
                 self.screen.blit(textsurface,(int(p.x)+10, int(p.y)+10))
             pygame.display.flip()
 
-    def observe(self, obs):
-        obs = self.obs
-        return self.obs
+    def observation(self, n_eme):
+        return self.obs[n_eme]
 
-    def computeRewardDoneObs(self, i):
-        p = self.starship[i].p
-        o = self.target-p
-        v = self.starship[i].v
-        self.obs[i] = ( o.x, o.y, v.x, v.y)
-        self.reward[i] = 1000.0/(1.0+o.length())
-        if (p.x<0 or p.y<0 or p.x>self.w or p.y>self.h):
-            self.done[i] = True
-            self.initOneAgent(i)
-        else:
-            self.done[i] = False
+    def action(self, n_eme):
+        return self.act[n_eme]
 
-    def stepBatch(self, act, obs):
-        #obs = np.empty( (self.sizeOfBatch,self.sizeOfObservationArray()), dtype=float )
-        #print(act)
-        for i in range(self.sizeOfBatch()):
-            self.starship[i].addForce( Vec2(act[i][0],act[i][1]) )
-            self.starship[i].update(0.1)
-            self.computeRewardDoneObs(i)
-        obs = self.obs
-        if self.m_print:
-            print("py! observation shape=",self.obs.shape, " action shape=",act.shape,
-                  "    observation=", self.obs, " action=", act,
-                  "   reward=", reward, "  done=",done)
-        #reward, done = self.viewer.step(self.action, self.observation)
-        return self.reward, self.done
+    def reward(self, n_eme):
+        return self.rew[n_eme]
 
-    def randomMove(self):
-        act = np.empty( (self.starship.size,2), dtype=float )
+    def done(self, n_eme):
+        return self.done[n_eme]
+
+    def setRandomAction(self, i):
+        self.act[i][0] = (random.random() * 2.0 - 1.0)
+        self.act[i][1] = (random.random() * 2.0 - 1.0)
+
+    def setRandomActionForAllBatch(self):
         for i in range(self.starship.size):
-            act[i][0] = (random.random()*2.0 - 1.0)
-            act[i][1] = (random.random()*2.0 - 1.0)
-        _,_ = self.stepBatch( act, self.obs )
+            self.setRandomAction(i)
+
+    def setAction(self, i, actone):
+        self.act[i] = actone
+
+    def setActionForAllBatch(self, actone):
+        for i in range(self.sizeOfBatch()):
+            self.setAction( i, actone )
+
+    def setObservationForAllBatch(self, obsone):
+        for i in range(self.sizeOfBatch()):
+            self.setObservation(i,obsone)
+
+    def setObservation(self, i, obsone):
+        self.obs[i] = obsone
+
+    def stepBatch(self):
+        if self.m_paused:
+            return
+        for i in range(self.sizeOfBatch()):
+            self.starship[i].setPosition( Vec2(self.target.x-self.obs[i][0], self.target.y-self.obs[i][1]))                       # obs = target - p
+            self.starship[i].setVelocity( Vec2(self.obs[i][2],self.obs[i][3]))
+            self.starship[i].setForce( Vec2(self.act[i][0],self.act[i][1]) )
+            if not self.done[i]:
+                self.starship[i].update(0.1)
+            self.computeRewardDoneObs(i)
+        if self.m_print:
+            print("py! observation shape=", self.obs.shape, " action shape=", self.act.shape,
+                  "    observation=", self.obs, " action=", self.act,
+                  "   reward=", self.rew, "  done=", self.done)
+        return self.rew, self.done
+
+    def stepBatchRandom(self):
+        self.setRandomActionForAllBatch()
+        self.stepBatch()
 
     def close(self):
         pass
+
+    def eventKey(self, k):
+        keys = pygame.key.get_pressed()
+        if keys[k]:
+            return True
+        else:
+            return False
 
     def manageEvent(self):
         for event in pygame.event.get():	#Attente des événements
@@ -326,10 +373,16 @@ class Starship:
             if event.type == KEYDOWN:
                 if event.key == K_ESCAPE:
                     self.m_quit = True 
-                elif event.key == K_l:
-                    self.m_isLearning = True
-                elif event.key == K_m:
-                    self.m_isLearning = False
+                elif event.key == K_d:
+                    self.printDebug()
+                elif event.key == K_r:
+                    print("===================================")
+                    self.reset()
+                elif event.key == K_p:
+                    self.m_paused = not self.m_paused
+                    print("paused: "+str(self.m_paused))
+                # elif event.key == K_m:
+                #     self.m_isLearning = False
 
             # elif key.is_pressed('q'):
             #     self.m_quit = True    
@@ -358,7 +411,7 @@ class Starship:
 
     def run(self):
         while not self.m_quit:
-            self.randomMove()
+            self.stepBatchRandom()
             self.manageEvent()
             self.drawSceneMenuAndSwap()
             #print("one step")

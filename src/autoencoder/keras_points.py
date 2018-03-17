@@ -88,12 +88,12 @@ class AutoEncoder(object):
         self.noise = 0.0
 
         self.input = Input(shape=(self.data.dim(),) )
-        self.encoded = Dense(64, activation='tanh')(self.input)
+        self.encoded = Dense(128, activation='tanh')(self.input)
         #self.encoded = Convolution1D(32,2, padding='same')(self.encoded)
-        self.encoded = Dense(5, activation='tanh')(self.encoded)
+        self.encoded = Dense(2, activation='tanh')(self.encoded)
 
-        self.decoded = Dense(5, activation='tanh')(self.encoded)
-        self.decoded = Dense(64, activation='tanh')(self.decoded)
+        self.decoded = Dense(2, activation='tanh')(self.encoded)
+        self.decoded = Dense(128, activation='tanh')(self.decoded)
         self.decoded = Dense(self.data.dim())(self.decoded)
 
         # this model maps an input to its reconstruction
