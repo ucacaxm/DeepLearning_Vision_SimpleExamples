@@ -49,7 +49,7 @@ class MCTS:
         self.game = game
         self.root = None
         self.budget = 1000
-        self.SCALAR = 1 / math.sqrt(2.0)
+        self.SCALAR = 0.1   #1 / math.sqrt(2.0)
         self.max_node_size_in_batch_count = 1
         self.SIZE_OF_BATCH = game.sizeOfBatch()
 
@@ -112,7 +112,7 @@ class MCTS:
             node.add_child( ch )
 
         # SIMULATION
-        nStep = 10
+        nStep = 3
         for i in range(nStep):
             self.game.setRandomActionForAllBatch()
             self.game.stepBatch()
@@ -177,8 +177,8 @@ class MCTS:
 if __name__ == "__main__":
     starship = starship.Starship()
     starship.init("starship", 800, 600, 15, 15)
-    mcts = MCTS(starship)
 
+    mcts = MCTS(starship)
     #mcts.PlayRandomPolicy(10)
     starship.reset()
     print( starship.observation(0) )
