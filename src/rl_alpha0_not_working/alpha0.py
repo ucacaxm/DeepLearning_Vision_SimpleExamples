@@ -13,29 +13,25 @@ print(sys.path)
 
 # os.environ["KERAS_BACKEND"] = "theano"
 os.environ["KERAS_BACKEND"] = "tensorflow"
+from keras.layers import Input, Dense, Convolution1D
+from keras.models import Model
+from keras.callbacks import TensorBoard
+from keras.optimizers import SGD
 
 import numpy as np
-
-np.set_printoptions(threshold=np.inf)
-np.set_printoptions(precision=4)
-np.set_printoptions(suppress=True)
-
-#import pysimea as sim
-import json
-from keras.models import Sequential
-from keras.layers.core import Dense
-from keras.optimizers import sgd
-
 import starship
+import mcts
+
 
 
 ######################################################################################################################
 class Alpha0:
-    def __init__(self, game):
+    def __init__(self, game, optimizer):
         # parameters for simu
         # self.viewer = sim.PySimeaViewer()
         # self.viewer = gym_wrapper_to_simea.Gym_wrapper()
         self.game = game
+        self.optimizer = optimizer
 
         self.game.init("Game", 1300, 600, 50, 50, 100)
         print("py! create batch/action/observation array:",
@@ -46,43 +42,22 @@ class Alpha0:
         # parameters for learning
         self.epsilon = .1  # exploration
         self.epoch = 10
-        self.nite = 1000
         self.action_range = 5.0  # 0.01
-        self.b_quit = False
-        self.b_random = True
 
-        self.reward = np.empty(self.game.sizeOfBatch(), dtype=float)
-        self.done = np.empty(self.game.sizeOfBatch(), dtype=bool)
-        self.observation = np.empty((self.game.sizeOfBatch(), self.game.sizeOfObservationArray()), dtype=float)
-        self.action = np.empty((self.game.sizeOfBatch(), self.game.sizeOfActionArray()), dtype=float)
+        self.input = Input(shape=(self.game.sizeOfObservationArray()) )
+        self.encoded = Dense(64, activation='tanh')(self.input)
+        #self.encoded = Convolution1D(32,2, padding='same')(self.encoded)
+        self.encoded = Dense(128, activation='tanh')(self.encoded)
 
-        for i in range(self.game.sizeOfBatch()):
-            self.reward[i] = 0
-            self.done[i] = False
-        self.observation = self.game.reset()
-        self.randomAction()
+        self.decoded = Dense(128, activation='tanh')(self.encoded)
+        self.decoded = Dense(64, activation='tanh')(self.decoded)
+        self.decoded = Dense(self.game.sizeOfActionArray())(self.decoded)
 
-        print("py! batch_size=", self.game.sizeOfBatch(), "observation.shape=", self.observation.shape,
-              "  action.shape=", self.action.shape)
+        # this model maps an input to its reconstruction
+        self.model = Model(self.input, self.decoded)
 
         print("py! Alpha0::init...OK")
 
-    def randomActionOne(self):
-        act = np.empty((self.game.sizeOfActionArray()), dtype=float)
-        for j in range(self.game.sizeOfActionArray()):
-            act[j] = -self.action_range + self.action_range * 2.0 * np.random.random_sample()
-        return act
-
-    def randomAction(self):
-        for i in range(self.game.sizeOfBatch()):
-            self.action[i] = self.randomActionOne()
-
-    def stepRandomAction(self):
-        self.randomAction()
-        self.reward, self.done = self.game.stepBatch(self.action, self.observation)
-        for i in range(self.game.sizeOfBatch()):
-            if self.done[i]:
-                self.observation[i] = self.game.resetOne(i)
 
     def modelAction(self):
         self.action = self.model.predict(self.observation)
@@ -94,15 +69,9 @@ class Alpha0:
             if self.done[i]:
                 self.observation[i] = self.game.resetOne(i)
 
-    def print_shape(self, onlyShape=False):
-        print("=====================================")
-        print("py! batch size=", self.game.sizeOfBatch())
-        print("py! observation shape=", self.observation.shape)
-        print("py! action shape=", self.action.shape)
-        if (not onlyShape):
-            print("py! observation=", self.observation, " type=", type(self.observation))
-            print("py! action=", self.action, " type=", type(self.action))
-        print("=====================================")
+    def load(self, filename):
+
+    def save(self, filename):
 
     def train(self):
         print("train is not implemented")

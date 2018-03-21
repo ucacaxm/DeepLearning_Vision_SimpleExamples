@@ -2,7 +2,6 @@
 import logging
 import math
 import random
-import time
 
 import numpy as np
 import starship
@@ -100,8 +99,8 @@ class MCTS:
 
     def ExpandByDefaultPolicyAndBackup(self, node):  # create a new node at the leaf of the tree and run N simulation from it
         # EXPAND
-        self.game.setObservationForAllBatch( node.observation )
-        self.game.setReward(0.0)
+        self.game.resetAllBatch( node.observation )
+        self.game.setRewardForAllBatch(0.0)
         self.game.setRandomActionForAllBatch()
         self.game.stepBatch()
         for i in range(self.game.sizeOfBatch()):
@@ -135,9 +134,7 @@ class MCTS:
         node = self.root
         if node==None:
             return
-        self.game.reset()
-        self.game.setReward(0.0)
-        self.game.setObservationForAllBatch(node.observation)
+        self.game.resetAllBatch( node.observation )
         self.game.setPaused(True)
         print("Start game reward=" + str(self.game.reward(0)) + "   " + str(node))
         while not self.game.isQuit():
@@ -159,16 +156,12 @@ class MCTS:
 
 
     def PlayRandomPolicy(self, n):
-        node = self.root
-        # if node==None:
-        #     return
-        self.game.setReward(0.0)
-        self.game.setObservationForAllBatch(self.game.observation(0) )
+        self.resetAllBatch( node.observation )
         while not self.game.isQuit():
             self.game.setRandomAction(0)
             self.game.setActionForAllBatch( self.game.action(0) )
             self.game.stepBatch()
-            print( "game reward="+ str(self.game.reward(0))+"   "+str(node) )
+            print( "game reward="+ str(self.game.reward(0)))
             self.game.manageEvent()
             self.game.drawSceneMenuAndSwap()
         print("PlayRandomPolicy...done")
@@ -180,8 +173,7 @@ if __name__ == "__main__":
 
     mcts = MCTS(starship)
     #mcts.PlayRandomPolicy(10)
-    starship.reset()
     print( starship.observation(0) )
     print("--------------------------------")
-    mcts.UCTSearch( starship.observation(0), 5000, 1 )
+    mcts.UCTSearch( starship.observation(0), 3000, 1 )
     mcts.PlayTreePolicy()

@@ -211,6 +211,7 @@ class Starship:
         print("Starship Game ...")
     
 
+    #====================== Used by opti/learning ===========================================
     def init(self,name,w,h,px,py,f=0):
         self.m_paused = False
         self.m_quit = False
@@ -223,24 +224,15 @@ class Starship:
         #self.act = np.empty( (self.sizeOfBatch(),self.sizeOfActionArray()), dtype=float )
         self.w = w
         self.h = h
-        self.reset()
+        self.resetRandomlyAllBatch()
         pygame.init()
         self.screen = pygame.display.set_mode((w, h))
         pygame.font.init()
         self.myfont = pygame.font.SysFont('Comic Sans MS', 10)
         self.printDebug();
 
-
     def isQuit(self):
         return self.m_quit
-
-    def printDebug(self):
-        print("Starship::init...ok")
-        for i in range(self.sizeOfBatch()):
-            self.printDebugOne(i)
-
-    def printDebugOne(self, i):
-        print("obs=" + str(self.observation(i)) + " reward="+str(self.rew[i]) + " done=" + str(self.done(i)))
 
     def sizeOfActionArray(self):
         return 2
@@ -251,6 +243,20 @@ class Starship:
     def sizeOfBatch(self):
         return 12
 
+    #====================== Used by opti/learning ===========================================
+
+    def printDebug(self):
+        print("Starship::init...ok")
+        for i in range(self.sizeOfBatch()):
+            self.printDebugOne(i)
+
+    def printDebugOne(self, i):
+        print("obs=" + str(self.observation(i)) + " reward="+str(self.rew[i]) + " done=" + str(self.done(i)))
+
+
+
+
+
     def paused(self):
         return self.m_paused;
 
@@ -260,25 +266,26 @@ class Starship:
     def resetOneAgent(self, i, obsone):
         self.starship[i] = Particle( self.target.x-obsone[0], self.target.y-obsone[1], obsone[2], obsone[3]);           # obs = target - p
         self.rew[i] = 0.0
+        self.setAction(i, np.zeros( self.sizeOfActionArray()) )
         self.computeReward(i)
 
-    def resetOneAgentRandom(self, i):
-        #obsone = [ random.random()*(0.8*self.w-1)-self.target.x, random.random()*(0.8*self.h-1)-self.target.y, 0, 0 ]
-        obsone = [  300, 200, 0, 0]
+    def resetAllBatch(self, obsone):
+        for i in range(self.sizeOfBatch()):
+            self.resetOneAgent(i, obsone)
+
+    def resetRandomlyOneAgent(self, i):
+        obsone = [ random.random()*(0.8*self.w-1)-self.target.x, random.random()*(0.8*self.h-1)-self.target.y, 0, 0 ]
         self.resetOneAgent( i, obsone )
 
-    def reset(self):
-        self.resetOneAgentRandom(0)
-        obs = self.observation(0)
-        for i in range(1,self.sizeOfBatch()):
-            self.resetOneAgent( i, obs )
-
-    # def getStarship(self, i):
-    #     return self.starship[i]
-
-    def setReward(self, rewa=0.0):
+    def resetRandomlyAllBatch(self):
         for i in range(self.sizeOfBatch()):
-            self.rew[i] = rewa
+            self.resetRandomlyOneAgent(i)
+
+    def observation(self):
+        batch_obs = np.empty( (self.sizeOfBatch(),self.sizeOfObservationArray()), dtype=float )
+        for i in range(self.sizeOfBatch()):
+            batch_obs[i] = self.observation(i)
+        return batch_obs
 
     def observation(self, i):
         p = self.starship[i].p
@@ -287,8 +294,9 @@ class Starship:
         obs = np.array( [ o.x, o.y, v.x, v.y ] )
         return obs
 
-    def action(self, i):
-        return np.array( [ self.starship[i].f.x, self.starship[i].f.y ] )
+    def setRewardForAllBatch(self, rewa=0.0):
+        for i in range(self.sizeOfBatch()):
+            self.rew[i] = rewa
 
     def reward(self, n_eme):
         return self.rew[n_eme]
@@ -297,14 +305,12 @@ class Starship:
         p = self.starship[i].p
         return (p.x<0 or p.y<0 or p.x>=self.w or p.y>=self.h)
 
+    def action(self, i):
+        return np.array( [ self.starship[i].f.x, self.starship[i].f.y ] )
+
     def setRandomAction(self, i):
         actone = np.array( [ (random.random() * 2.0 - 1.0),  (random.random() * 2.0 - 1.0) ] )
         self.setAction(i, actone)
-
-    def computeReward(self, i):
-        p = self.starship[i].p
-        o = self.target-p               # vector(position, target)
-        self.rew[i] += 1000.0 / (1.0 + o.length())
 
     def setRandomActionForAllBatch(self):
         for i in range(self.starship.size):
@@ -317,13 +323,13 @@ class Starship:
         for i in range(self.sizeOfBatch()):
             self.setAction( i, actone )
 
-    def setObservationForAllBatch(self, obsone):
-        for i in range(self.sizeOfBatch()):
-            self.setObservation(i,obsone)
 
-    def setObservation(self, i, obsone):
-        self.starship[i].setPosition( Vec2(self.target.x - obsone[0], self.target.y - obsone[1]))  # obs = target - p
-        self.starship[i].setVelocity(Vec2(obsone[2], obsone[3]))
+
+
+    def computeReward(self, i):
+        p = self.starship[i].p
+        o = self.target-p               # vector(position, target)
+        self.rew[i] += 1000.0 / (1.0 + o.length())
 
     def stepBatch(self):
         if self.m_paused:
