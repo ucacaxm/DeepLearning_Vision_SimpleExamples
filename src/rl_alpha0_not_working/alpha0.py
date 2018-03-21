@@ -3,8 +3,11 @@
 # status: not working
 ################################################################"
 
-import sys
 import os
+import sys
+from time import time
+
+import numpy as np
 
 sys.path.append(os.getcwd() + '\\..\\build\\src\\Debug')
 sys.path.append(os.getcwd() + '.')
@@ -13,15 +16,13 @@ print(sys.path)
 
 # os.environ["KERAS_BACKEND"] = "theano"
 os.environ["KERAS_BACKEND"] = "tensorflow"
-from keras.layers import Input, Dense, Convolution1D
+from keras.layers import Input, Dense
 from keras.models import Model
 from keras.callbacks import TensorBoard
 from keras.optimizers import SGD
 
-import numpy as np
 import starship
 import mcts
-
 
 
 ######################################################################################################################
@@ -33,7 +34,7 @@ class Alpha0:
         self.game = game
         self.optimizer = optimizer
 
-        self.game.init("Game", 1300, 600, 50, 50, 100)
+        self.game.init("Game", 800, 600, 50, 50, 100)
         print("py! create batch/action/observation array:",
               self.game.sizeOfBatch(), "/",
               self.game.sizeOfActionArray(), "/",
@@ -44,7 +45,7 @@ class Alpha0:
         self.epoch = 10
         self.action_range = 5.0  # 0.01
 
-        self.input = Input(shape=(self.game.sizeOfObservationArray()) )
+        self.input = Input(shape=(self.game.sizeOfObservationArray(),) )
         self.encoded = Dense(64, activation='tanh')(self.input)
         #self.encoded = Convolution1D(32,2, padding='same')(self.encoded)
         self.encoded = Dense(128, activation='tanh')(self.encoded)
@@ -56,53 +57,69 @@ class Alpha0:
         # this model maps an input to its reconstruction
         self.model = Model(self.input, self.decoded)
 
+        sgd = SGD(lr=0.001, decay=1e-6, momentum=0.9, nesterov=True)
+        self.model.compile(optimizer=sgd, loss='mse', metrics=['accuracy'])
+        self.tensorboard = TensorBoard(log_dir="logs/{}".format(time()))
+
         print("py! Alpha0::init...OK")
 
 
-    def modelAction(self):
-        self.action = self.model.predict(self.observation)
+    def load(self):
+        self.model = load_model('alpha0.h5')
+        print("load")
 
-    def stepModelAction(self):
-        self.modelAction()
-        self.reward, self.done = self.game.stepBatch(self.action, self.observation)
-        for i in range(self.game.sizeOfBatch()):
-            if self.done[i]:
-                self.observation[i] = self.game.resetOne(i)
+    def save(self):
+        self.model.save('alpha0.h5')
+        print("save")
 
-    def load(self, filename):
-
-    def save(self, filename):
+    def modelAction(self, obs):
+        action = self.model.predict(obs)
+        return action
 
     def train(self):
-        print("train is not implemented")
+        for epoch in range(5):
+            self.game.resetRandomlyAllBatch()
+            obs = np.copy( self.game.observationForAllBatch() )
+            act = np.empty( (self.game.sizeOfBatch(),self.game.sizeOfObservationArray()), dtype=float )
+            for i in range(self.game.sizeOfBatch):
+                act[i] = np.copy( self.optimizer.search( obs[i] ) )
+            r = self.model.train_on_batch(obs, act)
+            print("train_on_batch: epoch=", epoch, " loss=", r)
+        print("training...done")
 
     def stepModelAction(self):
-        print("model")
+        obs = self.game.observation(0)
+        act = modelAction(obs)
+        self.game.setAction( 0, act)
+        print("model for 0")
 
     def run(self):
-        self.observation = self.game.reset()
-        while not self.b_quit:
-            if not self.game.paused():
-                if self.game.eventKey( ord('l') ):
-                    self.train()
-                elif self.game.eventKey( ord('m') ):
-                    self.stepModelAction()
-                else:
-                    self.stepRandomAction()
+        useModel = False
+        while not self.game.isQuit():
+            if self.game.eventKey( ord('l') ):
+                self.load()
+            elif self.game.eventKey(ord('s')):
+                self.save()
+            elif self.game.eventKey( ord('t') ):
+                self.train()
+            elif self.game.eventKey( ord('m') ):
+                useModel = True
+            elif self.game.eventKey(ord('r')):
+                useModel = False
 
-            self.b_quit = self.game.manageEvent()
+            self.game.setRandomActionForAllBatch()
+            if useModel:
+                self.stepModelAction()
+
+            self.game.stepBatch()
+            self.game.manageEvent()
             self.game.drawSceneMenuAndSwap()
-            # print("py! Save&close...")
-            # self.model.save_weights("debug/model.h5", overwrite=True)
-            # with open("debug/model.json", "w") as outfile:
-            #     json.dump(self.model.to_json(), outfile)
-            # self.viewer.close()
-            # print("py! Save&close...OK")
 
 
 
 if __name__ == "__main__":
     print("Start...")
     game = starship.Starship()
-    a0 = Alpha0(game)
+    opti = mcts.MCTS(game, 3000, 1)
+    a0 = Alpha0(game, opti)
     a0.run()

@@ -191,6 +191,10 @@ class Particle:
             self.lastf = self.f
             #self.f = Vec2(0,0)     # for game
 
+    def clampVelocity(self, vmax):
+        if self.v.length()>vmax:
+            self.v = (vmax / self.v.length()) * self.v
+
     def addForce(self, f):
         self.f += f
 
@@ -224,6 +228,8 @@ class Starship:
         #self.act = np.empty( (self.sizeOfBatch(),self.sizeOfActionArray()), dtype=float )
         self.w = w
         self.h = h
+        self.vmax = 20.0
+        self.dt = 0.1
         self.resetRandomlyAllBatch()
         pygame.init()
         self.screen = pygame.display.set_mode((w, h))
@@ -264,7 +270,11 @@ class Starship:
         self.m_paused = p
 
     def resetOneAgent(self, i, obsone):
-        self.starship[i] = Particle( self.target.x-obsone[0], self.target.y-obsone[1], obsone[2], obsone[3]);           # obs = target - p
+        x = 0.5 * self.w * obsone[0]
+        y = 0.5 * self.h * obsone[1]
+        fx = 5.0*obsone[2]
+        fy = 5.0*obsone[3]
+        self.starship[i] = Particle( self.target.x-x, self.target.y-y, fx, fy);           # obs = target - p
         self.rew[i] = 0.0
         self.setAction(i, np.zeros( self.sizeOfActionArray()) )
         self.computeReward(i)
@@ -274,14 +284,15 @@ class Starship:
             self.resetOneAgent(i, obsone)
 
     def resetRandomlyOneAgent(self, i):
-        obsone = [ random.random()*(0.8*self.w-1)-self.target.x, random.random()*(0.8*self.h-1)-self.target.y, 0, 0 ]
+        #obsone = [ random.random()*(0.8*self.w-1)-self.target.x, random.random()*(0.8*self.h-1)-self.target.y, 0, 0 ]
+        obsone = [ random.random()*2-1, random.random()*2-1, random.random()*2-1, random.random()*2-1 ]
         self.resetOneAgent( i, obsone )
 
     def resetRandomlyAllBatch(self):
         for i in range(self.sizeOfBatch()):
             self.resetRandomlyOneAgent(i)
 
-    def observation(self):
+    def observationForAllBatch(self):
         batch_obs = np.empty( (self.sizeOfBatch(),self.sizeOfObservationArray()), dtype=float )
         for i in range(self.sizeOfBatch()):
             batch_obs[i] = self.observation(i)
@@ -290,8 +301,13 @@ class Starship:
     def observation(self, i):
         p = self.starship[i].p
         o = self.target-p               # vector(position, target)
-        v = self.starship[i].v
-        obs = np.array( [ o.x, o.y, v.x, v.y ] )
+        o.x = o.x / (0.5*self.w)
+        o.y = o.y / (0.5*self.h)
+        if abs(o.y)>1:
+            print( str(self.target.y-p.y)+" "+str(self.h))
+        vx = self.starship[i].v.x / self.vmax
+        vy = self.starship[i].v.y / self.vmax
+        obs = np.array( [ o.x, o.y, vx, vy ] )
         return obs
 
     def setRewardForAllBatch(self, rewa=0.0):
@@ -336,7 +352,8 @@ class Starship:
             return
         for i in range(self.sizeOfBatch()):
             if not self.done(i):
-                self.starship[i].update(0.1)
+                self.starship[i].update(self.dt)
+                self.starship[i].clampVelocity(self.vmax)
                 self.computeReward(i)
             if self.m_print:
                 print("py! observation shape=", self.obs.shape, " action shape=", self.act.shape,
@@ -388,7 +405,7 @@ class Starship:
                     self.printDebug()
                 elif event.key == K_r:
                     print("===================================")
-                    self.reset()
+                    self.resetRandomlyAllBatch()
                 elif event.key == K_p:
                     self.m_paused = not self.m_paused
                     print("paused: "+str(self.m_paused))

@@ -43,19 +43,17 @@ class Node:
 
 
 class MCTS:
-    def __init__(self, game):
+    def __init__(self, game, budget=2000, max_node_size_in_batch_count=1):
         # MCTS scalar.  Larger scalar will increase exploitation, smaller will increase exploration.
         self.game = game
-        self.root = None
-        self.budget = 1000
-        self.SCALAR = 0.1   #1 / math.sqrt(2.0)
-        self.max_node_size_in_batch_count = 1
-        self.SIZE_OF_BATCH = game.sizeOfBatch()
-
-    def UCTSearch(self, observation, budget=1000, batch_count_per_node=1):          # the main algo
-        self.root = Node( observation )
         self.budget = budget
-        self.max_node_size_in_batch_count = batch_count_per_node
+        self.max_node_size_in_batch_count = max_node_size_in_batch_count
+        self.SCALAR = 0.1   #1 / math.sqrt(2.0)
+        self.SIZE_OF_BATCH = game.sizeOfBatch()
+        self.root = None
+
+    def search(self, observation):          # the main algo
+        self.root = Node( observation )
         for iter in range(int(self.budget)):
             if iter%200==0:
                 print("ite "+str(iter)+": root=>"+ str(self.root) )
@@ -171,9 +169,9 @@ if __name__ == "__main__":
     starship = starship.Starship()
     starship.init("starship", 800, 600, 15, 15)
 
-    mcts = MCTS(starship)
+    mcts = MCTS(starship, 3000, 1)
     #mcts.PlayRandomPolicy(10)
     print( starship.observation(0) )
     print("--------------------------------")
-    mcts.UCTSearch( starship.observation(0), 3000, 1 )
+    mcts.search(starship.observation(0))
     mcts.PlayTreePolicy()
