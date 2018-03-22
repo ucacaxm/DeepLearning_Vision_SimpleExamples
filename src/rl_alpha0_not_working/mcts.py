@@ -147,15 +147,9 @@ class MCTS:
 
     def PlayTreePolicy(self):
         node = self.root
-        if node==None:
-            return
-        self.game.resetAllBatch( node.observation )
-        self.game.setPaused(True)
         prof = 0
         print("Start game")
-        print("reward=" + str(self.game.reward(0)) + "   " + str(node))
-        print("mcts node observation="+str(node.observation))
-        print("game node observation="+str(self.game.observation(0)))
+        self.game.setPaused(True)
         while not self.game.isQuit():
             self.game.manageEvent()
             self.game.drawSceneMenuAndSwap()
@@ -177,6 +171,19 @@ class MCTS:
                     node = self.root
                     self.game.setPaused(True)
                     print("game...end=>reset: root="+str(node))
+
+            if self.game.eventKey(ord('o')):
+                print("--- OPTIMIZE / SEARCH -----------------------------")
+                print(starship.observation(0))
+                self.root = None
+                mcts.search(starship.observation(0))
+                node = self.root
+                self.game.resetAllBatch(node.observation)
+                self.game.setPaused(True)
+                prof = 0
+                print("reward=" + str(self.game.reward(0)) + "   " + str(node))
+                print("mcts node observation=" + str(node.observation))
+                print("game node observation=" + str(self.game.observation(0)))
             if self.game.eventKey(ord('b')):
                 o,a = self.batchOfObservationAction()
                 print("Observation")
@@ -205,7 +212,4 @@ if __name__ == "__main__":
 
     mcts = MCTS(starship, 2000, 1)
     #mcts.PlayRandomPolicy(10)
-    print( starship.observation(0) )
-    print("--------------------------------")
-    mcts.search(starship.observation(0))
     mcts.PlayTreePolicy()

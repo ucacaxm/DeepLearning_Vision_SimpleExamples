@@ -359,8 +359,8 @@ class Starship:
         self.rew[i] += 1000.0 / (1.0 + o.length())
 
     def stepBatch(self):
-        if self.m_paused:
-            return
+        # if self.m_paused:
+        #     return
         for i in range(self.sizeOfBatch()):
             if not self.done(i):
                 self.starship[i].update(self.dt)
@@ -418,6 +418,7 @@ class Starship:
                 elif carac == 'r':
                     print("Random reset")
                     self.random_seed = random.randint( 100, 500);
+                    random.seed(self.random_seed)
                     self.resetRandomlyAllBatch()
                 elif carac == 'e':
                     random.seed(self.random_seed)

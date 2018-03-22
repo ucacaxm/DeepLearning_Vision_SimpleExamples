@@ -46,15 +46,13 @@ class Alpha0:
         self.action_range = 5.0  # 0.01
 
         self.input = Input(shape=(self.game.sizeOfObservationArray(),) )
-        self.encoded = Dense(64, activation='tanh')(self.input)
-        self.encoded = Dense(128, activation='tanh')(self.encoded)
-
-        self.decoded = Dense(128, activation='tanh')(self.encoded)
-        self.decoded = Dense(64, activation='tanh')(self.decoded)
-        self.decoded = Dense(self.game.sizeOfActionArray())(self.decoded)
+        self.hidden = Dense(32, activation='relu')(self.input)
+        self.hidden = Dense(64, activation='relu')(self.hidden)
+        self.hidden = Dense(32, activation='relu')(self.hidden)
+        self.hidden = Dense(self.game.sizeOfActionArray())(self.hidden)
 
         # this model maps an input to its reconstruction
-        self.model = Model(self.input, self.decoded)
+        self.model = Model(self.input, self.hidden)
 
         sgd = SGD(lr=0.001, decay=1e-6, momentum=0.9, nesterov=True)
         self.model.compile(optimizer=sgd, loss='mse', metrics=['accuracy'])
@@ -77,10 +75,10 @@ class Alpha0:
 
 
     def train(self):
-        for epoch in range(5):
+        for epoch in range(20):
             obs = np.empty((0, self.game.sizeOfObservationArray()), dtype=float)
             act = np.empty((0, self.game.sizeOfActionArray()), dtype=float)
-            for i in range(5):
+            for i in range(10):
                 self.game.resetRandomlyOneAgent(0)
                 self.optimizer.search( self.game.observation(0) )
                 o,a = self.optimizer.batchOfObservationAction()
