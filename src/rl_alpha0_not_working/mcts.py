@@ -54,14 +54,16 @@ class MCTS:
     def search(self, observation):          # the main algo
         self.root = Node( observation )
         for iter in range(int(self.budget)):
-            if iter%200==0:
+            if iter%500==0:
                 print("ite "+str(iter)+": root=>"+ str(self.root) )
             front=self.TreePolicy(self.root)
             self.ExpandByDefaultPolicyAndBackup(front)
         return self.BestChild(self.root, 0)
 
+
     def is_fully_expanded(self, node):
         return (len(node.children) >= self.max_node_size_in_batch_count * self.game.sizeOfBatch())
+
 
     def TreePolicy(self, node):               # Selection of the last node (leaf) by following the tree
         #a hack to force 'exploitation' in a game where there are many options, and you may never/not want to fully expand first
@@ -131,6 +133,7 @@ class MCTS:
         obs = np.empty( (0,self.game.sizeOfObservationArray()), dtype=float )
         act = np.empty( (0,self.game.sizeOfActionArray()), dtype=float )
         node = self.root
+        prof = 0
         while node != None:
             next_node = None
             if  len(node.children)>0:
@@ -138,6 +141,8 @@ class MCTS:
                 obs = np.append( obs, [node.observation], axis=0 )
                 act = np.append( act, [next_node.action], axis=0 )
             node = next_node
+            prof += 1
+        print("mcts tree height=", prof)
         return obs,act
 
     def PlayTreePolicy(self):

@@ -84,8 +84,8 @@ class Alpha0:
                 self.game.resetRandomlyOneAgent(0)
                 self.optimizer.search( self.game.observation(0) )
                 o,a = self.optimizer.batchOfObservationAction()
-                obs = np.append( obs, o)
-                act = np.append( act, a)
+                obs = np.append( obs, o, axis=0 )
+                act = np.append( act, a, axis=0 )
             r = self.model.train_on_batch(obs, act)
             print("train_on_batch: epoch=", epoch, " loss=", r, "sizeOfObsAct=", str(len(obs)),"/",str(len(act)))
         print("training...done")
@@ -124,6 +124,6 @@ class Alpha0:
 if __name__ == "__main__":
     print("Start...")
     game = starship.Starship()
-    opti = mcts.MCTS(game, 3000, 1)
+    opti = mcts.MCTS(game, 2000, 1)
     a0 = Alpha0(game, opti)
     a0.run()
