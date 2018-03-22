@@ -48,8 +48,7 @@ class MCTS:
         self.game = game
         self.budget = budget
         self.max_node_size_in_batch_count = max_node_size_in_batch_count
-        self.SCALAR = 0.1   #1 / math.sqrt(2.0)
-        self.SIZE_OF_BATCH = game.sizeOfBatch()
+        self.SCALAR = 0.115  #1 / math.sqrt(2.0)
         self.root = None
 
     def search(self, observation):          # the main algo
@@ -62,7 +61,7 @@ class MCTS:
         return self.BestChild(self.root, 0)
 
     def is_fully_expanded(self, node):
-        return (len(node.children) >= self.max_node_size_in_batch_count * self.SIZE_OF_BATCH)
+        return (len(node.children) >= self.max_node_size_in_batch_count * self.game.sizeOfBatch())
 
     def TreePolicy(self, node):               # Selection of the last node (leaf) by following the tree
         #a hack to force 'exploitation' in a game where there are many options, and you may never/not want to fully expand first
@@ -134,23 +133,32 @@ class MCTS:
             return
         self.game.resetAllBatch( node.observation )
         self.game.setPaused(True)
-        print("Start game reward=" + str(self.game.reward(0)) + "   " + str(node))
+        prof = 0
+        print("Start game")
+        print("reward=" + str(self.game.reward(0)) + "   " + str(node))
+        print("mcts node observation="+str(node.observation))
+        print("game node observation="+str(self.game.observation(0)))
         while not self.game.isQuit():
             self.game.manageEvent()
             self.game.drawSceneMenuAndSwap()
             if not self.game.paused():
                 if  len(node.children)>0:
                     node = self.BestChild(node, 0)
-                    self.game.setActionForAllBatch(node.action)
+                    prof += 1
+                    if self.game.noAction:
+                        self.game.setZeroActionForAllBatch()
+                    else:
+                        self.game.setActionForAllBatch(node.action)
                     self.game.stepBatch()
                     print("game reward=" + str(self.game.reward(0)) + "   " + str(node))
                 else:
+                    print("profondeur de l'arbre="+str(prof))
+                    print("=============================================")
+                    prof=0
                     node = self.root
-                    #self.game.reset()
-                    #self.game.setReward(0.0)
-                    #self.game.setObservationForAllBatch(node.observation)
                     self.game.setPaused(True)
                     print("game...end=>reset: root="+str(node))
+        print("PlayTreePolicy...done")
 
 
     def PlayRandomPolicy(self, n):
@@ -167,9 +175,9 @@ class MCTS:
 
 if __name__ == "__main__":
     starship = starship.Starship()
-    starship.init("starship", 800, 600, 15, 15)
+    starship.init("starship", 1000, 500, 15, 15)
 
-    mcts = MCTS(starship, 3000, 1)
+    mcts = MCTS(starship, 2000, 1)
     #mcts.PlayRandomPolicy(10)
     print( starship.observation(0) )
     print("--------------------------------")

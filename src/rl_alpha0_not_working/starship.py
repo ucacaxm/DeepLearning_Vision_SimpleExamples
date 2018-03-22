@@ -229,8 +229,12 @@ class Starship:
         self.w = w
         self.h = h
         self.vmax = 20.0
+        self.fmax = 5.0
         self.dt = 0.1
+        self.random_seed = 217
+        random.seed( self.random_seed )
         self.resetRandomlyAllBatch()
+        self.noAction = True
         pygame.init()
         self.screen = pygame.display.set_mode((w, h))
         pygame.font.init()
@@ -247,7 +251,7 @@ class Starship:
         return 4
 
     def sizeOfBatch(self):
-        return 12
+        return 10
 
     #====================== Used by opti/learning ===========================================
 
@@ -272,9 +276,9 @@ class Starship:
     def resetOneAgent(self, i, obsone):
         x = 0.5 * self.w * obsone[0]
         y = 0.5 * self.h * obsone[1]
-        fx = 5.0*obsone[2]
-        fy = 5.0*obsone[3]
-        self.starship[i] = Particle( self.target.x-x, self.target.y-y, fx, fy);           # obs = target - p
+        vx = self.vmax*obsone[2]
+        vy = self.vmax*obsone[3]
+        self.starship[i] = Particle( self.target.x-x, self.target.y-y, vx, vy);           # obs = target - p
         self.rew[i] = 0.0
         self.setAction(i, np.zeros( self.sizeOfActionArray()) )
         self.computeReward(i)
@@ -286,6 +290,8 @@ class Starship:
     def resetRandomlyOneAgent(self, i):
         #obsone = [ random.random()*(0.8*self.w-1)-self.target.x, random.random()*(0.8*self.h-1)-self.target.y, 0, 0 ]
         obsone = [ random.random()*2-1, random.random()*2-1, random.random()*2-1, random.random()*2-1 ]
+        obsone[0] *= 0.8
+        obsone[1] *= 0.8
         self.resetOneAgent( i, obsone )
 
     def resetRandomlyAllBatch(self):
@@ -322,7 +328,7 @@ class Starship:
         return (p.x<0 or p.y<0 or p.x>=self.w or p.y>=self.h)
 
     def action(self, i):
-        return np.array( [ self.starship[i].f.x, self.starship[i].f.y ] )
+        return np.array( [ self.starship[i].f.x/self.fmax, self.starship[i].f.y/self.fmax ] )
 
     def setRandomAction(self, i):
         actone = np.array( [ (random.random() * 2.0 - 1.0),  (random.random() * 2.0 - 1.0) ] )
@@ -332,8 +338,13 @@ class Starship:
         for i in range(self.starship.size):
             self.setRandomAction(i)
 
+    def setZeroActionForAllBatch(self):
+        actone = np.array( [ 0,0 ] )
+        for i in range(self.starship.size):
+            self.setAction(i, actone)
+
     def setAction(self, i, actone):
-        self.starship[i].setForce(Vec2(actone[0], actone[1]))
+        self.starship[i].setForce(Vec2(self.fmax * actone[0], self.fmax*actone[1]))
 
     def setActionForAllBatch(self, actone):
         for i in range(self.sizeOfBatch()):
@@ -381,8 +392,8 @@ class Starship:
                 v = self.starship[i].v
                 f = self.starship[i].lastf
                 pygame.draw.circle( self.screen, color, (int(p.x), int(p.y)), 5, 0 )
-                pygame.draw.line( self.screen, colorv, (int(p.x), int(p.y)), (int(p.x+3*v.x), int(p.y+3*v.y)) )
-                pygame.draw.line( self.screen, colorf, (int(p.x), int(p.y)), (int(p.x+3*f.x), int(p.y+3*f.y)) )
+                pygame.draw.line( self.screen, colorv, (int(p.x), int(p.y)), (int(p.x+5*v.x), int(p.y+5*v.y)) )
+                pygame.draw.line( self.screen, colorf, (int(p.x), int(p.y)), (int(p.x+5*f.x), int(p.y+5*f.y)) )
                 textsurface = self.myfont.render(str(int(self.rew[i])), False, (255, 0, 50))
                 self.screen.blit(textsurface,(int(p.x)+10, int(p.y)+10))
             pygame.display.flip()
@@ -399,50 +410,38 @@ class Starship:
             if event.type == QUIT:
                 self.m_quit = True
             if event.type == KEYDOWN:
-                if event.key == K_ESCAPE:
+                carac = event.dict['unicode']
+                if event.key == K_ESCAPE or carac=='q':
                     self.m_quit = True 
-                elif event.key == K_d:
+                elif carac == 'd':
                     self.printDebug()
-                elif event.key == K_r:
-                    print("===================================")
+                elif carac == 'r':
+                    print("Random reset")
+                    self.random_seed = random.randint( 100, 500);
                     self.resetRandomlyAllBatch()
-                elif event.key == K_p:
+                elif carac == 's':
+                    random.seed(self.random_seed)
+                    self.resetRandomlyAllBatch()
+                elif carac == 'p':
                     self.m_paused = not self.m_paused
                     print("paused: "+str(self.m_paused))
-                elif event.key == K_n:
+                elif carac == 'n':
                     self.stepBatch()
                     print("stepBatch")
-                # elif event.key == K_m:
-                #     self.m_isLearning = False
-
-            # elif key.is_pressed('q'):
-            #     self.m_quit = True    
-            # elif key.is_pressed('l'):
-            #     self.m_isLearning = True
-            #     print("is learning=", self.m_isLearning)
-            # elif key.is_pressed('m'):
-            #     self.m_isLearning = False
-            #     print("is learning=", self.m_isLearning)
-            # elif key.is_pressed('z'):
-            #     self.m_paused = False
-            #     print("paused=", self.m_paused)
-            # elif key.is_pressed('e'):
-            #     self.m_paused = True
-            #     print("paused=", self.m_paused)
-            # elif key.is_pressed('p'):
-            #     self.m_print = True
-            #     print("print=", self.m_print)
-            # elif key.is_pressed('o'):
-            #     self.m_print = False
-            #     print("paused=", self.m_print)
-            # elif key.is_pressed('h'):
-            #     print("l/m=learning, z/e=paused, p/o=print")
+                elif carac == 'a':
+                    self.noAction = not self.noAction
+                    print("no action="+str(self.noAction))
+                elif carac == 'h':
+                    print("a=toggle (no)/random Action;d=print Debug\nr=Random reset\ns=reSet\np=Paused\nn=Next batch\nq=Quit")
         return self.m_quit
 
 
     def run(self):
         while not self.m_quit:
-            self.setRandomActionForAllBatch()
+            if self.noAction:
+                self.setZeroActionForAllBatch()
+            else:
+                self.setRandomActionForAllBatch()
             self.stepBatch()
             self.manageEvent()
             self.drawSceneMenuAndSwap()
