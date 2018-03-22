@@ -47,7 +47,6 @@ class Alpha0:
 
         self.input = Input(shape=(self.game.sizeOfObservationArray(),) )
         self.encoded = Dense(64, activation='tanh')(self.input)
-        #self.encoded = Convolution1D(32,2, padding='same')(self.encoded)
         self.encoded = Dense(128, activation='tanh')(self.encoded)
 
         self.decoded = Dense(128, activation='tanh')(self.encoded)
@@ -73,28 +72,34 @@ class Alpha0:
         print("save")
 
     def modelAction(self, obs):
-        action = self.model.predict(obs)
-        return action
+        action = self.model.predict( np.array([obs]) )
+        return action[0]
+
 
     def train(self):
         for epoch in range(5):
-            self.game.resetRandomlyAllBatch()
-            obs = np.copy( self.game.observationForAllBatch() )
-            act = np.empty( (self.game.sizeOfBatch(),self.game.sizeOfObservationArray()), dtype=float )
-            for i in range(self.game.sizeOfBatch):
-                act[i] = np.copy( self.optimizer.search( obs[i] ) )
+            obs = np.empty((0, self.game.sizeOfObservationArray()), dtype=float)
+            act = np.empty((0, self.game.sizeOfActionArray()), dtype=float)
+            for i in range(5):
+                self.game.resetRandomlyOneAgent(0)
+                self.optimizer.search(obs[0])
+                o,a = self.optimizer.batchOfObservationAction()
+                obs = np.append( obs, o)
+                act = np.append( act, a)
             r = self.model.train_on_batch(obs, act)
-            print("train_on_batch: epoch=", epoch, " loss=", r)
+            print("train_on_batch: epoch=", epoch, " loss=", r, "sizeOfObsAct=", str(len(obs)),"/",str(len(act)))
         print("training...done")
 
+
     def stepModelAction(self):
-        obs = self.game.observation(0)
-        act = modelAction(obs)
-        self.game.setAction( 0, act)
-        print("model for 0")
+        for i in range(self.game.sizeOfBatch()):
+            obs = self.game.observation(i)
+            act = self.modelAction(obs)
+            self.game.setAction( i, act)
+        #print("model")
+
 
     def run(self):
-        useModel = False
         while not self.game.isQuit():
             if self.game.eventKey( ord('l') ):
                 self.load()
@@ -102,18 +107,17 @@ class Alpha0:
                 self.save()
             elif self.game.eventKey( ord('t') ):
                 self.train()
-            elif self.game.eventKey( ord('m') ):
-                useModel = True
-            elif self.game.eventKey(ord('r')):
-                useModel = False
 
-            self.game.setRandomActionForAllBatch()
-            if useModel:
-                self.stepModelAction()
+            if not self.game.paused():
+                if self.game.noAction:
+                    self.game.setZeroActionForAllBatch()
+                else:
+                    self.stepModelAction()
+                self.game.stepBatch()
 
-            self.game.stepBatch()
             self.game.manageEvent()
             self.game.drawSceneMenuAndSwap()
+        print("alpha0::run...done")
 
 
 

@@ -419,7 +419,7 @@ class Starship:
                     print("Random reset")
                     self.random_seed = random.randint( 100, 500);
                     self.resetRandomlyAllBatch()
-                elif carac == 's':
+                elif carac == 'e':
                     random.seed(self.random_seed)
                     self.resetRandomlyAllBatch()
                 elif carac == 'p':
@@ -432,7 +432,7 @@ class Starship:
                     self.noAction = not self.noAction
                     print("no action="+str(self.noAction))
                 elif carac == 'h':
-                    print("a=toggle (no)/random Action;d=print Debug\nr=Random reset\ns=reSet\np=Paused\nn=Next batch\nq=Quit")
+                    print("a=toggle (no)/random Action;d=print Debug\nr=Random reset\ne=rEset\np=Paused\nn=Next batch\nq=Quit")
         return self.m_quit
 
 

@@ -76,7 +76,7 @@ class MCTS:
                 node = self.BestChild(node, self.SCALAR)
         return node
 
-    #current this uses the most vanilla MCTS formula it is worth experimenting with THRESHOLD ASCENT (TAGS)
+
     def BestChild(self, node, scalar):        # select a best child of a node
         bestscore=0.0
         bestchildren=[]
@@ -89,9 +89,10 @@ class MCTS:
             elif score>bestscore:
                 bestchildren=[c]
                 bestscore=score
-        if len(bestchildren)==0:
-            logger.warning("OOPS: no best child found, probably fatal")
-        return random.choice(bestchildren)
+        if len(bestchildren) == 0:
+            return None
+        else:
+            return random.choice(bestchildren)
 
 
     def ExpandByDefaultPolicyAndBackup(self, node):  # create a new node at the leaf of the tree and run N simulation from it
@@ -126,6 +127,18 @@ class MCTS:
             cur.visits += 1
             cur=cur.parent
 
+    def batchOfObservationAction(self):
+        obs = np.empty( (0,self.game.sizeOfObservationArray()), dtype=float )
+        act = np.empty( (0,self.game.sizeOfActionArray()), dtype=float )
+        node = self.root
+        while not node != None:
+            next_node = None
+            if  len(node.children)>0:
+                next_node = self.BestChild(node, 0)
+                obs = np.append( obs, node.observation )
+                act = np.append( act, next_node.action )
+            node = next_node
+        return obs,act
 
     def PlayTreePolicy(self):
         node = self.root
@@ -143,13 +156,14 @@ class MCTS:
             self.game.drawSceneMenuAndSwap()
             if not self.game.paused():
                 if  len(node.children)>0:
-                    node = self.BestChild(node, 0)
-                    prof += 1
+                    next_node = self.BestChild(node, 0)
                     if self.game.noAction:
                         self.game.setZeroActionForAllBatch()
                     else:
-                        self.game.setActionForAllBatch(node.action)
+                        self.game.setActionForAllBatch(next_node.action)
                     self.game.stepBatch()
+                    node = next_node
+                    prof += 1
                     print("game reward=" + str(self.game.reward(0)) + "   " + str(node))
                 else:
                     print("profondeur de l'arbre="+str(prof))
@@ -161,16 +175,16 @@ class MCTS:
         print("PlayTreePolicy...done")
 
 
-    def PlayRandomPolicy(self, n):
-        self.resetAllBatch( node.observation )
-        while not self.game.isQuit():
-            self.game.setRandomAction(0)
-            self.game.setActionForAllBatch( self.game.action(0) )
-            self.game.stepBatch()
-            print( "game reward="+ str(self.game.reward(0)))
-            self.game.manageEvent()
-            self.game.drawSceneMenuAndSwap()
-        print("PlayRandomPolicy...done")
+    # def PlayRandomPolicy(self, n):
+    #     self.resetAllBatch( node.observation )
+    #     while not self.game.isQuit():
+    #         self.game.setRandomAction(0)
+    #         self.game.setActionForAllBatch( self.game.action(0) )
+    #         self.game.stepBatch()
+    #         print( "game reward="+ str(self.game.reward(0)))
+    #         self.game.manageEvent()
+    #         self.game.drawSceneMenuAndSwap()
+    #     print("PlayRandomPolicy...done")
 
 
 if __name__ == "__main__":
