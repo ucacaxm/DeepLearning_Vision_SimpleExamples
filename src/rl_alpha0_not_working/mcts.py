@@ -131,12 +131,12 @@ class MCTS:
         obs = np.empty( (0,self.game.sizeOfObservationArray()), dtype=float )
         act = np.empty( (0,self.game.sizeOfActionArray()), dtype=float )
         node = self.root
-        while not node != None:
+        while node != None:
             next_node = None
             if  len(node.children)>0:
                 next_node = self.BestChild(node, 0)
-                obs = np.append( obs, node.observation )
-                act = np.append( act, next_node.action )
+                obs = np.append( obs, [node.observation], axis=0 )
+                act = np.append( act, [next_node.action], axis=0 )
             node = next_node
         return obs,act
 
@@ -172,6 +172,13 @@ class MCTS:
                     node = self.root
                     self.game.setPaused(True)
                     print("game...end=>reset: root="+str(node))
+            if self.game.eventKey(ord('b')):
+                o,a = self.batchOfObservationAction()
+                print("Observation")
+                print(str(o))
+                print("Action")
+                print(str(a))
+
         print("PlayTreePolicy...done")
 
 

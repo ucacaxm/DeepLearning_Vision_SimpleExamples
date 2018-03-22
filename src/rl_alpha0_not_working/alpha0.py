@@ -82,7 +82,7 @@ class Alpha0:
             act = np.empty((0, self.game.sizeOfActionArray()), dtype=float)
             for i in range(5):
                 self.game.resetRandomlyOneAgent(0)
-                self.optimizer.search(obs[0])
+                self.optimizer.search( self.game.observation(0) )
                 o,a = self.optimizer.batchOfObservationAction()
                 obs = np.append( obs, o)
                 act = np.append( act, a)
