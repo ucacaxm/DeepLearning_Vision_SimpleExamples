@@ -255,6 +255,9 @@ class Starship:
 
     #====================== Used by opti/learning ===========================================
 
+    def name(self):
+        return type(self).__name__
+
     def printDebug(self):
         print("Starship::init...ok")
         for i in range(self.sizeOfBatch()):
@@ -405,37 +408,61 @@ class Starship:
         else:
             return False
 
+    def manageOneEvent(self, event):
+        do = False
+        if event.type == QUIT:
+            self.m_quit = True
+        if event.type == KEYDOWN:
+            carac = event.dict['unicode']
+            if event.key == K_ESCAPE or carac == 'q':
+                self.m_quit = True
+                do = True
+            elif carac == 'd':
+                self.printDebug()
+                do = True
+            elif carac == 'r':
+                print("Random reset")
+                self.random_seed = random.randint(100, 500);
+                random.seed(self.random_seed)
+                self.resetRandomlyAllBatch()
+                do = True
+            elif carac == 'e':
+                random.seed(self.random_seed)
+                self.resetRandomlyAllBatch()
+                do = True
+            elif carac == 'p':
+                self.m_paused = not self.m_paused
+                print("paused: " + str(self.m_paused))
+                do = True
+            elif carac == 'n':
+                self.stepBatch()
+                print("stepBatch")
+                do = True
+            elif carac == 'a':
+                self.noAction = not self.noAction
+                print("no action=" + str(self.noAction))
+                do = True
+            elif carac == 'h':
+                self.help()
+        return do
+
     def manageEvent(self):
         for event in pygame.event.get():	#Attente des événements
-            if event.type == QUIT:
-                self.m_quit = True
-            if event.type == KEYDOWN:
+            if event.type == KEYDOWN and not self.manageOneEvent(event):
                 carac = event.dict['unicode']
-                if event.key == K_ESCAPE or carac=='q':
-                    self.m_quit = True 
-                elif carac == 'd':
-                    self.printDebug()
-                elif carac == 'r':
-                    print("Random reset")
-                    self.random_seed = random.randint( 100, 500);
-                    random.seed(self.random_seed)
-                    self.resetRandomlyAllBatch()
-                elif carac == 'e':
-                    random.seed(self.random_seed)
-                    self.resetRandomlyAllBatch()
-                elif carac == 'p':
-                    self.m_paused = not self.m_paused
-                    print("paused: "+str(self.m_paused))
-                elif carac == 'n':
-                    self.stepBatch()
-                    print("stepBatch")
-                elif carac == 'a':
-                    self.noAction = not self.noAction
-                    print("no action="+str(self.noAction))
-                elif carac == 'h':
-                    print("a=toggle (no)/random Action;d=print Debug\nr=Random reset\ne=rEset\np=Paused\nn=Next batch\nq=Quit")
-        return self.m_quit
+                return carac
+        #carac = None
+        return None
 
+    def help(self):
+        print(self.name())
+        print("   a=toggle (no)/random Action")
+        print("   d=print Debug")
+        print("   r=Random reset")
+        print("   e=rEset")
+        print("   p=Paused")
+        print("   n=Next step for all batch")
+        print("   q=Quit")
 
     def run(self):
         while not self.m_quit:
