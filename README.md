@@ -67,3 +67,8 @@ Taper 3 mettra fin à l'execution du programme.
 => test of DLib to get landmarks on faces from photos and video
 
 
+## Alpha0 on a starship mini game
+* starship.py: the mini game. The score of each particles depend on the distance to the target. Action is 2D forces applyed to the particle.
+* mcts.py: the continuous mcst algo (it is a really poor implementation of mcts)
+* alpha0.ps: use mcts.py to compute couple (observation, action), the mcts provides several config, each node of the tree. And train a network to act according to the osbservation.
+
