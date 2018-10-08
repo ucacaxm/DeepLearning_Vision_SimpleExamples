@@ -1,13 +1,19 @@
 # Various Simple Examples of Deep Learning / Vision
 
-* Deep Learning with [Keras](https://keras.io) used on top of [TensorFlow](https://www.tensorflow.org)
-* Vision with [DLib](http://dlib.net)
+
+Deep Learnin
+* Most example use [Keras](https://keras.io) on top of [TensorFlow](https://www.tensorflow.org)
+* Some use [PyTorch](https://pytorch.org/)
+
+Vision
+* Vision eamples often use [DLib](http://dlib.net) and
+* [OpenCV](https://opencv.org/)
 
 ## Installation
 
-Install [Anaconda](https://www.anaconda.com/download/), take the one with python 3 and then launch an Anaconda prompt and create your working env nammed 'p35'
-* conda create -n p35 python=3.5 
-* activate p35
+Install [Anaconda](https://www.anaconda.com/download/), take the one with python 3 and then launch an Anaconda prompt and create your working env nammed 'p36'
+* conda create -n p36 python=3.6
+* activate p36
 
 NumPy
 * conda install -c anaconda numpy 
@@ -26,15 +32,23 @@ TensorFlow
 or
 * pip install --ignore-installed --upgrade tensorflow-gpu 
 
+Keras
+* conda install -c conda-forge keras 
+
+PyTorch
+* To install PyTorch use the pip install commands provided in the web site of [PyTorch](https://pytorch.org/)
 
 
 
 ## Classifier in src/classifier
 
-#Classify 2D points (x,y). Points upper than sin(x) are from class 1 (y>sin(x)), points lower than sin(x) are from class 2 (y<sin(x)).
+#Classify 2D points (x,y). 
+Points upper than sin(x) are from class 1 (y>sin(x)), points lower than sin(x) are from class 2 (y<sin(x)).
+All examples are in src/classifier
 * classifier_keras.py: with keras, simple network
 * classifier_keras_v2-functionnal.py: more elaborate network, functionnal representation of keras
 * classifier_keras_v2-sequential.py: more elaborate network, sequential representation of keras
+* classifier_pytorch.py
 
 #Images
 * classifier_image_CNN_keras: Convolution neural network (ConvNet) with keras
