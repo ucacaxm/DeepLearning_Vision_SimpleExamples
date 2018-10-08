@@ -1,3 +1,3 @@
 
 
-start /d "D:\alex\src\Sika\Sika.gitrenater" "git" "C:\Program Files\Git\bin\bash.exe" --login -i
+start /d "D:\alex\src\DeepLearning_Vision_SimpleExamples.github" "git" "C:\Program Files\Git\bin\bash.exe" --login -i
