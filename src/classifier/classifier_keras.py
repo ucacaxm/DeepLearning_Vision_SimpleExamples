@@ -51,6 +51,7 @@ def next_batch(n):
 
 def main():
 
+    model = Sequential()
     ############# NETWORK definition/configuration
     # in the first layer, you must specify the expected input data shape:
     # here, 2-dimensional vectors.

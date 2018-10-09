@@ -21,7 +21,7 @@ import os
 
 
 
-
+# Generation of one point (one sample)
 def one_sample():
     x = np.array( [ 2.0*3.141592*np.random.ranf(), 2.0*np.random.ranf()-1 ])
     if (math.cos(x[0]) < x[1]):
@@ -31,13 +31,13 @@ def one_sample():
     return x,y
 
 
+# Generation of a batch of points (batch of samples)
 def next_batch(n):
     x = np.zeros( shape=(n,2), dtype=np.float32)
     y = np.zeros( shape=(n,2), dtype=np.int32)
     for i in range(0, n):
         x[i],y[i] = one_sample()
     return x,y
-
 
 
 

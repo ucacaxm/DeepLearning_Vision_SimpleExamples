@@ -2,11 +2,11 @@
 
 
 Deep Learnin
-* Most example use [Keras](https://keras.io) on top of [TensorFlow](https://www.tensorflow.org)
+* Most examples use [Keras](https://keras.io) on top of [TensorFlow](https://www.tensorflow.org)
 * Some use [PyTorch](https://pytorch.org/)
 
 Vision
-* Vision eamples often use [DLib](http://dlib.net) and
+* Vision examples often use [DLib](http://dlib.net) and
 * [OpenCV](https://opencv.org/)
 
 ## Installation
