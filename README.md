@@ -43,12 +43,18 @@ PyTorch
 ## Classifier in src/classifier
 
 #Classify 2D points (x,y). 
-Points upper than sin(x) are from class 1 (y>sin(x)), points lower than sin(x) are from class 2 (y<sin(x)).
-All examples are in src/classifier
-* classifier_keras.py: with keras, simple network
+
+Start to play with the [playground ](https://playground.tensorflow.org/)
+
+All examples are in 'src/classifier'.
+In these examples, the points upper than sin(x) are from class 1 (y>sin(x)), points lower than sin(x) are from class 2 (y<sin(x)).
+* classifier_empty.py: just generate the sample batches and draw the points cloud. It is the starting empty program to use to learn to write your own classifier.
+
+* classifier_keras.py: a simple classifier with keras: simple network that can be improve
 * classifier_keras_v2-functionnal.py: more elaborate network, functionnal representation of keras
 * classifier_keras_v2-sequential.py: more elaborate network, sequential representation of keras
 * classifier_pytorch.py
+
 
 #Images
 * classifier_image_CNN_keras: Convolution neural network (ConvNet) with keras
