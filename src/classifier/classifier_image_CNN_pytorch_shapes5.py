@@ -22,7 +22,7 @@ import torch.nn.functional as F
 import torch.optim as optim
 
 
-import cv2
+#import cv2
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -45,8 +45,6 @@ from torch.utils.data.sampler import SubsetRandomSampler
 from shapes5_preprocessdata import preprocess
 from shapes5_preprocessdata import pilimshow
 
-
-IMG_SIZE = 32
 
 
 
@@ -127,7 +125,7 @@ if __name__ == "__main__":
         np.random.seed(random_seed)
         np.random.shuffle(indices)
     train_indices, val_indices = indices[split:], indices[:split]
-    for i in range(4):      # * 2^4
+    for i in range(6):      # * 2^4
         train_indices = train_indices + train_indices
 
     print("train indices number="+str(len(train_indices)))
