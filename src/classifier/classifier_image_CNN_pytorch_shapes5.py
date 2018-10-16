@@ -218,8 +218,7 @@ if __name__ == "__main__":
 
     if args.show:
         imshow(torchvision.utils.make_grid(images))
-        print('GroundTruth: ', ' '.join('%5s' % labels[j] for j in range(4)))
-
+    print('GroundTruth: ', ' '.join('%5s' % labels[j] for j in range(4)))
     outputs = net(images)
     _, predicted = torch.max(outputs, 1)
     print('Predicted: ', ' '.join('%5s' % predicted[j] for j in range(4)))		  
