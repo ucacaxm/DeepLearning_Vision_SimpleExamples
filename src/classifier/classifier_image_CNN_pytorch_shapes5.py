@@ -95,13 +95,26 @@ class MyTransform(object):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-s", "--show", help="show examples images", action="store_true")
-    parser.add_argument("-l", "--load", help="load a model instead of learn it", type=str)
+    parser.add_argument("-l", "--load", help="load a model instead of learn it", action="store_true")
+    parser.add_argument("-f", "--file", help="filename of the model for saving/loading", type=str)
     args = parser.parse_args()
+
+    model_filename = "../../models/classification_pytorch_shapes5_model"
+    data_folder = "../../data/shapes5_preprocessed"
+
     if args.show:
         print("====> will show some example images")    
+    if args.file != None:
+        model_filename = args.file
+    if args.load:
+        print("====> load the file='"+model_filename+"'")
 
-    if args.load != None:
-        print("====> will load "+args.load)
+    print("====> filename='"+model_filename+"'")
+    try:
+        os.makedirs(os.path.dirname(model_filename))
+    except:
+        pass
+
 
     ############# NETWORK definition/configuration
     net = Net()
@@ -122,7 +135,7 @@ if __name__ == "__main__":
         transforms.Normalize(mean=[0., 0., 0.], std=[1., 1., 1.] ),
         ])
 
-    dataset = ImageFolder(root="../../data/shapes5_preprocessed", transform=TRANSFORM_IMG)
+    dataset = ImageFolder(root=data_folder, transform=TRANSFORM_IMG)
 
     # Creating data indices for training and validation splits:
     validation_split = 0.3
@@ -149,20 +162,18 @@ if __name__ == "__main__":
     loaderVal = DataLoader(dataset, batch_size=4, shuffle=False, num_workers=2, sampler=valid_sampler)
 
 
-    print(dataset)
     # get some random training images
+    print(dataset)
     dataiter = iter(loader)
     images, labels = dataiter.next()
     print("images batch size="+str(len(images)))
-    # show images
     if args.show:
         imshow(torchvision.utils.make_grid(images))
-    # print labels
-    #print(' '.join('%5s' % classes[labels[j]] for j in range(4)))
+        print(' '.join('%5s' % labels[j] for j in range(4)))
 
 
-    if args.load != None:
-        torch.load(net, args.load)
+    if args.load:
+        net  = torch.load(model_filename)
     else:
         ############# SGD config: Stochastic Gradient Descent Config    
         criterion = nn.CrossEntropyLoss()
@@ -194,17 +205,12 @@ if __name__ == "__main__":
                             (epoch + 1, i + 1, running_loss / PRINT_STEP))
                     running_loss = 0.0
 
-        print('Finished Training')
     
+                    ############ SAVE
+                    print("save "+str(model_filename))
+                    torch.save(net, model_filename)
 
-    ############ SAVE
-    model_filename = "../../models/classification_pytorch_shapes5_model"
-    try:
-        os.makedirs(os.path.dirname(model_filename))
-    except:
-        pass
-    torch.save(net, model_filename)
-
+        print('Finished Training')
     
     ############ TEST
     dataiter = iter(loaderVal)
