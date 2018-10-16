@@ -206,9 +206,9 @@ if __name__ == "__main__":
                     running_loss = 0.0
 
     
-                    ############ SAVE
-                    print("save "+str(model_filename))
-                    torch.save(net, model_filename)
+            ############ SAVE
+            print("save "+str(model_filename))
+            torch.save(net, model_filename)
 
         print('Finished Training')
     
