@@ -13,28 +13,20 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 import sys
-import os
-
-
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-import torch.optim as optim
-
-
-#import cv2
-import torch
-import torch.nn as nn
-import torch.optim as optim
-import torch.nn.functional as F
 import numpy as np
-import os
+import argparse
+
+import matplotlib.pyplot as plt
+
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import torch.optim as optim
 
 from PIL import Image
 from PIL import ImageOps
 from torchvision import datasets, transforms
 from torch.autograd import Variable
-import matplotlib.pyplot as plt
 import torchvision
 from torchvision.datasets import ImageFolder
 from torch.utils.data import DataLoader
@@ -55,6 +47,9 @@ def imshow(img):
     plt.imshow(np.transpose(npimg, (1, 2, 0)))
     #plt.imshow(npimg)
     plt.show()
+
+
+
 
 
 class Net(nn.Module):
@@ -98,8 +93,23 @@ class MyTransform(object):
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-s", "--show", help="show examples images", action="store_true")
+    parser.add_argument("-l", "--load", help="load a model instead of learn it", type=str)
+    args = parser.parse_args()
+    if args.show:
+        print("====> will show some example images")    
+
+    if args.load != None:
+        print("====> will load "+args.load)
+
+    ############# NETWORK definition/configuration
+    net = Net()
+    print(net)
+    #if args.load:
 
 
+    ############# DATA
     TRANSFORM_IMG = transforms.Compose([
         transforms.Grayscale(1),
 #        MyTransform(),
@@ -135,9 +145,8 @@ if __name__ == "__main__":
     train_sampler = SubsetRandomSampler(train_indices)
     valid_sampler = SubsetRandomSampler(val_indices)
 
-    loader = DataLoader(dataset, batch_size=2, shuffle=False, num_workers=2, sampler=train_sampler)
+    loader = DataLoader(dataset, batch_size=8, shuffle=False, num_workers=2, sampler=train_sampler)
     loaderVal = DataLoader(dataset, batch_size=4, shuffle=False, num_workers=2, sampler=valid_sampler)
-
 
 
     print(dataset)
@@ -146,54 +155,64 @@ if __name__ == "__main__":
     images, labels = dataiter.next()
     print("images batch size="+str(len(images)))
     # show images
-    imshow(torchvision.utils.make_grid(images))
+    if args.show:
+        imshow(torchvision.utils.make_grid(images))
     # print labels
     #print(' '.join('%5s' % classes[labels[j]] for j in range(4)))
 
 
-    ############# NETWORK definition/configuration
-    net = Net()
-    print(net)
+    if args.load != None:
+        torch.load(net, args.load)
+    else:
+        ############# SGD config: Stochastic Gradient Descent Config    
+        criterion = nn.CrossEntropyLoss()
+        optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
 
-    ############# SGD config: Stochastic Gradient Descent Config    
-    criterion = nn.CrossEntropyLoss()
-    optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
+        ############ TRAINNING
+        print("loader size="+str(len(loader)))
+        PRINT_STEP = 100
+        for epoch in range(5):  # loop over the dataset multiple times
+            running_loss = 0.0
+            for i,data in enumerate(loader,0):         # mini batch         
+                inputs, labels = data
+                #print( "inputs shape=" + str(inputs.shape))
+                #print( "outputs shape=" + str(labels.shape))
 
-    ############ TRAINNING
-    print("loader size="+str(len(loader)))
-    PRINT_STEP = 100
-    for epoch in range(5):  # loop over the dataset multiple times
-        running_loss = 0.0
-        for i,data in enumerate(loader,0):         # mini batch         
-            inputs, labels = data
-            #print( "inputs shape=" + str(inputs.shape))
-            #print( "outputs shape=" + str(labels.shape))
+                # zero the parameter gradients
+                optimizer.zero_grad()
+        
+                # forward + backward + optimize
+                outputs = net(inputs)
+                loss = criterion(outputs, labels)
+                loss.backward()
+                optimizer.step()
+        
+                # print statistics
+                running_loss += loss.item()
+                if i % PRINT_STEP == PRINT_STEP-1:    # print every PRINT_STEP mini-batches
+                    print('[%d, %5d] loss: %.3f' %
+                            (epoch + 1, i + 1, running_loss / PRINT_STEP))
+                    running_loss = 0.0
 
-            # zero the parameter gradients
-            optimizer.zero_grad()
+        print('Finished Training')
     
-            # forward + backward + optimize
-            outputs = net(inputs)
-            loss = criterion(outputs, labels)
-            loss.backward()
-            optimizer.step()
-    
-            # print statistics
-            running_loss += loss.item()
-            if i % PRINT_STEP == PRINT_STEP-1:    # print every PRINT_STEP mini-batches
-                print('[%d, %5d] loss: %.3f' %
-                        (epoch + 1, i + 1, running_loss / PRINT_STEP))
-                running_loss = 0.0
 
-    print('Finished Training')
-    
+    ############ SAVE
+    model_filename = "../../models/classification_pytorch_shapes5_model"
+    try:
+        os.makedirs(os.path.dirname(model_filename))
+    except:
+        pass
+    torch.save(net, model_filename)
+
     
     ############ TEST
     dataiter = iter(loaderVal)
     images, labels = dataiter.next()
 
-    imshow(torchvision.utils.make_grid(images))
-    print('GroundTruth: ', ' '.join('%5s' % labels[j] for j in range(4)))
+    if args.show:
+        imshow(torchvision.utils.make_grid(images))
+        print('GroundTruth: ', ' '.join('%5s' % labels[j] for j in range(4)))
 
     outputs = net(images)
     _, predicted = torch.max(outputs, 1)
