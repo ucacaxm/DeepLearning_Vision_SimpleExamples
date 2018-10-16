@@ -148,7 +148,7 @@ if __name__ == "__main__":
         np.random.seed(random_seed)
         np.random.shuffle(indices)
     train_indices, val_indices = indices[split:], indices[:split]
-    for i in range(6):      # * 2^4
+    for i in range(7):      # * 2^4
         train_indices = train_indices + train_indices
 
     print("train indices number="+str(len(train_indices)))
