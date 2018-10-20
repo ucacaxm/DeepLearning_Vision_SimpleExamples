@@ -56,9 +56,9 @@ class Net(nn.Module):
 
     def __init__(self):
         super(Net, self).__init__()
-        self.conv1 = nn.Conv2d( 1, 6, 5)
+        self.conv1 = nn.Conv2d( 1, 6, 5)		# (channels_input=1, nb conv to apply=6, filterSize=5)
         self.pool = nn.MaxPool2d(2,2)
-        self.conv2 = nn.Conv2d( 6, 16, 5)
+        self.conv2 = nn.Conv2d( 6, 16, 5)		# (channels_input=6, nbConv=16, filterSize=5)
         self.fc1 = nn.Linear( 16*5*5, 128)
         self.fc2 = nn.Linear(128, 84)
         self.fc3 = nn.Linear(84, 5)         # 5 classes
