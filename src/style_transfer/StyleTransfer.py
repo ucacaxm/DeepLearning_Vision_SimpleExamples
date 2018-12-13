@@ -139,8 +139,8 @@ if __name__ == '__main__':
 
 
     ########################## DISPLAY IMAGE#########################################################""
-    content = load_image('images/montagne.jpg').to(device)
-    style = load_image('images/peinture3.jpg', shape=content.shape[-2:]).to(device)
+    content = load_image('images/face.jpg').to(device)
+    style = load_image('images/peinture6.jpg', shape=content.shape[-2:]).to(device)
 
     #imshow(im_convert(content))
     #imshow(im_convert(style))
