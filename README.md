@@ -23,21 +23,17 @@ MatPlotLib
 * conda install -c conda-forge/label/testing matplotlib
 * conda install -c conda-forge/label/rc matplotlib 
 
-OpenCv and DLib
+OpenCv, DLib, SciPy, etc.
 * pip install numpy scipy matplotlib scikit-learn jupyter
 * pip install opencv-contrib-python
 * pip install imutils
-
 * pip install cmake
 * pip install dlib
-or
-* conda install -c menpo dlib  (works only for Pyhton 3.5)
 
 TensorFlow
 * pip install --ignore-installed --upgrade tensorflow 
 or
 * pip install --ignore-installed --upgrade tensorflow-gpu 
-
 
 Keras
 * conda install -c conda-forge keras 
