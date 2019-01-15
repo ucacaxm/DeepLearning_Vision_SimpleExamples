@@ -1,9 +1,8 @@
 # Various Simple Examples of Deep Learning / Vision
 
 
-Deep Learnin
-* Most examples use [Keras](https://keras.io) on top of [TensorFlow](https://www.tensorflow.org)
-* Some use [PyTorch](https://pytorch.org/)
+Deep Learning
+* Most examples use [Keras](https://keras.io) on top of [TensorFlow](https://www.tensorflow.org) or [PyTorch](https://pytorch.org/)
 
 Vision
 * Vision examples often use [DLib](http://dlib.net) and
@@ -11,7 +10,7 @@ Vision
 
 ## Installation
 
-Install [Anaconda](https://www.anaconda.com/download/), take the one with python 3 and then launch an Anaconda prompt and create your working env nammed 'p36'
+Install [Anaconda](https://www.anaconda.com/download/), take the one with python 3 and then launch an Anaconda prompt and create your working env nammed 'p36' with Python 3.6 (you can choose another version).
 * conda create -n p36 python=3.6
 * activate p36
 
@@ -24,13 +23,21 @@ MatPlotLib
 * conda install -c conda-forge/label/testing matplotlib
 * conda install -c conda-forge/label/rc matplotlib 
 
-DLib
-* conda install -c menpo dlib 
+OpenCv and DLib
+* pip install numpy scipy matplotlib scikit-learn jupyter
+* pip install opencv-contrib-python
+* pip install imutils
+
+* pip install cmake
+* pip install dlib
+or
+* conda install -c menpo dlib  (works only for Pyhton 3.5)
 
 TensorFlow
 * pip install --ignore-installed --upgrade tensorflow 
 or
 * pip install --ignore-installed --upgrade tensorflow-gpu 
+
 
 Keras
 * conda install -c conda-forge keras 

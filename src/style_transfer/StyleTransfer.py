@@ -140,7 +140,7 @@ if __name__ == '__main__':
 
     ########################## DISPLAY IMAGE#########################################################""
     content = load_image('images/face.jpg').to(device)
-    style = load_image('images/peinture6.jpg', shape=content.shape[-2:]).to(device)
+    style = load_image('images/peinture8.jpg', shape=content.shape[-2:]).to(device)
 
     #imshow(im_convert(content))
     #imshow(im_convert(style))
@@ -175,7 +175,9 @@ if __name__ == '__main__':
     show_every = 100
     optimizer = optim.Adam([target], lr=0.003)
     style_grams = {layer: gram_matrix(style_features[layer]) for layer in style_features}           # dict with each gram matrix for each feature name
-    for i in range(2000):
+    style_layers = {  'conv0', 'conv5', 'conv10', }
+
+    for i in range(20000):
         # get the features from your target image
         content_features = get_features(content, vgg)
         style_features = get_features(style, vgg)
@@ -188,9 +190,10 @@ if __name__ == '__main__':
         # the style loss
         style_loss = 0
         target_grams = {layer: gram_matrix(target_features[layer]) for layer in target_features}           # dict with each gram matrix for each feature name
-        for key, value in style_features.items():
+        #for key, value in style_features.items():
+        for key in style_layers:
             d, hw = style_grams[key].shape
-            style_loss  +=  torch.mean((style_grams[key] - target_grams[key])**2) / (d * hw)
+            style_loss  +=  torch.mean((style_grams[key] - target_grams[key])**2)  #/ (d * hw)
         
         # calculate the *total* loss
         total_loss =  0.5*content_loss + 0.5*style_loss
