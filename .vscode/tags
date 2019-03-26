@@ -1,0 +1,677 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+Activation	../src\classifier\classifier_pointcloud_keras.py	/^from keras.layers import Dense, Dropout, Activation$/;"	kind:namespace	line:26
+Alpha0	../src\rl_alpha0\alpha0.py	/^class Alpha0:$/;"	kind:class	line:30
+AutoEncoder	../src\autoencoder\keras_points.py	/^class AutoEncoder(object):$/;"	kind:class	line:81
+Backup	../src\rl_alpha0\mcts.py	/^    def Backup(self, node, reward):       # back propagation of the reward and the count$/;"	kind:member	line:124
+BestChild	../src\rl_alpha0\mcts.py	/^    def BestChild(self, node, scalar):        # select a best child of a node$/;"	kind:member	line:82
+Circle	../src\autoencoder\keras_points.py	/^class Circle(object):$/;"	kind:class	line:29
+Conv2D	../src\classifier\classifier_image_CNN_keras.py	/^from keras.layers import Conv2D, MaxPooling2D$/;"	kind:namespace	line:12
+Convolution1D	../src\autoencoder\keras_points.py	/^from keras.layers import Input, Dense, Convolution1D$/;"	kind:namespace	line:23
+DataLoader	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^from torch.utils.data import DataLoader$/;"	kind:namespace	line:40
+DataLoader	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^from torch.utils.data import DataLoader$/;"	kind:namespace	line:32
+Dense	../src\autoencoder\keras_points.py	/^from keras.layers import Input, Dense, Convolution1D$/;"	kind:namespace	line:23
+Dense	../src\classifier\classifier_image_CNN_keras.py	/^from keras.layers import Dense, Dropout, Flatten$/;"	kind:namespace	line:11
+Dense	../src\classifier\classifier_pointcloud_keras.py	/^from keras.layers import Dense, Dropout, Activation$/;"	kind:namespace	line:26
+Dense	../src\rl_alpha0\alpha0.py	/^from keras.layers import Input, Dense, Dropout$/;"	kind:namespace	line:19
+Dropout	../src\classifier\classifier_image_CNN_keras.py	/^from keras.layers import Dense, Dropout, Flatten$/;"	kind:namespace	line:11
+Dropout	../src\classifier\classifier_pointcloud_keras.py	/^from keras.layers import Dense, Dropout, Activation$/;"	kind:namespace	line:26
+Dropout	../src\rl_alpha0\alpha0.py	/^from keras.layers import Input, Dense, Dropout$/;"	kind:namespace	line:19
+Ellipse	../src\autoencoder\keras_points.py	/^from matplotlib.patches import Ellipse$/;"	kind:namespace	line:16
+ExpandByDefaultPolicyAndBackup	../src\rl_alpha0\mcts.py	/^    def ExpandByDefaultPolicyAndBackup(self, node):  # create a new node at the leaf of the tree and run N simulation from it$/;"	kind:member	line:100
+F	../src\classifier\cifar10_tutorial.py	/^import torch.nn.functional as F$/;"	kind:namespace	line:115
+F	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^import torch.nn.functional as F$/;"	kind:namespace	line:21
+F	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^import torch.nn.functional as F$/;"	kind:namespace	line:29
+F	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^import torch.nn.functional as F$/;"	kind:namespace	line:23
+F	../src\classifier\classifier_pointcloud_pytorch.py	/^import torch.nn.functional as F$/;"	kind:namespace	line:25
+F	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^import torch.nn.functional as F$/;"	kind:namespace	line:9
+Flatten	../src\classifier\classifier_image_CNN_keras.py	/^from keras.layers import Dense, Dropout, Flatten$/;"	kind:namespace	line:11
+GAN	../src\gan\gan_keras_not_working.py	/^class GAN(object):$/;"	kind:class	line:72
+GramMSELoss	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^class GramMSELoss(nn.Module):$/;"	kind:class	line:102
+GramMatrix	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^class GramMatrix(nn.Module):$/;"	kind:class	line:94
+IMG_SIZE	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^IMG_SIZE = 32$/;"	kind:variable	line:45
+IMG_SIZE	../src\classifier\shapes5_preprocessdata.py	/^IMG_SIZE = 32$/;"	kind:variable	line:21
+Image	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^from PIL import Image$/;"	kind:namespace	line:33
+Image	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^from PIL import Image$/;"	kind:namespace	line:26
+Image	../src\classifier\shapes5_preprocessdata.py	/^from PIL import Image$/;"	kind:namespace	line:17
+Image	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^from PIL import Image$/;"	kind:namespace	line:15
+Image	../src\style_transfer\StyleTransfer.py	/^from PIL import Image$/;"	kind:namespace	line:2
+ImageFolder	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^from torchvision.datasets import ImageFolder$/;"	kind:namespace	line:39
+ImageFolder	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^from torchvision.datasets import ImageFolder$/;"	kind:namespace	line:31
+ImageOps	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^from PIL import ImageOps$/;"	kind:namespace	line:34
+ImageOps	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^from PIL import ImageOps$/;"	kind:namespace	line:27
+ImageOps	../src\classifier\shapes5_preprocessdata.py	/^from PIL import ImageOps$/;"	kind:namespace	line:18
+Input	../src\autoencoder\keras_points.py	/^from keras.layers import Input, Dense, Convolution1D$/;"	kind:namespace	line:23
+Input	../src\rl_alpha0\alpha0.py	/^from keras.layers import Input, Dense, Dropout$/;"	kind:namespace	line:19
+K	../src\classifier\classifier_image_CNN_keras.py	/^from keras import backend as K$/;"	kind:namespace	line:13
+MCTS	../src\rl_alpha0\mcts.py	/^class MCTS:$/;"	kind:class	line:45
+MaxPooling2D	../src\classifier\classifier_image_CNN_keras.py	/^from keras.layers import Conv2D, MaxPooling2D$/;"	kind:namespace	line:12
+Model	../src\autoencoder\keras_points.py	/^from keras.models import Model$/;"	kind:namespace	line:24
+Model	../src\rl_alpha0\alpha0.py	/^from keras.models import Model$/;"	kind:namespace	line:20
+MyTransform	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^class MyTransform(object):    $/;"	kind:class	line:86
+Net	../src\classifier\cifar10_tutorial.py	/^class Net(nn.Module):$/;"	kind:class	line:118
+Net	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^class Net(nn.Module):$/;"	kind:class	line:56
+Net	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^class Net(nn.Module):$/;"	kind:class	line:55
+Net	../src\classifier\classifier_pointcloud_pytorch.py	/^class Net(nn.Module):$/;"	kind:class	line:53
+NeuralStyleTransfer_Gatys.py	../src\style_transfer\NeuralStyleTransfer_Gatys.py	1;"	kind:file	line:1
+Node	../src\rl_alpha0\mcts.py	/^class Node:$/;"	kind:class	line:23
+OrderedDict	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^from collections import OrderedDict$/;"	kind:namespace	line:16
+Particle	../src\rl_alpha0\starship.py	/^class Particle:$/;"	kind:class	line:179
+PlayTreePolicy	../src\rl_alpha0\mcts.py	/^    def PlayTreePolicy(self):$/;"	kind:member	line:148
+ProcessFolder	../src\classifier\shapes5_preprocessdata.py	/^def ProcessFolder(root, dst):$/;"	kind:function	line:75
+SGD	../src\autoencoder\keras_points.py	/^from keras.optimizers import SGD$/;"	kind:namespace	line:26
+SGD	../src\classifier\classifier_pointcloud_keras.py	/^from keras.optimizers import SGD$/;"	kind:namespace	line:27
+SGD	../src\rl_alpha0\alpha0.py	/^from keras.optimizers import SGD$/;"	kind:namespace	line:22
+Sequential	../src\classifier\classifier_image_CNN_keras.py	/^from keras.models import Sequential$/;"	kind:namespace	line:10
+Sequential	../src\classifier\classifier_pointcloud_keras.py	/^from keras.models import Sequential$/;"	kind:namespace	line:25
+Starship	../src\rl_alpha0\starship.py	/^class Starship:$/;"	kind:class	line:213
+StyleTransfer.py	../src\style_transfer\StyleTransfer.py	1;"	kind:file	line:1
+SubsetRandomSampler	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^from torch.utils.data.sampler import SubsetRandomSampler$/;"	kind:namespace	line:34
+SubsetRandomSampler	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^from torch.utils.data.sampler import SubsetRandomSampler$/;"	kind:namespace	line:35
+TRANSFORM_IMG	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^    TRANSFORM_IMG = transforms.Compose([$/;"	kind:variable	line:96
+TRANSFORM_IMG	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^    TRANSFORM_IMG = transforms.Compose([$/;"	kind:variable	line:126
+TensorBoard	../src\autoencoder\keras_points.py	/^from keras.callbacks import TensorBoard$/;"	kind:namespace	line:25
+TensorBoard	../src\rl_alpha0\alpha0.py	/^from keras.callbacks import TensorBoard$/;"	kind:namespace	line:21
+ToTensor	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^from torchvision.transforms import ToTensor$/;"	kind:namespace	line:41
+ToTensor	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^from torchvision.transforms import ToTensor$/;"	kind:namespace	line:33
+TreePolicy	../src\rl_alpha0\mcts.py	/^    def TreePolicy(self, node):               # Selection of the last node (leaf) by following the tree$/;"	kind:member	line:68
+VGG	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^class VGG(nn.Module):$/;"	kind:class	line:34
+Variable	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^from torch.autograd import Variable$/;"	kind:namespace	line:36
+Variable	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^from torch.autograd import Variable$/;"	kind:namespace	line:29
+Variable	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^from torch.autograd import Variable$/;"	kind:namespace	line:7
+Vec2	../src\rl_alpha0\starship.py	/^class Vec2(object):$/;"	kind:class	line:13
+VideoStream	../src\image\dlib_videowebcam_facial_landmarks.py	/^from imutils.video import VideoStream$/;"	kind:namespace	line:4
+__add__	../src\rl_alpha0\starship.py	/^    def __add__(self, other):$/;"	kind:member	line:34
+__call__	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^    def __call__(self, x):$/;"	kind:member	line:87
+__div__	../src\rl_alpha0\starship.py	/^    def __div__(self, other):$/;"	kind:member	line:43
+__init__	../src\autoencoder\keras_points.py	/^    def __init__(self):$/;"	kind:member	line:30
+__init__	../src\autoencoder\keras_points.py	/^    def __init__(self, dat):$/;"	kind:member	line:82
+__init__	../src\classifier\cifar10_tutorial.py	/^    def __init__(self):$/;"	kind:member	line:119
+__init__	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^    def __init__(self):$/;"	kind:member	line:58
+__init__	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^    def __init__(self):$/;"	kind:member	line:57
+__init__	../src\classifier\classifier_pointcloud_pytorch.py	/^    def __init__(self):$/;"	kind:member	line:55
+__init__	../src\gan\gan_keras_not_working.py	/^    def __init__(self):$/;"	kind:member	line:73
+__init__	../src\rl_alpha0\alpha0.py	/^    def __init__(self, game, optimizer):$/;"	kind:member	line:31
+__init__	../src\rl_alpha0\mcts.py	/^    def __init__(self, game, budget=2000, max_node_size_in_batch_count=1):$/;"	kind:member	line:46
+__init__	../src\rl_alpha0\mcts.py	/^    def __init__(self, observation, action=None, reward=0, parent=None):$/;"	kind:member	line:24
+__init__	../src\rl_alpha0\starship.py	/^    def __init__(self): # Notre méthode constructeur$/;"	kind:member	line:214
+__init__	../src\rl_alpha0\starship.py	/^    def __init__(self, x ,y, vx, vy):$/;"	kind:member	line:180
+__init__	../src\rl_alpha0\starship.py	/^    def __init__(self, x=0, y=0):$/;"	kind:member	line:14
+__init__	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^    def __init__(self, pool='max'):$/;"	kind:member	line:35
+__mul__	../src\rl_alpha0\starship.py	/^    def __mul__(self, other):$/;"	kind:member	line:53
+__neg__	../src\rl_alpha0\starship.py	/^    def __neg__(self):$/;"	kind:member	line:62
+__radd__	../src\rl_alpha0\starship.py	/^    def __radd__(self, other):$/;"	kind:member	line:65
+__rdiv__	../src\rl_alpha0\starship.py	/^    def __rdiv__(self, other):$/;"	kind:member	line:68
+__repr__	../src\rl_alpha0\mcts.py	/^    def __repr__(self):$/;"	kind:member	line:35
+__repr__	../src\rl_alpha0\starship.py	/^    def __repr__(self):$/;"	kind:member	line:77
+__rmul__	../src\rl_alpha0\starship.py	/^    def __rmul__(self, other):$/;"	kind:member	line:71
+__rsub__	../src\rl_alpha0\starship.py	/^    def __rsub__(self, other):$/;"	kind:member	line:74
+__str__	../src\rl_alpha0\mcts.py	/^    def __str__(self):$/;"	kind:member	line:40
+__str__	../src\rl_alpha0\starship.py	/^    def __str__(self):$/;"	kind:member	line:80
+__sub__	../src\rl_alpha0\starship.py	/^    def __sub__(self, other):$/;"	kind:member	line:83
+a0	../src\rl_alpha0\alpha0.py	/^    a0 = Alpha0(game, opti)$/;"	kind:variable	line:174
+absolute_import	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^from __future__ import absolute_import$/;"	kind:namespace	line:4
+absolute_import	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^from __future__ import absolute_import$/;"	kind:namespace	line:4
+absolute_import	../src\classifier\classifier_pointcloud_empty.py	/^from __future__ import absolute_import$/;"	kind:namespace	line:8
+absolute_import	../src\classifier\classifier_pointcloud_keras.py	/^from __future__ import absolute_import$/;"	kind:namespace	line:8
+absolute_import	../src\classifier\classifier_pointcloud_pytorch.py	/^from __future__ import absolute_import$/;"	kind:namespace	line:8
+absolute_import	../src\classifier\classifier_pointcloud_tensorflow.py	/^from __future__ import absolute_import$/;"	kind:namespace	line:1
+absolute_import	../src\classifier\shapes5_preprocessdata.py	/^from __future__ import absolute_import$/;"	kind:namespace	line:1
+absolute_import	../src\gan\classifier_generator_tf_mnist.py	/^from __future__ import absolute_import$/;"	kind:namespace	line:1
+absolute_import	../src\gan\gan_keras_not_working.py	/^from __future__ import absolute_import$/;"	kind:namespace	line:1
+action	../src\rl_alpha0\starship.py	/^    def action(self, i):$/;"	kind:member	line:333
+activation	../src\classifier\classifier_image_CNN_keras.py	/^                 activation='relu',$/;"	kind:variable	line:48
+addForce	../src\rl_alpha0\starship.py	/^    def addForce(self, f):$/;"	kind:member	line:198
+add_child	../src\rl_alpha0\mcts.py	/^    def add_child(self, child):$/;"	kind:member	line:32
+add_noise	../src\autoencoder\keras_points.py	/^    def add_noise(self, x, rangee):$/;"	kind:member	line:65
+alpha0.py	../src\rl_alpha0\alpha0.py	1;"	kind:file	line:1
+ap	../src\image\dlib_videowebcam_facial_landmarks.py	/^ap = argparse.ArgumentParser()$/;"	kind:variable	line:14
+argparse	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^import argparse$/;"	kind:namespace	line:17
+argparse	../src\image\dlib_videowebcam_facial_landmarks.py	/^import argparse$/;"	kind:namespace	line:7
+args	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^    args = parser.parse_args()$/;"	kind:variable	line:100
+args	../src\image\dlib_videowebcam_facial_landmarks.py	/^args = vars(ap.parse_args())$/;"	kind:variable	line:19
+batchOfObservationAction	../src\rl_alpha0\mcts.py	/^    def batchOfObservationAction(self):$/;"	kind:member	line:132
+batch_size	../src\classifier\classifier_image_CNN_keras.py	/^          batch_size=batch_size,$/;"	kind:variable	line:63
+batch_size	../src\classifier\classifier_image_CNN_keras.py	/^batch_size = 128$/;"	kind:variable	line:15
+bias_variable	../src\gan\classifier_generator_tf_mnist.py	/^def bias_variable(shape):$/;"	kind:function	line:112
+ceil	../src\rl_alpha0\starship.py	/^    def ceil(self):$/;"	kind:member	line:92
+cifar10_tutorial.py	../src\classifier\cifar10_tutorial.py	1;"	kind:file	line:1
+clampVelocity	../src\rl_alpha0\starship.py	/^    def clampVelocity(self, vmax):$/;"	kind:member	line:194
+class_correct	../src\classifier\cifar10_tutorial.py	/^class_correct = list(0. for i in range(10))$/;"	kind:variable	line:244
+class_total	../src\classifier\cifar10_tutorial.py	/^class_total = list(0. for i in range(10))$/;"	kind:variable	line:245
+classes	../src\classifier\cifar10_tutorial.py	/^classes = ('plane', 'car', 'bird', 'cat',$/;"	kind:variable	line:80
+classifier_generator_tf_mnist.py	../src\gan\classifier_generator_tf_mnist.py	1;"	kind:file	line:1
+classifier_image_CNN_keras.py	../src\classifier\classifier_image_CNN_keras.py	1;"	kind:file	line:1
+classifier_image_CNN_pytorch_cifar10.py	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	1;"	kind:file	line:1
+classifier_image_CNN_pytorch_shapes5.py	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	1;"	kind:file	line:1
+classifier_pointcloud_empty.py	../src\classifier\classifier_pointcloud_empty.py	1;"	kind:file	line:1
+classifier_pointcloud_keras.py	../src\classifier\classifier_pointcloud_keras.py	1;"	kind:file	line:1
+classifier_pointcloud_pytorch.py	../src\classifier\classifier_pointcloud_pytorch.py	1;"	kind:file	line:1
+classifier_pointcloud_tensorflow.py	../src\classifier\classifier_pointcloud_tensorflow.py	1;"	kind:file	line:1
+close	../src\autoencoder\keras_points.py	/^    def close(self):$/;"	kind:member	line:200
+close	../src\gan\gan_keras_not_working.py	/^    def close(self):$/;"	kind:member	line:208
+close	../src\rl_alpha0\starship.py	/^    def close(self):$/;"	kind:member	line:381
+closure	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^    def closure():$/;"	kind:function	line:186
+closure	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^    def closure():$/;"	kind:function	line:244
+cma	../src\optimization\cma_test.py	/^import cma$/;"	kind:namespace	line:1
+cma_test.py	../src\optimization\cma_test.py	1;"	kind:file	line:1
+computeOptiData	../src\rl_alpha0\alpha0.py	/^    def computeOptiData(self, n):$/;"	kind:member	line:96
+computeReward	../src\rl_alpha0\starship.py	/^    def computeReward(self, i):$/;"	kind:member	line:359
+content	../src\style_transfer\StyleTransfer.py	/^    content = load_image('images\/face.jpg').to(device)$/;"	kind:variable	line:142
+content_features	../src\style_transfer\StyleTransfer.py	/^        content_features = get_features(content, vgg)$/;"	kind:variable	line:182
+content_features	../src\style_transfer\StyleTransfer.py	/^    content_features = get_features(content, vgg)$/;"	kind:variable	line:155
+content_layers	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^content_layers = ['r42']$/;"	kind:variable	line:161
+content_loss	../src\style_transfer\StyleTransfer.py	/^        content_loss  = torch.mean((target_features['conv21'] - content_features['conv21'])**2)$/;"	kind:variable	line:188
+content_targets	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^content_targets = [A.detach() for A in vgg(content_image, content_layers)]$/;"	kind:variable	line:174
+content_targets	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^content_targets = [A.detach() for A in vgg(content_image, content_layers)]$/;"	kind:variable	line:234
+content_weights	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^content_weights = [1e0]$/;"	kind:variable	line:169
+conv2D	../src\gan\classifier_generator_tf_mnist.py	/^def conv2D (x,W):$/;"	kind:function	line:86
+convert_int_to_label	../src\gan\classifier_generator_tf_mnist.py	/^def convert_int_to_label(i):$/;"	kind:function	line:65
+correct	../src\classifier\cifar10_tutorial.py	/^correct = 0$/;"	kind:variable	line:223
+correct	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^    correct = 0$/;"	kind:variable	line:227
+createNetwork	../src\gan\classifier_generator_tf_mnist.py	/^def createNetwork(x, y):$/;"	kind:function	line:121
+createNetwork_invert	../src\gan\classifier_generator_tf_mnist.py	/^def createNetwork_invert(y_inv):$/;"	kind:function	line:47
+criterion	../src\classifier\cifar10_tutorial.py	/^criterion = nn.CrossEntropyLoss()$/;"	kind:variable	line:147
+criterion	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^    criterion = nn.CrossEntropyLoss()$/;"	kind:variable	line:141
+cv2	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^import cv2$/;"	kind:namespace	line:25
+cv2	../src\image\dlib_videowebcam_facial_landmarks.py	/^import cv2$/;"	kind:namespace	line:11
+data_center	../src\gan\gan_keras_not_working.py	/^data_center = (4.0,6.0)$/;"	kind:variable	line:15
+data_folder	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^    data_folder = "..\/..\/data\/shapes5_preprocessed"$/;"	kind:variable	line:103
+data_radius	../src\gan\gan_keras_not_working.py	/^data_radius = 3.0$/;"	kind:variable	line:14
+data_xlim	../src\gan\gan_keras_not_working.py	/^data_xlim  = (0, 10)$/;"	kind:variable	line:16
+data_ylim	../src\gan\gan_keras_not_working.py	/^data_ylim  = (0, 10)$/;"	kind:variable	line:17
+dataiter	../src\classifier\cifar10_tutorial.py	/^dataiter = iter(testloader)$/;"	kind:variable	line:196
+dataiter	../src\classifier\cifar10_tutorial.py	/^dataiter = iter(trainloader)$/;"	kind:variable	line:99
+dataiter	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^    dataiter = iter(loader)$/;"	kind:variable	line:127
+dataiter	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^    dataiter = iter(testloader)$/;"	kind:variable	line:173
+dataiter	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^    dataiter = iter(loader)$/;"	kind:variable	line:167
+dataiter	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^    dataiter = iter(loaderVal)$/;"	kind:variable	line:216
+dataset	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^    dataset = ImageFolder(root=data_folder, transform=TRANSFORM_IMG)$/;"	kind:variable	line:138
+dataset_size	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^    dataset_size = len(dataset)$/;"	kind:variable	line:144
+datasets	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^from torchvision import datasets, transforms$/;"	kind:namespace	line:35
+datasets	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^from torchvision import datasets, transforms$/;"	kind:namespace	line:28
+datetime	../src\image\dlib_videowebcam_facial_landmarks.py	/^import datetime$/;"	kind:namespace	line:6
+decode	../src\autoencoder\keras_points.py	/^    def decode(self):$/;"	kind:member	line:122
+detector	../src\image\dlib_images_facial_landmarks.py	/^detector = dlib.get_frontal_face_detector()$/;"	kind:variable	line:75
+detector	../src\image\dlib_videowebcam_facial_landmarks.py	/^detector = dlib.get_frontal_face_detector()$/;"	kind:variable	line:24
+dets	../src\image\dlib_images_facial_landmarks.py	/^    dets = detector(img, 1)$/;"	kind:variable	line:89
+device	../src\classifier\cifar10_tutorial.py	/^device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")$/;"	kind:variable	line:275
+device	../src\style_transfer\StyleTransfer.py	/^    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")$/;"	kind:variable	line:131
+dim	../src\autoencoder\keras_points.py	/^    def dim(self):$/;"	kind:member	line:36
+discriminator	../src\gan\gan_keras_not_working.py	/^    def discriminator(self, input):$/;"	kind:member	line:105
+display	../src\gan\gan_keras_not_working.py	/^    def display(self):$/;"	kind:member	line:184
+display_autoencodedDataOfAllSpace	../src\autoencoder\keras_points.py	/^    def display_autoencodedDataOfAllSpace(self, n=1):$/;"	kind:member	line:175
+display_autoencodedDataOfManifold	../src\autoencoder\keras_points.py	/^    def display_autoencodedDataOfManifold(self, noise=0.5):$/;"	kind:member	line:159
+display_real	../src\autoencoder\keras_points.py	/^    def display_real(self):$/;"	kind:member	line:144
+display_real	../src\gan\gan_keras_not_working.py	/^    def display_real(self):$/;"	kind:member	line:195
+distance	../src\rl_alpha0\starship.py	/^    def distance(cls, a, b):$/;"	kind:member	line:130
+division	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^from __future__ import division$/;"	kind:namespace	line:5
+division	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^from __future__ import division$/;"	kind:namespace	line:5
+division	../src\classifier\classifier_pointcloud_empty.py	/^from __future__ import division$/;"	kind:namespace	line:9
+division	../src\classifier\classifier_pointcloud_keras.py	/^from __future__ import division$/;"	kind:namespace	line:9
+division	../src\classifier\classifier_pointcloud_pytorch.py	/^from __future__ import division$/;"	kind:namespace	line:9
+division	../src\classifier\classifier_pointcloud_tensorflow.py	/^from __future__ import division$/;"	kind:namespace	line:2
+division	../src\classifier\shapes5_preprocessdata.py	/^from __future__ import division$/;"	kind:namespace	line:2
+division	../src\gan\classifier_generator_tf_mnist.py	/^from __future__ import division$/;"	kind:namespace	line:2
+division	../src\gan\gan_keras_not_working.py	/^from __future__ import division$/;"	kind:namespace	line:2
+dlib	../src\image\dlib_images_facial_landmarks.py	/^import dlib$/;"	kind:namespace	line:57
+dlib	../src\image\dlib_videowebcam_facial_landmarks.py	/^import dlib$/;"	kind:namespace	line:10
+dlib_images_facial_landmarks.py	../src\image\dlib_images_facial_landmarks.py	1;"	kind:file	line:1
+dlib_videowebcam_facial_landmarks.py	../src\image\dlib_videowebcam_facial_landmarks.py	1;"	kind:file	line:1
+done	../src\rl_alpha0\starship.py	/^    def done(self, i):$/;"	kind:member	line:329
+dot	../src\rl_alpha0\starship.py	/^    def dot(self, a, b):$/;"	kind:member	line:135
+drawSceneMenuAndSwap	../src\rl_alpha0\starship.py	/^    def drawSceneMenuAndSwap(self):$/;"	kind:member	line:384
+draw_sampleFrontiere	../src\autoencoder\keras_points.py	/^    def draw_sampleFrontiere(self, plt):$/;"	kind:member	line:59
+draw_sampleFrontiere	../src\gan\gan_keras_not_working.py	/^def draw_sampleFrontiere(plt):$/;"	kind:function	line:27
+encode	../src\autoencoder\keras_points.py	/^    def encode(self):$/;"	kind:member	line:119
+epochs	../src\classifier\classifier_image_CNN_keras.py	/^          epochs=epochs,$/;"	kind:variable	line:64
+epochs	../src\classifier\classifier_image_CNN_keras.py	/^epochs = 12$/;"	kind:variable	line:17
+equals	../src\rl_alpha0\starship.py	/^    def equals(cls, a, b, tolerance=0.0):$/;"	kind:member	line:139
+es	../src\optimization\cma_test.py	/^es = cma.CMAEvolutionStrategy(x0, sigma0)$/;"	kind:variable	line:21
+eventKey	../src\rl_alpha0\starship.py	/^    def eventKey(self, k):$/;"	kind:member	line:404
+face_utils	../src\image\dlib_videowebcam_facial_landmarks.py	/^from imutils import face_utils$/;"	kind:namespace	line:5
+faces_folder_path	../src\image\dlib_images_facial_landmarks.py	/^faces_folder_path = sys.argv[2]$/;"	kind:variable	line:73
+features	../src\style_transfer\StyleTransfer.py	/^    features = list(vgg)[:23]$/;"	kind:variable	line:136
+fit	../src\optimization\cma_test.py	/^    fit = fitness( solutions )$/;"	kind:variable	line:25
+fitness	../src\optimization\cma_test.py	/^def fitness(a):$/;"	kind:function	line:11
+fitness_1	../src\optimization\cma_test.py	/^def fitness_1(a):$/;"	kind:function	line:7
+floor	../src\rl_alpha0\starship.py	/^    def floor(self):$/;"	kind:member	line:95
+forward	../src\classifier\cifar10_tutorial.py	/^    def forward(self, x):$/;"	kind:member	line:128
+forward	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^    def forward(self, x):$/;"	kind:member	line:67
+forward	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^    def forward(self, x):$/;"	kind:member	line:66
+forward	../src\classifier\classifier_pointcloud_pytorch.py	/^    def forward(self, x):$/;"	kind:member	line:62
+forward	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^    def forward(self, input):$/;"	kind:member	line:95
+forward	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^    def forward(self, input, target):$/;"	kind:member	line:103
+forward	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^    def forward(self, x, out_keys):$/;"	kind:member	line:67
+frame	../src\image\dlib_videowebcam_facial_landmarks.py	/^	frame = imutils.resize(frame, width=400)$/;"	kind:variable	line:38
+frame	../src\image\dlib_videowebcam_facial_landmarks.py	/^	frame = vs.read()$/;"	kind:variable	line:37
+game	../src\rl_alpha0\alpha0.py	/^    game = starship.Starship()$/;"	kind:variable	line:172
+gan_keras_not_working.py	../src\gan\gan_keras_not_working.py	1;"	kind:file	line:1
+generator	../src\gan\gan_keras_not_working.py	/^    def generator(self, input):$/;"	kind:member	line:131
+get_data	../src\rl_alpha0\starship.py	/^    def get_data(self):$/;"	kind:member	line:98
+get_features	../src\style_transfer\StyleTransfer.py	/^def get_features(image, model, layers=None):$/;"	kind:function	line:72
+glob	../src\image\dlib_images_facial_landmarks.py	/^import glob$/;"	kind:namespace	line:58
+gram_matrix	../src\style_transfer\StyleTransfer.py	/^def gram_matrix(tensor):$/;"	kind:function	line:95
+gray	../src\image\dlib_videowebcam_facial_landmarks.py	/^	gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)$/;"	kind:variable	line:39
+help	../src\image\dlib_videowebcam_facial_landmarks.py	/^	help="path to facial landmark predictor")$/;"	kind:variable	line:16
+help	../src\image\dlib_videowebcam_facial_landmarks.py	/^	help="whether or not the Raspberry Pi camera should be used")$/;"	kind:variable	line:18
+help	../src\rl_alpha0\alpha0.py	/^    def help(self):$/;"	kind:member	line:120
+help	../src\rl_alpha0\starship.py	/^    def help(self):$/;"	kind:member	line:457
+im	../src\gan\classifier_generator_tf_mnist.py	/^import scipy.misc as im$/;"	kind:namespace	line:9
+im_convert	../src\style_transfer\StyleTransfer.py	/^def im_convert(tensor):$/;"	kind:function	line:40
+image_dir	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^image_dir = os.getcwd() + '\/Images\/'$/;"	kind:variable	line:3
+img	../src\image\dlib_images_facial_landmarks.py	/^    img = io.imread(f)$/;"	kind:variable	line:81
+img_dirs	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^img_dirs = [image_dir, image_dir]$/;"	kind:variable	line:141
+img_names	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^img_names = ['vangogh_starry_night.jpg', 'Tuebingen_Neckarfront.jpg']$/;"	kind:variable	line:142
+img_size	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^img_size = 512 $/;"	kind:variable	line:109
+img_size_hr	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^img_size_hr = 800 #works for 8GB GPU, make larger if you have 12GB or more$/;"	kind:variable	line:212
+imgs	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^imgs = [Image.open(img_dirs[i] + name) for i,name in enumerate(img_names)]$/;"	kind:variable	line:143
+imgs_torch	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^    imgs_torch = [Variable(img.unsqueeze(0)) for img in imgs_torch]$/;"	kind:variable	line:148
+imgs_torch	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^    imgs_torch = [Variable(img.unsqueeze(0)) for img in imgs_torch]$/;"	kind:variable	line:225
+imgs_torch	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^    imgs_torch = [Variable(img.unsqueeze(0).cuda()) for img in imgs_torch]$/;"	kind:variable	line:146
+imgs_torch	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^    imgs_torch = [Variable(img.unsqueeze(0).cuda()) for img in imgs_torch]$/;"	kind:variable	line:223
+imgs_torch	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^imgs_torch = [prep(img) for img in imgs]$/;"	kind:variable	line:144
+imgs_torch	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^imgs_torch = [prep_hr(img) for img in imgs]$/;"	kind:variable	line:221
+imshow	../src\classifier\cifar10_tutorial.py	/^def imshow(img):$/;"	kind:function	line:92
+imshow	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^def imshow(img):$/;"	kind:function	line:49
+imshow	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^def imshow(img):$/;"	kind:function	line:43
+imshow	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^def imshow(img):$/;"	kind:function	line:23
+imshow	../src\style_transfer\StyleTransfer.py	/^def imshow(img):              # Pour afficher une image$/;"	kind:function	line:49
+imutils	../src\image\dlib_videowebcam_facial_landmarks.py	/^import imutils$/;"	kind:namespace	line:8
+indices	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^    indices = list(range(dataset_size))$/;"	kind:variable	line:145
+init	../src\rl_alpha0\starship.py	/^    def init(self,name,w,h,px,py,f=0):$/;"	kind:member	line:219
+input_data	../src\gan\classifier_generator_tf_mnist.py	/^from tensorflow.examples.tutorials.mnist import input_data$/;"	kind:namespace	line:5
+input_shape	../src\classifier\classifier_image_CNN_keras.py	/^                 input_shape=input_shape))$/;"	kind:variable	line:49
+input_shape	../src\classifier\classifier_image_CNN_keras.py	/^    input_shape = (1, img_rows, img_cols)$/;"	kind:variable	line:28
+input_shape	../src\classifier\classifier_image_CNN_keras.py	/^    input_shape = (img_rows, img_cols, 1)$/;"	kind:variable	line:32
+inverse	../src\rl_alpha0\starship.py	/^    def inverse(self):$/;"	kind:member	line:101
+io	../src\image\dlib_images_facial_landmarks.py	/^from skimage import io$/;"	kind:namespace	line:59
+isQuit	../src\rl_alpha0\starship.py	/^    def isQuit(self):$/;"	kind:member	line:244
+is_fully_expanded	../src\rl_alpha0\mcts.py	/^    def is_fully_expanded(self, node):$/;"	kind:member	line:64
+keras	../src\classifier\classifier_image_CNN_keras.py	/^import keras$/;"	kind:namespace	line:8
+keras	../src\classifier\classifier_pointcloud_keras.py	/^import keras$/;"	kind:namespace	line:24
+keras_points.py	../src\autoencoder\keras_points.py	1;"	kind:file	line:1
+key	../src\image\dlib_videowebcam_facial_landmarks.py	/^	key = cv2.waitKey(1) & 0xFF$/;"	kind:variable	line:59
+length	../src\rl_alpha0\starship.py	/^    def length(self):$/;"	kind:member	line:104
+loadImage	../src\gan\classifier_generator_tf_mnist.py	/^def loadImage(filename):$/;"	kind:function	line:23
+loadModel	../src\rl_alpha0\alpha0.py	/^    def loadModel(self):$/;"	kind:member	line:70
+loadOptiData	../src\rl_alpha0\alpha0.py	/^    def loadOptiData(self):$/;"	kind:member	line:89
+load_image	../src\style_transfer\StyleTransfer.py	/^def load_image(img_path, max_size=400, shape=None):$/;"	kind:function	line:12
+load_model	../src\rl_alpha0\alpha0.py	/^from keras.models import load_model$/;"	kind:namespace	line:23
+loader	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^    loader = DataLoader(mydata, batch_size=16, shuffle=True, num_workers=2)$/;"	kind:variable	line:105
+loader	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^    loader = torch.utils.data.DataLoader(mydata, batch_size=4,$/;"	kind:variable	line:116
+loader	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^    loader = DataLoader(dataset, batch_size=8, shuffle=False, num_workers=2, sampler=train_sampler)$/;"	kind:variable	line:161
+loaderVal	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^    loaderVal = DataLoader(dataset, batch_size=4, shuffle=False, num_workers=2, sampler=valid_sampler)$/;"	kind:variable	line:162
+log	../src\gan\gan_keras_not_working.py	/^def log(x):$/;"	kind:function	line:62
+logger	../src\rl_alpha0\mcts.py	/^logger = logging.getLogger('MCTS')$/;"	kind:variable	line:20
+logging	../src\rl_alpha0\mcts.py	/^import logging$/;"	kind:namespace	line:2
+loss_fns	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^    loss_fns = [loss_fn.cuda() for loss_fn in loss_fns]$/;"	kind:variable	line:165
+loss_fns	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^loss_fns = [GramMSELoss()] * len(style_layers) + [nn.MSELoss()] * len(content_layers)$/;"	kind:variable	line:163
+loss_layers	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^loss_layers = style_layers + content_layers$/;"	kind:variable	line:162
+main	../src\autoencoder\keras_points.py	/^def main():$/;"	kind:function	line:204
+main	../src\classifier\classifier_pointcloud_empty.py	/^def main():$/;"	kind:function	line:45
+main	../src\classifier\classifier_pointcloud_keras.py	/^def main():$/;"	kind:function	line:52
+main	../src\classifier\classifier_pointcloud_pytorch.py	/^def main():$/;"	kind:function	line:73
+main	../src\classifier\classifier_pointcloud_tensorflow.py	/^def main():$/;"	kind:function	line:54
+main	../src\gan\classifier_generator_tf_mnist.py	/^def main ():$/;"	kind:function	line:196
+main	../src\gan\gan_keras_not_working.py	/^def main():$/;"	kind:function	line:212
+manageEvent	../src\rl_alpha0\starship.py	/^    def manageEvent(self):$/;"	kind:member	line:449
+manageOneEvent	../src\rl_alpha0\starship.py	/^    def manageOneEvent(self, event):$/;"	kind:member	line:411
+math	../src\autoencoder\keras_points.py	/^import math$/;"	kind:namespace	line:11
+math	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^import math$/;"	kind:namespace	line:11
+math	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^import math$/;"	kind:namespace	line:11
+math	../src\classifier\classifier_pointcloud_empty.py	/^import math$/;"	kind:namespace	line:15
+math	../src\classifier\classifier_pointcloud_keras.py	/^import math$/;"	kind:namespace	line:15
+math	../src\classifier\classifier_pointcloud_pytorch.py	/^import math$/;"	kind:namespace	line:15
+math	../src\classifier\classifier_pointcloud_tensorflow.py	/^import math$/;"	kind:namespace	line:8
+math	../src\classifier\shapes5_preprocessdata.py	/^import math$/;"	kind:namespace	line:8
+math	../src\gan\gan_keras_not_working.py	/^import math$/;"	kind:namespace	line:8
+math	../src\rl_alpha0\mcts.py	/^import math$/;"	kind:namespace	line:3
+math	../src\rl_alpha0\starship.py	/^import math$/;"	kind:namespace	line:1
+matplotlib	../src\autoencoder\keras_points.py	/^import matplotlib.pyplot as plt$/;"	kind:namespace	line:15
+matplotlib	../src\classifier\cifar10_tutorial.py	/^import matplotlib.pyplot as plt$/;"	kind:namespace	line:86
+matplotlib	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^import matplotlib.pyplot as plt$/;"	kind:namespace	line:13
+matplotlib	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^import matplotlib.pyplot as plt$/;"	kind:namespace	line:37
+matplotlib	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^import matplotlib.pyplot as plt$/;"	kind:namespace	line:13
+matplotlib	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^import matplotlib.pyplot as plt$/;"	kind:namespace	line:19
+matplotlib	../src\classifier\classifier_pointcloud_empty.py	/^import matplotlib.pyplot as plt$/;"	kind:namespace	line:17
+matplotlib	../src\classifier\classifier_pointcloud_keras.py	/^import matplotlib.pyplot as plt$/;"	kind:namespace	line:17
+matplotlib	../src\classifier\classifier_pointcloud_pytorch.py	/^import matplotlib.pyplot as plt$/;"	kind:namespace	line:17
+matplotlib	../src\classifier\classifier_pointcloud_tensorflow.py	/^import matplotlib.pyplot as plt$/;"	kind:namespace	line:11
+matplotlib	../src\classifier\shapes5_preprocessdata.py	/^import matplotlib.pyplot as plt$/;"	kind:namespace	line:10
+matplotlib	../src\gan\classifier_generator_tf_mnist.py	/^import matplotlib.pyplot as plt$/;"	kind:namespace	line:10
+matplotlib	../src\gan\gan_keras_not_working.py	/^import matplotlib.pyplot as plt$/;"	kind:namespace	line:11
+matplotlib	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^import matplotlib.pyplot as plt$/;"	kind:namespace	line:19
+matplotlib	../src\style_transfer\StyleTransfer.py	/^import matplotlib.pyplot as plt$/;"	kind:namespace	line:3
+max	../src\rl_alpha0\starship.py	/^    def max(cls, a, b):$/;"	kind:member	line:149
+max_iter	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^max_iter = 500$/;"	kind:variable	line:179
+max_iter_hr	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^max_iter_hr = 200$/;"	kind:variable	line:239
+mcts	../src\rl_alpha0\alpha0.py	/^import mcts$/;"	kind:namespace	line:26
+mcts	../src\rl_alpha0\mcts.py	/^    mcts = MCTS(starship, 2000, 1)$/;"	kind:variable	line:213
+mcts.py	../src\rl_alpha0\mcts.py	1;"	kind:file	line:1
+metrics	../src\classifier\classifier_image_CNN_keras.py	/^              metrics=['accuracy'])$/;"	kind:variable	line:60
+min	../src\rl_alpha0\starship.py	/^    def min(cls, a, b):$/;"	kind:member	line:155
+mix	../src\rl_alpha0\starship.py	/^    def mix(cls, a, b, t):$/;"	kind:member	line:161
+mnist	../src\classifier\classifier_image_CNN_keras.py	/^from keras.datasets import mnist$/;"	kind:namespace	line:9
+mnist	../src\gan\classifier_generator_tf_mnist.py	/^mnist = input_data.read_data_sets("MNIST_data\/", one_hot=True)$/;"	kind:variable	line:13
+model	../src\classifier\classifier_image_CNN_keras.py	/^model = Sequential()$/;"	kind:variable	line:46
+modelAction	../src\rl_alpha0\alpha0.py	/^    def modelAction(self, obs):$/;"	kind:member	line:80
+model_dir	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^model_dir = os.getcwd() + '\/Models\/'$/;"	kind:variable	line:4
+model_filename	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^    model_filename = "..\/..\/models\/classification_pytorch_shapes5_model"$/;"	kind:variable	line:102
+models	../src\style_transfer\StyleTransfer.py	/^from torchvision import transforms, models$/;"	kind:namespace	line:8
+multilayer_perceptron	../src\classifier\classifier_pointcloud_tensorflow.py	/^def multilayer_perceptron(x, weights, biases):$/;"	kind:function	line:31
+multilayer_perceptron	../src\gan\gan_keras_not_working.py	/^def multilayer_perceptron(x, weights, biases):$/;"	kind:function	line:47
+mydata	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^    mydata = ImageFolder(root="..\/..\/data\/shapes5", transform=TRANSFORM_IMG)$/;"	kind:variable	line:104
+mydata	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^    mydata = torchvision.datasets.CIFAR10(root='.\/data', train=True,$/;"	kind:variable	line:114
+n_iter	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^n_iter=[0]$/;"	kind:variable	line:182
+n_iter	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^n_iter=[0]$/;"	kind:variable	line:241
+name	../src\rl_alpha0\starship.py	/^    def name(self):$/;"	kind:member	line:258
+net	../src\classifier\cifar10_tutorial.py	/^net = Net()$/;"	kind:variable	line:138
+net	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^    net = Net()$/;"	kind:variable	line:137
+net	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^    net = Net()$/;"	kind:variable	line:120
+next_batch	../src\autoencoder\keras_points.py	/^    def next_batch(self, n):$/;"	kind:member	line:53
+next_batch	../src\classifier\classifier_pointcloud_empty.py	/^def next_batch(n):$/;"	kind:function	line:35
+next_batch	../src\classifier\classifier_pointcloud_keras.py	/^def next_batch(n):$/;"	kind:function	line:41
+next_batch	../src\classifier\classifier_pointcloud_pytorch.py	/^def next_batch(n):$/;"	kind:function	line:41
+next_batch	../src\classifier\classifier_pointcloud_tensorflow.py	/^def next_batch(n):$/;"	kind:function	line:22
+next_batch	../src\gan\gan_keras_not_working.py	/^def next_batch(n):$/;"	kind:function	line:32
+nn	../src\classifier\cifar10_tutorial.py	/^import torch.nn as nn$/;"	kind:namespace	line:114
+nn	../src\classifier\cifar10_tutorial.py	/^import torch.nn.functional as F$/;"	kind:namespace	line:115
+nn	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^import torch.nn as nn$/;"	kind:namespace	line:20
+nn	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^import torch.nn as nn$/;"	kind:namespace	line:27
+nn	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^import torch.nn.functional as F$/;"	kind:namespace	line:21
+nn	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^import torch.nn.functional as F$/;"	kind:namespace	line:29
+nn	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^import torch.nn as nn$/;"	kind:namespace	line:22
+nn	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^import torch.nn.functional as F$/;"	kind:namespace	line:23
+nn	../src\classifier\classifier_pointcloud_pytorch.py	/^import torch.nn as nn$/;"	kind:namespace	line:24
+nn	../src\classifier\classifier_pointcloud_pytorch.py	/^import torch.nn.functional as F$/;"	kind:namespace	line:25
+nn	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^import torch.nn as nn$/;"	kind:namespace	line:8
+nn	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^import torch.nn.functional as F$/;"	kind:namespace	line:9
+noise	../src\gan\gan_keras_not_working.py	/^def noise(n, rangee):$/;"	kind:function	line:39
+normalize	../src\rl_alpha0\starship.py	/^    def normalize(self):$/;"	kind:member	line:107
+np	../src\autoencoder\keras_points.py	/^import numpy as np$/;"	kind:namespace	line:17
+np	../src\classifier\cifar10_tutorial.py	/^import numpy as np$/;"	kind:namespace	line:87
+np	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^import numpy as np$/;"	kind:namespace	line:12
+np	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^import numpy as np$/;"	kind:namespace	line:30
+np	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^import numpy as np$/;"	kind:namespace	line:12
+np	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^import numpy as np$/;"	kind:namespace	line:16
+np	../src\classifier\classifier_pointcloud_empty.py	/^import numpy as np$/;"	kind:namespace	line:16
+np	../src\classifier\classifier_pointcloud_keras.py	/^import numpy as np$/;"	kind:namespace	line:16
+np	../src\classifier\classifier_pointcloud_pytorch.py	/^import numpy as np$/;"	kind:namespace	line:16
+np	../src\classifier\classifier_pointcloud_tensorflow.py	/^import numpy as np$/;"	kind:namespace	line:9
+np	../src\classifier\shapes5_preprocessdata.py	/^import numpy as np$/;"	kind:namespace	line:14
+np	../src\classifier\shapes5_preprocessdata.py	/^import numpy as np$/;"	kind:namespace	line:9
+np	../src\gan\classifier_generator_tf_mnist.py	/^import numpy as np$/;"	kind:namespace	line:8
+np	../src\gan\gan_keras_not_working.py	/^import numpy as np$/;"	kind:namespace	line:9
+np	../src\optimization\cma_test.py	/^import numpy as np$/;"	kind:namespace	line:2
+np	../src\rl_alpha0\alpha0.py	/^import numpy as np$/;"	kind:namespace	line:10
+np	../src\rl_alpha0\mcts.py	/^import numpy as np$/;"	kind:namespace	line:6
+np	../src\rl_alpha0\starship.py	/^import numpy as np$/;"	kind:namespace	line:4
+np	../src\style_transfer\StyleTransfer.py	/^import numpy as np$/;"	kind:namespace	line:4
+num_classes	../src\classifier\classifier_image_CNN_keras.py	/^num_classes = 10$/;"	kind:variable	line:16
+num_flat_features	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^    def num_flat_features(self, x):$/;"	kind:member	line:76
+num_flat_features	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^    def num_flat_features(self, x):$/;"	kind:member	line:75
+observation	../src\rl_alpha0\starship.py	/^    def observation(self, i):$/;"	kind:member	line:310
+observationForAllBatch	../src\rl_alpha0\starship.py	/^    def observationForAllBatch(self):$/;"	kind:member	line:304
+one_sample	../src\autoencoder\keras_points.py	/^    def one_sample(self):$/;"	kind:member	line:40
+one_sample	../src\classifier\classifier_pointcloud_empty.py	/^def one_sample():$/;"	kind:function	line:25
+one_sample	../src\classifier\classifier_pointcloud_keras.py	/^def one_sample():$/;"	kind:function	line:31
+one_sample	../src\classifier\classifier_pointcloud_pytorch.py	/^def one_sample():$/;"	kind:function	line:31
+one_sample	../src\classifier\classifier_pointcloud_tensorflow.py	/^def one_sample():$/;"	kind:function	line:13
+one_sample	../src\gan\gan_keras_not_working.py	/^def one_sample():$/;"	kind:function	line:20
+opt_img	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^opt_img = Variable(content_image.data.clone(), requires_grad=True)$/;"	kind:variable	line:152
+opt_img	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^opt_img = Variable(opt_img.type_as(content_image.data), requires_grad=True)$/;"	kind:variable	line:230
+opt_img	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^opt_img = prep_hr(out_img).unsqueeze(0)$/;"	kind:variable	line:229
+opti	../src\rl_alpha0\alpha0.py	/^    opti = mcts.MCTS(game, 2000, 1)$/;"	kind:variable	line:173
+optim	../src\classifier\cifar10_tutorial.py	/^import torch.optim as optim$/;"	kind:namespace	line:145
+optim	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^import torch.optim as optim$/;"	kind:namespace	line:22
+optim	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^import torch.optim as optim$/;"	kind:namespace	line:28
+optim	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^import torch.optim as optim$/;"	kind:namespace	line:24
+optim	../src\classifier\classifier_pointcloud_pytorch.py	/^import torch.optim as optim$/;"	kind:namespace	line:26
+optim	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^from torch import optim$/;"	kind:namespace	line:10
+optim	../src\style_transfer\StyleTransfer.py	/^import torch.optim as optim$/;"	kind:namespace	line:7
+optimizer	../src\classifier\cifar10_tutorial.py	/^optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)$/;"	kind:variable	line:148
+optimizer	../src\classifier\classifier_image_CNN_keras.py	/^              optimizer=keras.optimizers.Adadelta(),$/;"	kind:variable	line:59
+optimizer	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^    optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)$/;"	kind:variable	line:142
+optimizer	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^optimizer = optim.LBFGS([opt_img]);$/;"	kind:variable	line:181
+optimizer	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^optimizer = optim.LBFGS([opt_img]);$/;"	kind:variable	line:240
+optimizer	../src\style_transfer\StyleTransfer.py	/^    optimizer = optim.Adam([target], lr=0.003)$/;"	kind:variable	line:176
+os	../src\autoencoder\keras_points.py	/^import os$/;"	kind:namespace	line:12
+os	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^import os$/;"	kind:namespace	line:16
+os	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^import os$/;"	kind:namespace	line:31
+os	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^import os$/;"	kind:namespace	line:8
+os	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^import os$/;"	kind:namespace	line:8
+os	../src\classifier\classifier_pointcloud_empty.py	/^import os$/;"	kind:namespace	line:12
+os	../src\classifier\classifier_pointcloud_empty.py	/^import os$/;"	kind:namespace	line:20
+os	../src\classifier\classifier_pointcloud_keras.py	/^import os$/;"	kind:namespace	line:12
+os	../src\classifier\classifier_pointcloud_pytorch.py	/^import os$/;"	kind:namespace	line:12
+os	../src\classifier\classifier_pointcloud_pytorch.py	/^import os$/;"	kind:namespace	line:20
+os	../src\classifier\classifier_pointcloud_tensorflow.py	/^import os$/;"	kind:namespace	line:5
+os	../src\classifier\shapes5_preprocessdata.py	/^import os$/;"	kind:namespace	line:13
+os	../src\classifier\shapes5_preprocessdata.py	/^import os$/;"	kind:namespace	line:15
+os	../src\classifier\shapes5_preprocessdata.py	/^import os$/;"	kind:namespace	line:5
+os	../src\gan\gan_keras_not_working.py	/^import os$/;"	kind:namespace	line:5
+os	../src\image\dlib_images_facial_landmarks.py	/^import os$/;"	kind:namespace	line:56
+os	../src\rl_alpha0\alpha0.py	/^import os$/;"	kind:namespace	line:6
+os	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^import os $/;"	kind:namespace	line:2
+out_img	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^out_img = postp(opt_img.data[0].cpu().squeeze())$/;"	kind:variable	line:202
+out_img_hr	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^out_img_hr = postp(opt_img.data[0].cpu().squeeze())$/;"	kind:variable	line:260
+outputs	../src\classifier\cifar10_tutorial.py	/^outputs = net(images)$/;"	kind:variable	line:206
+outputs	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^    outputs = net(images)$/;"	kind:variable	line:179
+outputs	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^    outputs = net(images)$/;"	kind:variable	line:222
+parser	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^    parser = argparse.ArgumentParser()$/;"	kind:variable	line:96
+paused	../src\rl_alpha0\starship.py	/^    def paused(self):$/;"	kind:member	line:273
+pilimshow	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^from shapes5_preprocessdata import pilimshow$/;"	kind:namespace	line:38
+pilimshow	../src\classifier\shapes5_preprocessdata.py	/^def pilimshow(img):$/;"	kind:function	line:26
+plt	../src\autoencoder\keras_points.py	/^import matplotlib.pyplot as plt$/;"	kind:namespace	line:15
+plt	../src\classifier\cifar10_tutorial.py	/^import matplotlib.pyplot as plt$/;"	kind:namespace	line:86
+plt	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^import matplotlib.pyplot as plt$/;"	kind:namespace	line:13
+plt	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^import matplotlib.pyplot as plt$/;"	kind:namespace	line:37
+plt	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^import matplotlib.pyplot as plt$/;"	kind:namespace	line:13
+plt	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^import matplotlib.pyplot as plt$/;"	kind:namespace	line:19
+plt	../src\classifier\classifier_pointcloud_empty.py	/^import matplotlib.pyplot as plt$/;"	kind:namespace	line:17
+plt	../src\classifier\classifier_pointcloud_keras.py	/^import matplotlib.pyplot as plt$/;"	kind:namespace	line:17
+plt	../src\classifier\classifier_pointcloud_pytorch.py	/^import matplotlib.pyplot as plt$/;"	kind:namespace	line:17
+plt	../src\classifier\classifier_pointcloud_tensorflow.py	/^import matplotlib.pyplot as plt$/;"	kind:namespace	line:11
+plt	../src\classifier\shapes5_preprocessdata.py	/^import matplotlib.pyplot as plt$/;"	kind:namespace	line:10
+plt	../src\gan\classifier_generator_tf_mnist.py	/^import matplotlib.pyplot as plt$/;"	kind:namespace	line:10
+plt	../src\gan\gan_keras_not_working.py	/^import matplotlib.pyplot as plt$/;"	kind:namespace	line:11
+plt	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^import matplotlib.pyplot as plt$/;"	kind:namespace	line:19
+plt	../src\style_transfer\StyleTransfer.py	/^import matplotlib.pyplot as plt$/;"	kind:namespace	line:3
+pool2x2	../src\gan\classifier_generator_tf_mnist.py	/^def pool2x2 (x):$/;"	kind:function	line:94
+postp	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^def postp(tensor): # to clip results in the range [0,1]$/;"	kind:function	line:124
+postpa	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^postpa = transforms.Compose([transforms.Lambda(lambda x: x.mul_(1.\/255)),$/;"	kind:variable	line:117
+postpb	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^postpb = transforms.Compose([transforms.ToPILImage()])$/;"	kind:variable	line:122
+prediction_logits	../src\gan\classifier_generator_tf_mnist.py	/^def prediction_logits (y,batch_size,nb_label):$/;"	kind:function	line:30
+predictor	../src\image\dlib_images_facial_landmarks.py	/^predictor = dlib.shape_predictor(predictor_path)$/;"	kind:variable	line:76
+predictor	../src\image\dlib_videowebcam_facial_landmarks.py	/^predictor = dlib.shape_predictor(args["shape_predictor"])$/;"	kind:variable	line:25
+predictor_path	../src\image\dlib_images_facial_landmarks.py	/^predictor_path = sys.argv[1]$/;"	kind:variable	line:72
+prep	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^prep = transforms.Compose([transforms.Scale(img_size),$/;"	kind:variable	line:110
+prep_hr	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^prep_hr = transforms.Compose([transforms.Scale(img_size_hr),$/;"	kind:variable	line:213
+preprocess	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^from shapes5_preprocessdata import preprocess$/;"	kind:namespace	line:37
+preprocess	../src\classifier\shapes5_preprocessdata.py	/^def preprocess(x):$/;"	kind:function	line:32
+printDebug	../src\rl_alpha0\starship.py	/^    def printDebug(self):$/;"	kind:member	line:261
+printDebugOne	../src\rl_alpha0\starship.py	/^    def printDebugOne(self, i):$/;"	kind:member	line:266
+print_function	../src\classifier\classifier_image_CNN_keras.py	/^from __future__ import print_function$/;"	kind:namespace	line:7
+print_function	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^from __future__ import print_function$/;"	kind:namespace	line:6
+print_function	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^from __future__ import print_function$/;"	kind:namespace	line:6
+print_function	../src\classifier\classifier_pointcloud_empty.py	/^from __future__ import print_function$/;"	kind:namespace	line:10
+print_function	../src\classifier\classifier_pointcloud_keras.py	/^from __future__ import print_function$/;"	kind:namespace	line:10
+print_function	../src\classifier\classifier_pointcloud_pytorch.py	/^from __future__ import print_function$/;"	kind:namespace	line:10
+print_function	../src\classifier\classifier_pointcloud_tensorflow.py	/^from __future__ import print_function$/;"	kind:namespace	line:3
+print_function	../src\classifier\shapes5_preprocessdata.py	/^from __future__ import print_function$/;"	kind:namespace	line:3
+print_function	../src\gan\classifier_generator_tf_mnist.py	/^from __future__ import print_function$/;"	kind:namespace	line:3
+print_function	../src\gan\gan_keras_not_working.py	/^from __future__ import print_function$/;"	kind:namespace	line:3
+print_logits	../src\gan\classifier_generator_tf_mnist.py	/^def print_logits (y,batch_size,nb_label):$/;"	kind:function	line:73
+pygame	../src\rl_alpha0\starship.py	/^import pygame$/;"	kind:namespace	line:5
+r	../src\optimization\cma_test.py	/^r = es.best$/;"	kind:variable	line:29
+random	../src\rl_alpha0\mcts.py	/^import random$/;"	kind:namespace	line:4
+random	../src\rl_alpha0\starship.py	/^    def random(cls):$/;"	kind:member	line:165
+random	../src\rl_alpha0\starship.py	/^import random$/;"	kind:namespace	line:2
+random_seed	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^    random_seed = 217$/;"	kind:variable	line:143
+rects	../src\image\dlib_videowebcam_facial_landmarks.py	/^	rects = detector(gray, 0)$/;"	kind:variable	line:42
+resetAllBatch	../src\rl_alpha0\starship.py	/^    def resetAllBatch(self, obsone):$/;"	kind:member	line:289
+resetOneAgent	../src\rl_alpha0\starship.py	/^    def resetOneAgent(self, i, obsone):$/;"	kind:member	line:279
+resetRandomlyAllBatch	../src\rl_alpha0\starship.py	/^    def resetRandomlyAllBatch(self):$/;"	kind:member	line:300
+resetRandomlyOneAgent	../src\rl_alpha0\starship.py	/^    def resetRandomlyOneAgent(self, i):$/;"	kind:member	line:293
+reward	../src\rl_alpha0\starship.py	/^    def reward(self, n_eme):$/;"	kind:member	line:326
+round	../src\rl_alpha0\starship.py	/^    def round(self):$/;"	kind:member	line:113
+run	../src\rl_alpha0\alpha0.py	/^    def run(self):$/;"	kind:member	line:133
+run	../src\rl_alpha0\starship.py	/^    def run(self):$/;"	kind:member	line:467
+running_loss	../src\classifier\cifar10_tutorial.py	/^    running_loss = 0.0$/;"	kind:variable	line:160
+saveImage	../src\gan\classifier_generator_tf_mnist.py	/^def saveImage(x, filename):$/;"	kind:function	line:15
+saveModel	../src\rl_alpha0\alpha0.py	/^    def saveModel(self):$/;"	kind:member	line:75
+saveOptiData	../src\rl_alpha0\alpha0.py	/^    def saveOptiData(self):$/;"	kind:member	line:84
+saveopts	../src\autoencoder\keras_points.py	/^from setuptools.command.saveopts import saveopts$/;"	kind:namespace	line:20
+scipy	../src\gan\classifier_generator_tf_mnist.py	/^import scipy.misc as im$/;"	kind:namespace	line:9
+score	../src\classifier\classifier_image_CNN_keras.py	/^score = model.evaluate(x_test, y_test, verbose=0)$/;"	kind:variable	line:67
+search	../src\rl_alpha0\mcts.py	/^    def search(self, observation):          # the main algo$/;"	kind:member	line:54
+setAction	../src\rl_alpha0\starship.py	/^    def setAction(self, i, actone):$/;"	kind:member	line:349
+setActionForAllBatch	../src\rl_alpha0\starship.py	/^    def setActionForAllBatch(self, actone):$/;"	kind:member	line:352
+setForce	../src\rl_alpha0\starship.py	/^    def setForce(self, f):$/;"	kind:member	line:201
+setPaused	../src\rl_alpha0\starship.py	/^    def setPaused(self, p=True):$/;"	kind:member	line:276
+setPosition	../src\rl_alpha0\starship.py	/^    def setPosition(self, p):$/;"	kind:member	line:207
+setRandomAction	../src\rl_alpha0\starship.py	/^    def setRandomAction(self, i):$/;"	kind:member	line:336
+setRandomActionForAllBatch	../src\rl_alpha0\starship.py	/^    def setRandomActionForAllBatch(self):$/;"	kind:member	line:340
+setRewardForAllBatch	../src\rl_alpha0\starship.py	/^    def setRewardForAllBatch(self, rewa=0.0):$/;"	kind:member	line:322
+setVelocity	../src\rl_alpha0\starship.py	/^    def setVelocity(self, v):$/;"	kind:member	line:204
+setZeroActionForAllBatch	../src\rl_alpha0\starship.py	/^    def setZeroActionForAllBatch(self):$/;"	kind:member	line:344
+shape	../src\image\dlib_images_facial_landmarks.py	/^        shape = predictor(img, d)$/;"	kind:variable	line:95
+shape	../src\image\dlib_videowebcam_facial_landmarks.py	/^		shape = face_utils.shape_to_np(shape)$/;"	kind:variable	line:50
+shape	../src\image\dlib_videowebcam_facial_landmarks.py	/^		shape = predictor(gray, rect)$/;"	kind:variable	line:49
+shapes5_preprocessdata.py	../src\classifier\shapes5_preprocessdata.py	1;"	kind:file	line:1
+ship	../src\rl_alpha0\starship.py	/^    ship = Starship()$/;"	kind:variable	line:480
+show_every	../src\style_transfer\StyleTransfer.py	/^    show_every = 100$/;"	kind:variable	line:175
+show_iter	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^show_iter = 50$/;"	kind:variable	line:180
+shuffle_dataset	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^    shuffle_dataset = True$/;"	kind:variable	line:142
+sigma0	../src\optimization\cma_test.py	/^sigma0 = 2$/;"	kind:variable	line:20
+sizeOfActionArray	../src\rl_alpha0\starship.py	/^    def sizeOfActionArray(self):$/;"	kind:member	line:247
+sizeOfBatch	../src\rl_alpha0\starship.py	/^    def sizeOfBatch(self):$/;"	kind:member	line:253
+sizeOfObservationArray	../src\rl_alpha0\starship.py	/^    def sizeOfObservationArray(self):       # position(x,y) and velocity(vx,vy)$/;"	kind:member	line:250
+solutions	../src\optimization\cma_test.py	/^    solutions = es.ask()$/;"	kind:variable	line:24
+split	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^    split = int(np.floor(validation_split * dataset_size))$/;"	kind:variable	line:146
+square_distance	../src\rl_alpha0\starship.py	/^    def square_distance(cls, a, b):$/;"	kind:member	line:171
+square_length	../src\rl_alpha0\starship.py	/^    def square_length(self):$/;"	kind:member	line:116
+starship	../src\rl_alpha0\alpha0.py	/^import starship$/;"	kind:namespace	line:25
+starship	../src\rl_alpha0\mcts.py	/^    starship = starship.Starship()$/;"	kind:variable	line:210
+starship	../src\rl_alpha0\mcts.py	/^import starship$/;"	kind:namespace	line:7
+starship.py	../src\rl_alpha0\starship.py	1;"	kind:file	line:1
+stepBatch	../src\rl_alpha0\starship.py	/^    def stepBatch(self):$/;"	kind:member	line:364
+stepBatchRandom	../src\rl_alpha0\starship.py	/^    def stepBatchRandom(self):$/;"	kind:member	line:377
+stepModelAction	../src\rl_alpha0\alpha0.py	/^    def stepModelAction(self):$/;"	kind:member	line:113
+style	../src\style_transfer\StyleTransfer.py	/^    style = load_image('images\/peinture8.jpg', shape=content.shape[-2:]).to(device)$/;"	kind:variable	line:143
+style_features	../src\style_transfer\StyleTransfer.py	/^        style_features = get_features(style, vgg)$/;"	kind:variable	line:183
+style_features	../src\style_transfer\StyleTransfer.py	/^    style_features = get_features(style, vgg)$/;"	kind:variable	line:156
+style_grams	../src\style_transfer\StyleTransfer.py	/^    style_grams = {layer: gram_matrix(style_features[layer]) for layer in style_features}           # dict with each gram matrix for each feature name$/;"	kind:variable	line:177
+style_layers	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^style_layers = ['r11','r21','r31','r41', 'r51'] $/;"	kind:variable	line:160
+style_layers	../src\style_transfer\StyleTransfer.py	/^    style_layers = {  'conv0', 'conv5', 'conv10', }$/;"	kind:variable	line:178
+style_loss	../src\style_transfer\StyleTransfer.py	/^        style_loss = 0$/;"	kind:variable	line:191
+style_targets	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^style_targets = [GramMatrix()(A).detach() for A in vgg(style_image, style_layers)]$/;"	kind:variable	line:173
+style_targets	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^style_targets = [GramMatrix()(A).detach() for A in vgg(style_image, style_layers)]$/;"	kind:variable	line:233
+style_weights	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^style_weights = [1e3\/n**2 for n in [64,128,256,512,512]]$/;"	kind:variable	line:168
+sys	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^import sys$/;"	kind:namespace	line:15
+sys	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^import sys$/;"	kind:namespace	line:15
+sys	../src\classifier\classifier_pointcloud_empty.py	/^import sys$/;"	kind:namespace	line:19
+sys	../src\classifier\classifier_pointcloud_pytorch.py	/^import sys$/;"	kind:namespace	line:19
+sys	../src\classifier\shapes5_preprocessdata.py	/^import sys$/;"	kind:namespace	line:12
+sys	../src\image\dlib_images_facial_landmarks.py	/^import sys$/;"	kind:namespace	line:55
+sys	../src\rl_alpha0\alpha0.py	/^import sys$/;"	kind:namespace	line:7
+target	../src\style_transfer\StyleTransfer.py	/^    target = content.clone().requires_grad_(True).to(device)$/;"	kind:variable	line:167
+target_features	../src\style_transfer\StyleTransfer.py	/^        target_features = get_features(target, vgg)$/;"	kind:variable	line:184
+target_grams	../src\style_transfer\StyleTransfer.py	/^        target_grams = {layer: gram_matrix(target_features[layer]) for layer in target_features}           # dict with each gram matrix for each feature name$/;"	kind:variable	line:192
+targets	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^targets = style_targets + content_targets$/;"	kind:variable	line:175
+targets	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^targets = style_targets + content_targets$/;"	kind:variable	line:235
+testdata	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^    testdata = torchvision.datasets.CIFAR10(root='.\/data', train=False,$/;"	kind:variable	line:119
+testloader	../src\classifier\cifar10_tutorial.py	/^testloader = torch.utils.data.DataLoader(testset, batch_size=4,$/;"	kind:variable	line:77
+testloader	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^    testloader = torch.utils.data.DataLoader(testdata, batch_size=4,$/;"	kind:variable	line:121
+testset	../src\classifier\cifar10_tutorial.py	/^testset = torchvision.datasets.CIFAR10(root='.\/data', train=False,$/;"	kind:variable	line:75
+tf	../src\classifier\classifier_pointcloud_tensorflow.py	/^import tensorflow as tf$/;"	kind:namespace	line:10
+tf	../src\gan\classifier_generator_tf_mnist.py	/^import tensorflow as tf$/;"	kind:namespace	line:7
+tf	../src\gan\gan_keras_not_working.py	/^import tensorflow as tf$/;"	kind:namespace	line:10
+time	../src\autoencoder\keras_points.py	/^from time import time$/;"	kind:namespace	line:13
+time	../src\image\dlib_videowebcam_facial_landmarks.py	/^import time$/;"	kind:namespace	line:9
+time	../src\rl_alpha0\alpha0.py	/^from time import time$/;"	kind:namespace	line:8
+time	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^import time$/;"	kind:namespace	line:1
+torch	../src\classifier\cifar10_tutorial.py	/^import torch$/;"	kind:namespace	line:58
+torch	../src\classifier\cifar10_tutorial.py	/^import torch.nn as nn$/;"	kind:namespace	line:114
+torch	../src\classifier\cifar10_tutorial.py	/^import torch.nn.functional as F$/;"	kind:namespace	line:115
+torch	../src\classifier\cifar10_tutorial.py	/^import torch.optim as optim$/;"	kind:namespace	line:145
+torch	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^import torch$/;"	kind:namespace	line:19
+torch	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^import torch$/;"	kind:namespace	line:26
+torch	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^import torch.nn as nn$/;"	kind:namespace	line:20
+torch	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^import torch.nn as nn$/;"	kind:namespace	line:27
+torch	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^import torch.nn.functional as F$/;"	kind:namespace	line:21
+torch	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^import torch.nn.functional as F$/;"	kind:namespace	line:29
+torch	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^import torch.optim as optim$/;"	kind:namespace	line:22
+torch	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^import torch.optim as optim$/;"	kind:namespace	line:28
+torch	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^import torch$/;"	kind:namespace	line:21
+torch	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^import torch.nn as nn$/;"	kind:namespace	line:22
+torch	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^import torch.nn.functional as F$/;"	kind:namespace	line:23
+torch	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^import torch.optim as optim$/;"	kind:namespace	line:24
+torch	../src\classifier\classifier_pointcloud_pytorch.py	/^import torch$/;"	kind:namespace	line:23
+torch	../src\classifier\classifier_pointcloud_pytorch.py	/^import torch.nn as nn$/;"	kind:namespace	line:24
+torch	../src\classifier\classifier_pointcloud_pytorch.py	/^import torch.nn.functional as F$/;"	kind:namespace	line:25
+torch	../src\classifier\classifier_pointcloud_pytorch.py	/^import torch.optim as optim$/;"	kind:namespace	line:26
+torch	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^import torch$/;"	kind:namespace	line:6
+torch	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^import torch.nn as nn$/;"	kind:namespace	line:8
+torch	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^import torch.nn.functional as F$/;"	kind:namespace	line:9
+torch	../src\style_transfer\StyleTransfer.py	/^import torch$/;"	kind:namespace	line:6
+torch	../src\style_transfer\StyleTransfer.py	/^import torch.optim as optim$/;"	kind:namespace	line:7
+torchvision	../src\classifier\cifar10_tutorial.py	/^import torchvision$/;"	kind:namespace	line:59
+torchvision	../src\classifier\cifar10_tutorial.py	/^import torchvision.transforms as transforms$/;"	kind:namespace	line:60
+torchvision	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^import torchvision$/;"	kind:namespace	line:38
+torchvision	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^import torchvision$/;"	kind:namespace	line:30
+torchvision	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^import torchvision$/;"	kind:namespace	line:12
+total	../src\classifier\cifar10_tutorial.py	/^total = 0$/;"	kind:variable	line:224
+total	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^    total = 0$/;"	kind:variable	line:228
+total_loss	../src\style_transfer\StyleTransfer.py	/^        total_loss =  0.5*content_loss + 0.5*style_loss$/;"	kind:variable	line:199
+train	../src\autoencoder\keras_points.py	/^    def train(self):$/;"	kind:member	line:125
+train	../src\gan\gan_keras_not_working.py	/^    def train(self):$/;"	kind:member	line:161
+train	../src\rl_alpha0\alpha0.py	/^    def train(self):$/;"	kind:member	line:106
+train_sampler	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^    train_sampler = SubsetRandomSampler(train_indices)$/;"	kind:variable	line:158
+trainloader	../src\classifier\cifar10_tutorial.py	/^trainloader = torch.utils.data.DataLoader(trainset, batch_size=4,$/;"	kind:variable	line:72
+trainset	../src\classifier\cifar10_tutorial.py	/^trainset = torchvision.datasets.CIFAR10(root='.\/data', train=True,$/;"	kind:variable	line:70
+transform	../src\classifier\cifar10_tutorial.py	/^transform = transforms.Compose($/;"	kind:variable	line:66
+transform	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^    transform = transforms.Compose($/;"	kind:variable	line:110
+transforms	../src\classifier\cifar10_tutorial.py	/^import torchvision.transforms as transforms$/;"	kind:namespace	line:60
+transforms	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^from torchvision import datasets, transforms$/;"	kind:namespace	line:35
+transforms	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^from torchvision import datasets, transforms$/;"	kind:namespace	line:28
+transforms	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^from torchvision import transforms$/;"	kind:namespace	line:13
+transforms	../src\style_transfer\StyleTransfer.py	/^from torchvision import transforms, models$/;"	kind:namespace	line:8
+update	../src\rl_alpha0\starship.py	/^    def update(self, dt):$/;"	kind:member	line:187
+urllib	../src\classifier\classifier_image_CNN_pytorch_cifar10.py	/^import urllib$/;"	kind:namespace	line:9
+urllib	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^import urllib$/;"	kind:namespace	line:9
+urllib	../src\classifier\classifier_pointcloud_empty.py	/^import urllib$/;"	kind:namespace	line:13
+urllib	../src\classifier\classifier_pointcloud_keras.py	/^import urllib$/;"	kind:namespace	line:13
+urllib	../src\classifier\classifier_pointcloud_pytorch.py	/^import urllib$/;"	kind:namespace	line:13
+urllib	../src\classifier\classifier_pointcloud_tensorflow.py	/^import urllib$/;"	kind:namespace	line:6
+urllib	../src\classifier\shapes5_preprocessdata.py	/^import urllib$/;"	kind:namespace	line:6
+urllib	../src\gan\gan_keras_not_working.py	/^import urllib$/;"	kind:namespace	line:6
+valid_sampler	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^    valid_sampler = SubsetRandomSampler(val_indices)$/;"	kind:variable	line:159
+validation_data	../src\classifier\classifier_image_CNN_keras.py	/^          validation_data=(x_test, y_test))$/;"	kind:variable	line:66
+validation_split	../src\classifier\classifier_image_CNN_pytorch_shapes5.py	/^    validation_split = 0.3$/;"	kind:variable	line:141
+verbose	../src\classifier\classifier_image_CNN_keras.py	/^          verbose=1,$/;"	kind:variable	line:65
+vgg	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^vgg = VGG()$/;"	kind:variable	line:133
+vgg	../src\style_transfer\StyleTransfer.py	/^    vgg = models.vgg19(pretrained=True).features$/;"	kind:variable	line:123
+vnp	../src\style_transfer\StyleTransfer.py	/^        vnp = value.to("cpu").clone().detach().numpy()$/;"	kind:variable	line:162
+vs	../src\image\dlib_videowebcam_facial_landmarks.py	/^vs = VideoStream(usePiCamera=args["picamera"] > 0).start()$/;"	kind:variable	line:29
+weight_variable	../src\gan\classifier_generator_tf_mnist.py	/^def weight_variable(shape):$/;"	kind:function	line:103
+weights	../src\style_transfer\NeuralStyleTransfer_Gatys.py	/^weights = style_weights + content_weights$/;"	kind:variable	line:170
+win	../src\image\dlib_images_facial_landmarks.py	/^win = dlib.image_window()$/;"	kind:variable	line:77
+x	../src\rl_alpha0\starship.py	/^    def x(self):$/;"	kind:member	line:19
+x	../src\rl_alpha0\starship.py	/^    def x(self, new_x):$/;"	kind:member	line:23
+x0	../src\optimization\cma_test.py	/^x0 = np.array( [ 1,1 ] )$/;"	kind:variable	line:19
+x_test	../src\classifier\classifier_image_CNN_keras.py	/^    x_test = x_test.reshape(x_test.shape[0], 1, img_rows, img_cols)$/;"	kind:variable	line:27
+x_test	../src\classifier\classifier_image_CNN_keras.py	/^    x_test = x_test.reshape(x_test.shape[0], img_rows, img_cols, 1)$/;"	kind:variable	line:31
+x_test	../src\classifier\classifier_image_CNN_keras.py	/^x_test = x_test.astype('float32')$/;"	kind:variable	line:35
+x_train	../src\classifier\classifier_image_CNN_keras.py	/^    x_train = x_train.reshape(x_train.shape[0], 1, img_rows, img_cols)$/;"	kind:variable	line:26
+x_train	../src\classifier\classifier_image_CNN_keras.py	/^    x_train = x_train.reshape(x_train.shape[0], img_rows, img_cols, 1)$/;"	kind:variable	line:30
+x_train	../src\classifier\classifier_image_CNN_keras.py	/^x_train = x_train.astype('float32')$/;"	kind:variable	line:34
+y	../src\rl_alpha0\starship.py	/^    def y(self):$/;"	kind:member	line:27
+y	../src\rl_alpha0\starship.py	/^    def y(self, new_y):$/;"	kind:member	line:31
+y_test	../src\classifier\classifier_image_CNN_keras.py	/^y_test = keras.utils.to_categorical(y_test, num_classes)$/;"	kind:variable	line:44
+y_train	../src\classifier\classifier_image_CNN_keras.py	/^y_train = keras.utils.to_categorical(y_train, num_classes)$/;"	kind:variable	line:43
