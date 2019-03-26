@@ -19,16 +19,19 @@ NumPy
 
 MatPlotLib
 * conda install -c conda-forge matplotlib
-* conda install -c conda-forge/label/broken matplotlib
-* conda install -c conda-forge/label/testing matplotlib
-* conda install -c conda-forge/label/rc matplotlib 
 
-OpenCv, DLib, SciPy, etc.
-* pip install numpy scipy matplotlib scikit-learn jupyter
+OpenCv, SciPy, SciKit Image
+* pip install scipy scikit-learn jupyter  imutils scikit-image
 * pip install opencv-contrib-python
-* pip install imutils
+
+DLib
+* conda install -c menpo dlib 
+or 
 * pip install cmake
 * pip install dlib
+
+
+Next chose which framework you want to use: TensorFlow with Keras or PyTorch
 
 TensorFlow
 * pip install --ignore-installed --upgrade tensorflow 
@@ -83,10 +86,10 @@ Taper 3 mettra fin à l'execution du programme.
 
 
 
-## DLib
+## Image Processing
 * dlib_facial_landmarks.py
 * dlib_video_facial_landmarks.py
-
+* image_warping.py
 => test of DLib to get landmarks on faces from photos and video
 
 
