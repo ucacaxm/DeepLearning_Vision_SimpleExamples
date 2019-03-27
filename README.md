@@ -8,9 +8,23 @@ Vision
 * Vision examples often use [DLib](http://dlib.net) and
 * [OpenCV](https://opencv.org/)
 
+
+For the edition of code, we will use Visual Code which is light, efficient, configurable and works on Linux, Windows, Mac ! 
+It comes with Anaconda as well.
+See https://code.visualstudio.com/docs/languages/python
+
+Anaconda install python and Manage environments
+https://www.anaconda.com/distribution/
+
+
+
 ## Installation
 
-Install [Anaconda](https://www.anaconda.com/download/), take the one with python 3 and then launch an Anaconda prompt and create your working env nammed 'p36' with Python 3.6 (you can choose another version).
+
+Install [Anaconda](https://www.anaconda.com/download/): take the one with python 3 
+and include the installation of  Visual Code which works on Linux, Mac, Windows !
+One installed, launch an Anaconda prompt and create your working env nammed 'p36' 
+with Python 3.6 (you can choose another version).
 * conda create -n p36 python=3.6
 * activate p36
 
@@ -86,11 +100,15 @@ Taper 3 mettra fin à l'execution du programme.
 
 
 
-## Image Processing
+## Image Processing in src/image
 * dlib_facial_landmarks.py
 * dlib_video_facial_landmarks.py
 * image_warping.py
 => test of DLib to get landmarks on faces from photos and video
+
+
+## Optimization samples in src/optimization
+* cma_test: an simple example of optimization of the function f(x,y) = x^2+y^2 => it finds x=0 and y=0 as minimum
 
 
 ## Alpha0 on a starship mini game
