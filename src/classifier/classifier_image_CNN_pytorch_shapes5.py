@@ -54,7 +54,7 @@ def imshow(img):
 
 class Net(nn.Module):
 
-    def __init__(self):
+    def __init__(self):                         # 28x28 => conv 24x24 => max pool 14x14 => conv 10x10 => max 5x5 
         super(Net, self).__init__()
         self.conv1 = nn.Conv2d( 1, 6, 5)		# (channels_input=1, nb conv to apply=6, filterSize=5)
         self.pool = nn.MaxPool2d(2,2)
