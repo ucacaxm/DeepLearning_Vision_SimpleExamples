@@ -77,7 +77,13 @@ def main():
     print(net)
 
     ############# SGD config: Stochastic Gradient Descent Config    
-    criterion = nn.CrossEntropyLoss()
+
+    # It is useful when training a classification problem with C classes
+    # The input is expected to contain raw, unnormalized scores for each class.
+    # See python CrossEntropyLoss doc here https://pytorch.org/docs/stable/nn.html
+    criterion = nn.CrossEntropyLoss()   
+
+    # 
     optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
 
     ############ TRAINNING
@@ -93,7 +99,11 @@ def main():
     
             # forward + backward + optimize
             outputs = net(inputs)
-            loss = criterion(outputs, torch.max(labels, 1)[1])
+
+            # torch.max returns the indices which is the index location of each maximum value found
+            # ouptus has to be provided as it is (see CrossEntropyLoss comment before)
+            loss = criterion(outputs, torch.max(labels, 1)[1])  
+
             loss.backward()
             optimizer.step()
     

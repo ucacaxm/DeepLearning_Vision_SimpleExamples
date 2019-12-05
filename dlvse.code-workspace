@@ -3,9 +3,5 @@
 		{
 			"path": "."
 		}
-	],
-	"settings": {
-		"git.ignoreLimitWarning": true,
-		"editor.fontSize": 15
-	}
+	]
 }

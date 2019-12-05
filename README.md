@@ -1,6 +1,5 @@
 # Various Simple Examples of Deep Learning / Vision
 
-
 Deep Learning
 * Most examples use [Keras](https://keras.io) on top of [TensorFlow](https://www.tensorflow.org) or [PyTorch](https://pytorch.org/)
 
@@ -19,7 +18,6 @@ https://www.anaconda.com/distribution/
 
 
 ## Installation
-
 
 Install [Anaconda](https://www.anaconda.com/download/): take the one with python 3 
 and include the installation of  Visual Code which works on Linux, Mac, Windows !
@@ -57,6 +55,13 @@ Keras
 
 PyTorch
 * To install PyTorch use the pip install commands provided in the web site of [PyTorch](https://pytorch.org/)
+
+
+## Visual Code 
+
+Install and configure Visual Code:
+Open the Command Pallete (Ctrl/Cmd + Shift + P) and type “Python: Select Interpreter”
+See here: https://medium.com/@udiyosovzon/how-to-activate-conda-environment-in-vs-code-ce599497f20d
 
 
 

@@ -139,8 +139,8 @@ if __name__ == '__main__':
 
 
     ########################## DISPLAY IMAGE#########################################################""
-    content = load_image('images/face.jpg').to(device)
-    style = load_image('images/peinture8.jpg', shape=content.shape[-2:]).to(device)
+    content = load_image('src/style_transfer/images/face.jpg').to(device)
+    style = load_image('src/style_transfer/images/peinture8.jpg', shape=content.shape[-2:]).to(device)
 
     #imshow(im_convert(content))
     #imshow(im_convert(style))
@@ -205,6 +205,6 @@ if __name__ == '__main__':
         print('Total loss: ', i, total_loss.item())
         if  i % show_every == 0:
             #imshow(im_convert(target))
-            plt.imsave('images/output.png', im_convert(target))
+            plt.imsave('src\style_transfer/images/output.png', im_convert(target))
             print("save")
 
