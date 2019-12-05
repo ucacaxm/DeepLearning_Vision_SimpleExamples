@@ -37,8 +37,8 @@ class PointsRBF:
         xdst = dst[:,0]
         ydst = dst[:,1]
         # doc for RBF: https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.Rbf.html
-        self.rbf_x = Rbf( xsrc, ysrc, xdst, function='multiquadric')  # learn the move for X: self.rbf_x learn to provide xdst from input=(xsrc,ysrc)
-        self.rbf_y = Rbf( xsrc, ysrc, ydst, function='multiquadric')  # learn the move for Y: self.rbf_y learn to provide ydst from input=(xsrc,ysrc) 
+        self.rbf_x = Rbf( xsrc, ysrc, xdst, function='thin_plate')  # learn the move for X: self.rbf_x learn to provide xdst from input=(xsrc,ysrc)
+        self.rbf_y = Rbf( xsrc, ysrc, ydst, function='thin_plate')  # learn the move for Y: self.rbf_y learn to provide ydst from input=(xsrc,ysrc) 
 
     def __call__(self, xy):
         x = xy[:,0]
@@ -64,8 +64,9 @@ def click(event, x, y, flags, param):
     # performed
     if event == cv2.EVENT_LBUTTONDOWN:
         print("(x,y)=",x," ",y, "   shape=", param[0].shape)
-        a = np.array(  [ [x,y], [x,y],  ]).reshape( [2,1,2] )
-        param[0] = np.append( param[0], a, 1)
+        a = np.array(  [x,y] ).reshape( [1,2] )
+        param[0] = np.append( param[0], a, 0)
+        param[1] = np.append( param[1], a, 0)
         #a = np.append( param[0], [[x,y],], 0 )
         #b = np.append( param[1], [[x,y],], 0 )
         #param = np.array([a,b])
@@ -73,7 +74,7 @@ def click(event, x, y, flags, param):
         #param[0] = a
         #param[1] = b
     elif event == cv2.EVENT_LBUTTONUP:
-        param[0][1][-1] = [x,y]
+        param[1][-1] = [x,y]
 
 
 
@@ -86,22 +87,20 @@ if __name__ == '__main__':
 
     output_shape = image.shape[:2]  # dimensions of our final image (from webcam eg)
     print("shape="+str(image.shape))
-    src_coord = np.array([[0,0], [image.shape[1]-1,0], [image.shape[1]-1,image.shape[0]-1], [0,image.shape[0]-1], [186,331], [226,291], [264,327]])
-    dst_coord = np.array([[0,0], [image.shape[1]-1,0], [image.shape[1]-1,image.shape[0]-1], [0,image.shape[0]-1], [170,320], [226,291], [285,320]])
-    matching_array = np.array( [src_coord, dst_coord] )
+    src_coord = np.array([[0,0], [image.shape[1]-1,0], [image.shape[1]-1,image.shape[0]-1], [0,image.shape[0]-1], [186,331], [264,327]])
+    dst_coord = np.array([[0,0], [image.shape[1]-1,0], [image.shape[1]-1,image.shape[0]-1], [0,image.shape[0]-1], [175,327], [255,322]])
 
     image_warped = warpRBF(image, src_coord, dst_coord)
 
-    points = [ matching_array  ]
+    matching_points = [ src_coord, dst_coord  ]
     cv2.namedWindow("Frame")
-    cv2.setMouseCallback("Frame", click, points)
+    cv2.setMouseCallback("Frame", click, matching_points)
 
     while True:
         im = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         imw = cv2.cvtColor(image_warped, cv2.COLOR_BGR2RGB)
-        matching_array = points[0]
-        src_coord = matching_array[0]
-        dst_coord = matching_array[1]
+        src_coord = matching_points[0]
+        dst_coord = matching_points[1]
         for i in range(len(src_coord)):
             x = src_coord[i, 0]
             y = src_coord[i, 1]
@@ -124,7 +123,7 @@ if __name__ == '__main__':
         if key == ord("q") or key == 27:		# 27=ESC
             break
         if key == ord("w"):
-            image_warped = warpRBF(image, matching_array[0], matching_array[1])
+            image_warped = warpRBF(image, src_coord, dst_coord)
 
  
     # do a bit of cleanup
