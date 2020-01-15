@@ -21,10 +21,14 @@ https://www.anaconda.com/distribution/
 
 Install [Anaconda](https://www.anaconda.com/download/): take the one with python 3 
 and include the installation of  Visual Code which works on Linux, Mac, Windows !
-One installed, launch an Anaconda prompt and create your working env nammed 'p36' 
-with Python 3.6 (you can choose another version).
-* conda create -n p36 python=3.6
-* activate p36
+One installed, launch an Anaconda prompt and create your working env nammed 'p37' 
+with Python 3.7 (you can choose another version).
+
+* conda create -n p37 python=3.7
+* activate p37
+
+Install every packages with only 'conda install' or with 'pip install' but try to not mix both, specially for basic packages like numpy, matplotlib, etc.
+
 
 NumPy
 * conda install -c anaconda numpy 
@@ -32,9 +36,17 @@ NumPy
 MatPlotLib
 * conda install -c conda-forge matplotlib
 
-OpenCv, SciPy, SciKit Image
-* pip install scipy scikit-learn jupyter  imutils scikit-image
-* pip install opencv-contrib-python
+OpenCv, SciPy, SciKit Image, Pillow, PyQt, pygame, etc. (many of then are optional, depending what you want to do)
+* conda install -c conda-forge opencv 
+* conda install -c anaconda jupyter 
+* conda install -c anaconda scikit-learn 
+* conda install -c anaconda scikit-image 
+* conda install -c anaconda pillow
+* conda install -c anaconda pyqt
+* conda install -c cogsci pygame
+or
+* pip install scipy scikit-learn jupyter imutils scikit-image
+
 
 DLib
 * conda install -c menpo dlib 
@@ -43,7 +55,11 @@ or
 * pip install dlib
 
 
-Next chose which framework you want to use: TensorFlow with Keras or PyTorch
+Next chose which framework you want to use: TensorFlow with Keras or PyTorch.
+We recommand PyTorch.
+
+PyTorch
+* To install PyTorch use the pip install commands provided in the web site of [PyTorch](https://pytorch.org/)
 
 TensorFlow
 * pip install --ignore-installed --upgrade tensorflow 
@@ -53,8 +69,6 @@ or
 Keras
 * conda install -c conda-forge keras 
 
-PyTorch
-* To install PyTorch use the pip install commands provided in the web site of [PyTorch](https://pytorch.org/)
 
 
 ## Visual Code 

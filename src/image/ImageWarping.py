@@ -37,8 +37,10 @@ class PointsRBF:
         xdst = dst[:,0]
         ydst = dst[:,1]
         # doc for RBF: https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.Rbf.html
-        self.rbf_x = Rbf( xsrc, ysrc, xdst, function='thin_plate')  # learn the move for X: self.rbf_x learn to provide xdst from input=(xsrc,ysrc)
-        self.rbf_y = Rbf( xsrc, ysrc, ydst, function='thin_plate')  # learn the move for Y: self.rbf_y learn to provide ydst from input=(xsrc,ysrc) 
+        #self.rbf_x = Rbf( xsrc, ysrc, xdst, function='thin_plate')  # learn the move for X: self.rbf_x learn to provide xdst from input=(xsrc,ysrc)
+        #self.rbf_y = Rbf( xsrc, ysrc, ydst, function='thin_plate')  # learn the move for Y: self.rbf_y learn to provide ydst from input=(xsrc,ysrc) 
+        self.rbf_x = Rbf( xsrc, ysrc, xdst, function='linear')  # learn the move for X: self.rbf_x learn to provide xdst from input=(xsrc,ysrc)
+        self.rbf_y = Rbf( xsrc, ysrc, ydst, function='linear')  # learn the move for Y: self.rbf_y learn to provide ydst from input=(xsrc,ysrc) 
 
     def __call__(self, xy):
         x = xy[:,0]
@@ -87,8 +89,8 @@ if __name__ == '__main__':
 
     output_shape = image.shape[:2]  # dimensions of our final image (from webcam eg)
     print("shape="+str(image.shape))
-    src_coord = np.array([[0,0], [image.shape[1]-1,0], [image.shape[1]-1,image.shape[0]-1], [0,image.shape[0]-1], [186,331], [264,327]])
-    dst_coord = np.array([[0,0], [image.shape[1]-1,0], [image.shape[1]-1,image.shape[0]-1], [0,image.shape[0]-1], [175,327], [255,322]])
+    src_coord = np.array([[0,0], [image.shape[1]-1,0], [image.shape[1]-1,image.shape[0]-1], [0,image.shape[0]-1] ]) #, [186,331], [264,327]])
+    dst_coord = np.array([[0,0], [image.shape[1]-1,0], [image.shape[1]-1,image.shape[0]-1], [0,image.shape[0]-1] ]) #, [175,327], [255,322]])
 
     image_warped = warpRBF(image, src_coord, dst_coord)
 
