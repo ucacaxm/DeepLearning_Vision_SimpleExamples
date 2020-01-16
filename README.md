@@ -28,24 +28,16 @@ with Python 3.7 (you can choose another version).
 * activate p37
 
 Install every packages with only 'conda install' or with 'pip install' but try to not mix both, specially for basic packages like numpy, matplotlib, etc.
+The '-c channel' is used to select the source channel of the packages. Standard are 'anaconda' or 'conda-forge'.
 
 
 NumPy
 * conda install -c anaconda numpy 
 
-MatPlotLib
-* conda install -c conda-forge matplotlib
-
-OpenCv, SciPy, SciKit Image, Pillow, PyQt, pygame, etc. (many of then are optional, depending what you want to do)
-* conda install -c conda-forge opencv 
-* conda install -c anaconda jupyter 
-* conda install -c anaconda scikit-learn 
-* conda install -c anaconda scikit-image 
-* conda install -c anaconda pillow
-* conda install -c anaconda pyqt
+MatPlotLib, OpenCv, SciPy, SciKit Image, Pillow, PyQt, pygame, etc. (many of then are optional, depending what you want to do)
+* conda install -c anaconda  numpy pylint jupyter scikit-learn scikit-image pillow pyqt
+* conda install -c conda-forge matplotlib opencv
 * conda install -c cogsci pygame
-or
-* pip install scipy scikit-learn jupyter imutils scikit-image
 
 
 DLib
