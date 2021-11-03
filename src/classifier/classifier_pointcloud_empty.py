@@ -44,6 +44,9 @@ def next_batch(n):
 
 def main():
 
+    x = next_batch(10)
+    print(x)
+
     ############# NETWORK definition/configuration
 
     ############# Stochastic Gradient Descent Config
