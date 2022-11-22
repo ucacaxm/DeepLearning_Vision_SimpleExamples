@@ -74,6 +74,10 @@ def get_features(image, model, layers=None):
     ## Need the layers for the content and style representations of an image
     if layers is None:
         layers = {'0': 'conv0',
+                  '1': 'conv1',
+                  '2': 'conv2',
+                  '3': 'conv3',
+                  '4': 'conv4',
                   '5': 'conv5', 
                   '10': 'conv10', 
                   '19': 'conv19',   ## content representation
@@ -140,6 +144,7 @@ if __name__ == '__main__':
     ########################## DISPLAY IMAGE#########################################################""
     content = load_image('src/style_transfer/images/montagne_small.jpg').to(device)
     style = load_image('src/style_transfer/images/peinture1.jpg', shape=content.shape[-2:]).to(device)
+    #style = load_image('src/style_transfer/images/montagne_small.jpg', shape=content.shape[-2:]).to(device)
 
     #imshow(im_convert(content))
     #imshow(im_convert(style))
@@ -174,7 +179,7 @@ if __name__ == '__main__':
     show_every = 100
     optimizer = optim.Adam([target], lr=0.003)
     style_grams = {layer: gram_matrix(style_features[layer]) for layer in style_features}           # dict with each gram matrix for each feature name
-    style_layers = {  'conv0', 'conv5', 'conv10', }
+    style_layers = {  'conv0', 'conv1', 'conv2', 'conv3', 'conv4', 'conv5', } #'conv10', }
 
     for i in range(20000):
         # get the features from your target image
@@ -191,9 +196,10 @@ if __name__ == '__main__':
         target_grams = {layer: gram_matrix(target_features[layer]) for layer in target_features}           # dict with each gram matrix for each feature name
         #for key, value in style_features.items():
         for key in style_layers:
-            d, hw = style_grams[key].shape
+            #d, hw = style_grams[key].shape
             style_loss  +=  torch.mean((style_grams[key] - target_grams[key])**2)  #/ (d * hw)
-        
+        style_loss /= len(style_layers)
+
         # calculate the *total* loss
         total_loss =  0.5*content_loss + 0.5*style_loss
     
@@ -201,9 +207,10 @@ if __name__ == '__main__':
         optimizer.zero_grad()
         total_loss.backward()
         optimizer.step()
-        print('Total loss: ', i, total_loss.item())
+        print('Total loss=%f content=%f style=%f i=%d' % (total_loss, content_loss.item(), style_loss.item(), i)    )
         if  i % show_every == 0:
             #imshow(im_convert(target))
             plt.imsave('src\style_transfer/images/output.png', im_convert(target))
+            #print("loss: content=%d, style=%d => save %d" % (content_loss, style_loss, i))
             print("save")
 

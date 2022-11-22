@@ -66,6 +66,10 @@ def get_features(image, model, layers=None):
     ## Need the layers for the content and style representations of an image
     if layers is None:
         layers = {'0': 'conv0',
+                  '1': 'conv1',
+                  '2': 'conv2',
+                  '3': 'conv3',
+                  '4': 'conv4',
                   '5': 'conv5', 
                   '10': 'conv10', 
                   '19': 'conv19',   ## content representation
