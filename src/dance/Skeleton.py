@@ -73,7 +73,7 @@ class Skeleton:
         height,width,_ = image.shape
         for i in range(33):
             x, y = int(self.ske[i].x * width), int(self.ske[i].y * height)
-            cv2.circle(image, (x,y), 5, (0, 0, 255), -1)
+            cv2.circle(image, (x,y), 3, (0, 0, 255), -1)
             #cv2.line(image, (100, 100), (500, 500), (0, 255, 0), 2)
 
 

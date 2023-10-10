@@ -115,7 +115,7 @@ class VideoSkeleton:
         for i in range(self.ske.shape[0]):
             filename_im = self.path + "/" + self.im[i]
             im = cv2.imread(filename_im)
-            print(filename_im)
+            # print(filename_im)
             self.ske[i].draw(im)
             cv2.imshow('Image', im)
             if cv2.waitKey(250) & 0xFF == ord('q'):
