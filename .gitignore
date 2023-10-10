@@ -25,3 +25,7 @@ src/classifier/data/cifar-10-batches-py/
 models/classification_pytorch_shapes5_model
 
 src/style_transfer/images/output.png
+
+src/dance/data/taichi1/
+
+*.pkl
