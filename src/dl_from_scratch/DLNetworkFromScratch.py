@@ -254,7 +254,7 @@ class Network:
 
         # Calcul pour la dernière couche (gradient de l'erreur par rapport à l'activation)
         target = to_one_hot(int(y), 10)
-        delta = self.compute_cost_derivative(activation, target) 
+        delta = self.compute_cost_derivative(activations[-1], target) 
         #* self.layers[-1].activation_prime( aggregation )
         bias_gradient = [ delta ]
         delta2d = delta[:, np.newaxis]                        # (dim_output) => (1,dim_output)

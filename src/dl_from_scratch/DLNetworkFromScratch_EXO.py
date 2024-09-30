@@ -1,9 +1,9 @@
 # %% [markdown]
-# L'objectif de ce TP est d'implémenter par vous même l'apprentissage de réseaux de neurones simples. 
+# L'objectif de ce TP est d'implémenter par vous-même l'apprentissage de réseaux de neurones simples. 
 # Cette prise en main sera formatrice pour utiliser des frameworks plus évolués (comme PyTorch) où l'apprentissage est automatisé.
 # 
 # Nous allons utiliser la base de données image MNIST, constituée d'images de caractères 
-# manuscrits (60000 images en apprentissage, 10000 en test). L'objectif est de reconnaitre 
+# manuscrits (60000 images en apprentissage, 10000 en test). L'objectif est de reconnaître. 
 # le chiffre par un réseau de neurones. Les images sont en niveau de gris de taille 28x28. 
 # Le vecteur d'entrée est de 784 valeurs et un vecteur de 10 valeurs en sortie.
 # 
@@ -81,7 +81,7 @@ def to_one_hot(y, k):
 
 
 # %% [markdown]
-# La définition d'un réseau complétement connecté (FC fuly connected) est une succession 
+# La définition d'un réseau complètement connecté (FC fuly connected) est une succession 
 # de couches (layer). Un layer contient une matrice W des poids et bias : W.x_input + bias. 
 # La fonction d'activation est sigmoid ici. Voir le cours pour les détails.
 
@@ -126,7 +126,7 @@ class Layer:
 
     def activation(self, a):
         """
-          Passe et retourne les valeurs aggrégées x dans la fonction d'activation.
+          Passe et retourne les valeurs agrégées x dans la fonction d'activation.
           TODO_A
         """
         return None 
@@ -249,8 +249,6 @@ class Network:
         # Une passe vers l'avant puis une passe vers l'arrière
         # On profite de la passe vers l'avant pour stocker les calculs
         # intermédiaires, qui seront réutilisés durant la passe vers l'arrière.
-        # regarder le code ici pour vous aider, en plus des slides du cours :
-        # http://neuralnetworksanddeeplearning.com/chap2.html#the_four_fundamental_equations_behind_backpropagation
         #
         # TODO_B
         """
@@ -259,13 +257,13 @@ class Network:
         activations = [activation]
 
         # Propagation pour obtenir la sortie (même code que feedForward 
-        # mais on stocke les valeurs intermédiaires dans aggregations et activations)
+        # mais on stocke les valeurs intermédiaires dans agrégations et activations)
         # TODO_B
         pass
 
         # Calcul de delta pour la dernière couche (gradient de l'erreur par rapport à l'activation)
         target = to_one_hot(int(y), 10)
-        delta = self.compute_delta(aggregations[-1], activation, target)    # delta de la dernière couche
+        #delta = self.compute_cost_derivative(activations[-1], target)    # delta de la dernière couche: cette ligne ne marchera que quand le code de forward 3 lignes au dessus sera ok
         weight_gradient = []
         bias_gradient = []
 
@@ -277,13 +275,14 @@ class Network:
         return weight_gradient, bias_gradient
 
 
-    def compute_cost_derivative(self, a, h, target):
+    #def compute_cost_derivative(self, aggregation, activation, target):
+    def compute_cost_derivative(self, activation, target):
         """    
         # Calcule Grad_E_a pour la dernière couche, en utilisant
         # la sortie du réseau (aggregation et activation) et la valeur cible.
         # a= aggregation, h=activation, target = cible = y
         """
-        return  a - target
+        return  activation - target
 
 
 
