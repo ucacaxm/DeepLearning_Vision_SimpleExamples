@@ -51,12 +51,12 @@ def visu(X_train):
   plt.figure(figsize=(28, 28))
   for i in range(5):
     plt.subplot(10,20,i+1)
-    plt.imshow( 255*(X_train[i,:].reshape([28,28])), cmap='gray')
+    plt.imshow( 4*(X_train[i,:].reshape([28,28])), cmap='gray')
     plt.axis('off')
   plt.show()
 
 
-visu(X)
+#visu(X)
 
 # %% [markdown]
 # Quelques fonctions utiles.
@@ -78,7 +78,6 @@ def to_one_hot(y, k):
     one_hot = np.zeros(k)
     one_hot[y] = 1
     return one_hot
-
 
 # %% [markdown]
 # La définition d'un réseau complétement connecté (FC fuly connected) est une succession 
@@ -111,25 +110,24 @@ class Layer:
         Résultat du calcul de chaque neurone.
         `data` est un vecteur de longueur `self.input_size`
         retourne un vecteur de taille `self.size`.
-        TODO_A: en utilisant self.aggregation et self.activation
       """
-      return None
+      aggregation = self.aggregation(data)
+      activation = self.activation(aggregation)
+      return activation
 
 
     def aggregation(self, data):
       """
-        Calcule et retourne W.data + bias
-        TODO_A
+        Calcule W.data + bias
       """
-      return None
+      return np.dot(self.weights, data) + self.bias
 
 
-    def activation(self, a):
+    def activation(self, x):
         """
-          Passe et retourne les valeurs aggrégées x dans la fonction d'activation.
-          TODO_A
+          Passe les valeurs aggrégées dans la fonction d'activation.
         """
-        return None 
+        return sigmoid(x)
 
 
     def activation_prime(self, x):
@@ -137,21 +135,13 @@ class Layer:
 
 
     def update_weights(self, gradient, learning_rate):
-        """ 
-            Mise à jour des poids (self.weight) à partir du gradient (algo du gradient) et learning_rate
-            TODO_B
-        """
-        pass
+        """ Mise à jour des poids à partir du gradient (algo du gradient) """
+        self.weights -= learning_rate * gradient
 
 
     def update_biases(self, gradient, learning_rate):
-        """ 
-            Idem mais avec les biais 
-            TODO_B
-        """
-        pass
-
-
+        """ Idem mais avec les biais """
+        self.bias -= learning_rate * gradient
 
 # %% [markdown]
 # Le réseau complet est une succession de couches. La fonction feedforward propage les données.
@@ -177,28 +167,29 @@ class Network:
 
 
     def feedforward(self, input_data):
-        """ 
-            Propage les données d'entrée d'une couche à l'autre
-            TODO_A
-        """
-        return None
+        """ Propage les données d'entrée d'une couche à l'autre """
+        activation = input_data
+        for layer in self.layers:
+            activation = layer.forward(activation)
+        return activation
 
 
     def predict(self, input_data):
-        """ 
-            Passe input_data dans le réseau (feedForward) et retourne l'index du neurone de 
-            sortie qui a la plus grande valeur (qui est la classe sélectionnée par le réseau). 
-        """
+        """ Passe input_data dans le réseau (feedForward) et retourne l'index du neurone de 
+            sortie qui a la plus grande valeur (qui est la classe sélectionnée par le réseau). """
         return np.argmax(self.feedforward(input_data))
 
 
     def evaluate(self, X, Y):
-        """ 
-            Évalue la performance du réseau à partir d'un set d'exemples. 
-            Retourne un nombre réel entre 0.0 et 1.0 (1=100%)
-            TODO_A
-        """
-        return 0.0
+        """ Évalue la performance du réseau à partir d'un set d'exemples. Retourne un nombre entre 0 et 1."""
+        results = 0.0
+        n = 0
+        for (x,y) in zip(X,Y):
+            results += (self.predict(x.reshape( 28*28 )  ) == y)
+            n += 1
+        #results = [1 if self.predict(x) == y else 0 for (x, y) in zip(X, Y)]
+        accuracy = results / n
+        return accuracy
 
 
     def train(self, X, Y, steps=30, learning_rate=0.3, batch_size=10):
@@ -216,9 +207,7 @@ class Network:
 
 
     def train_batch(self, X, Y, learning_rate):
-        """     
-            Cette fonction combine les algos du retropropagation du gradient + gradient descendant 
-        """
+        """     Cette fonction combine les algos du retropropagation du gradient + gradient descendant """
         # Initialise les gradients pour les poids et les biais.
         weight_gradient = [np.zeros(layer.weights.shape) for layer in self.layers]
         bias_gradient = [np.zeros(layer.bias.shape) for layer in self.layers]
@@ -241,15 +230,14 @@ class Network:
 
 
     def backprop(self, x, y):
-        """   
+        """
+        # x=input, y=output
         # L'algorithme de rétropropagation du gradient. C'est là que tout le boulot se fait. 
         # Une passe vers l'avant puis une passe vers l'arrière
         # On profite de la passe vers l'avant pour stocker les calculs
         # intermédiaires, qui seront réutilisés durant la passe vers l'arrière.
-        # regarder le code ici pour vous aider : 
+        # regarder le code ici pour vous aider, en plus des slides du cours :
         # http://neuralnetworksanddeeplearning.com/chap2.html#the_four_fundamental_equations_behind_backpropagation
-        #
-        # TODO_B
         """
         aggregations = []
         activation = x
@@ -257,35 +245,68 @@ class Network:
 
         # Propagation pour obtenir la sortie (même code que feedForward 
         # mais on stocke les valeurs intermédiaires dans aggregations et activations)
-        # TODO_B
-        pass
+        for layer in self.layers:
+            aggregation = layer.aggregation(activation)
+            aggregations.append(aggregation)
+            activation = layer.activation(aggregation)
+            activations.append(activation)
+        #print("backprop: agg=",len(aggregations), " acti=", len(activations))
 
-        # Calcul de delta pour la dernière couche (gradient de l'erreur par rapport à l'activation)
+        # Calcul pour la dernière couche (gradient de l'erreur par rapport à l'activation)
         target = to_one_hot(int(y), 10)
-        delta = self.compute_delta(aggregations[-1], activation, target)    # delta de la dernière couche
-        weight_gradient = []
-        bias_gradient = []
+        delta = self.compute_cost_derivative(activation, target) 
+        #* self.layers[-1].activation_prime( aggregation )
+        bias_gradient = [ delta ]
+        delta2d = delta[:, np.newaxis]                        # (dim_output) => (1,dim_output)
+        prev_activation = activations[-2][np.newaxis,:]     # (dim_prev_activation) => (dim_prev_activation,1)
+        weight_gradient = [ np.dot(delta2d, prev_activation)  ]
+        #weight_gradient = [ np.dot(self.layers[-1].weights.transpose(), delta)  ]
 
         # Phase de rétropropagation pour calculer les deltas de chaque couche
-        # Puis dans la boucle avec les deltas, on calcule les gradients de w et de b
-        # TODO_B
-        pass
+        # Puis avec les deltas, on calcule les gradients de w et de b (qui sont les résultats de la fonction)
+        nb_layers = len(self.layers)                # ici 2: couche cachée + sortie
+        for k in range( nb_layers-1, 0, -1):        # de nb_layers-2 ... à ... 0 (car n-1 est déjà fait)
+            layer = self.layers[k-1]                # comme il n'y a que 2 layers, le layer 0 est l'activation 1
+            next_layer = self.layers[k]
+
+            activation_prime = layer.activation_prime(aggregations[k-1])                  # g'(a_k)
+            delta = np.dot(next_layer.weights.transpose(), delta) * activation_prime      # 
+            #deltas.append(delta)
+            bias_gradient.insert(0, delta)
+
+            prev_activation = activations[k-1][np.newaxis,:]
+            delta2d = delta[:, np.newaxis]                        # (dim) => (1,dim_output)
+            wg = np.dot(delta2d, prev_activation)
+            # prev_activation = activations[k]
+            # wg = np.dot( prev_activation.transpose(), delta)
+            weight_gradient.insert( 0, wg )
+
+        # delta = self.cost_derivative(activations[-1], y) * sigmoid_prime(zs[-1])        # dim(delta)=dim(y)
+        # nabla_b[-1] = delta
+        # nabla_w[-1] = np.dot(delta, activations[-2].transpose())                        # ?
+        # for l in range(2, self.num_layers):
+        #     z = zs[-l]
+        #     sp = sigmoid_prime(z)
+        #     delta = np.dot(self.weights[-l+1].transpose(), delta) * sp
+        #     nabla_b[-l] = delta
+        #     nabla_w[-l] = np.dot(delta, activations[-l-1].transpose())
 
         return weight_gradient, bias_gradient
 
 
-    def compute_delta(self, a, h, target):
+    #def compute_cost_derivative(self, aggregation, activation, target):
+    def compute_cost_derivative(self, activation, target):
         """    
-        # Calcule delta pour la dernière couche, en utilisant
+        # Calcule Grad_E_a pour la dernière couche, en utilisant
         # la sortie du réseau (aggregation et activation) et la valeur cible.
         # a= aggregation, h=activation, target = cible = y
         """
-        return  a - target
-
-
+        return  activation - target
 
 # %% [markdown]
 # Le main
+
+# %%
 # La base de données est coupée en deux : entraînement et test.
 # X, Y = load_mnist_data()      # déjà chargée avant
 X_train, Y_train = X[:60000], Y[:60000]
