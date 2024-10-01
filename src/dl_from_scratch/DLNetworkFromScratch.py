@@ -254,52 +254,38 @@ class Network:
 
         # Calcul pour la dernière couche (gradient de l'erreur par rapport à l'activation)
         target = to_one_hot(int(y), 10)
-        delta = self.compute_cost_derivative(activations[-1], target) 
-        #* self.layers[-1].activation_prime( aggregation )
+        delta = self.compute_loss_derivative(activations[-1], target) 
         bias_gradient = [ delta ]
-        delta2d = delta[:, np.newaxis]                        # (dim_output) => (1,dim_output)
-        prev_activation = activations[-2][np.newaxis,:]     # (dim_prev_activation) => (dim_prev_activation,1)
+        delta2d = delta[:, np.newaxis]                          # (dim_output) => (1,dim_output)
+        prev_activation = activations[-2][np.newaxis,:]         # (dim_prev_activation) => (dim_prev_activation,1)
         weight_gradient = [ np.dot(delta2d, prev_activation)  ]
-        #weight_gradient = [ np.dot(self.layers[-1].weights.transpose(), delta)  ]
 
         # Phase de rétropropagation pour calculer les deltas de chaque couche
         # Puis avec les deltas, on calcule les gradients de w et de b (qui sont les résultats de la fonction)
-        nb_layers = len(self.layers)                # ici 2: couche cachée + sortie
-        for k in range( nb_layers-1, 0, -1):        # de nb_layers-2 ... à ... 0 (car n-1 est déjà fait)
-            layer = self.layers[k-1]                # comme il n'y a que 2 layers, le layer 0 est l'activation 1
-            next_layer = self.layers[k]
+        nb_layers = len(self.layers)                # ici 2: couches
+        for k in range( nb_layers-1, 0, -1):        # de nb_layers-1 ... à ... 1 (0 n'est pas inclus avec range, nb_kayer-1 est déjà fait)
+            layer = self.layers[k-1]                # le layer à traiter est k-1
+            next_layer = self.layers[k]             # le layer suivant est k
 
             activation_prime = layer.activation_prime(aggregations[k-1])                  # g'(a_k)
             delta = np.dot(next_layer.weights.transpose(), delta) * activation_prime      # 
-            #deltas.append(delta)
             bias_gradient.insert(0, delta)
 
             prev_activation = activations[k-1][np.newaxis,:]
             delta2d = delta[:, np.newaxis]                        # (dim) => (1,dim_output)
             wg = np.dot(delta2d, prev_activation)
-            # prev_activation = activations[k]
-            # wg = np.dot( prev_activation.transpose(), delta)
             weight_gradient.insert( 0, wg )
-
-        # delta = self.cost_derivative(activations[-1], y) * sigmoid_prime(zs[-1])        # dim(delta)=dim(y)
-        # nabla_b[-1] = delta
-        # nabla_w[-1] = np.dot(delta, activations[-2].transpose())                        # ?
-        # for l in range(2, self.num_layers):
-        #     z = zs[-l]
-        #     sp = sigmoid_prime(z)
-        #     delta = np.dot(self.weights[-l+1].transpose(), delta) * sp
-        #     nabla_b[-l] = delta
-        #     nabla_w[-l] = np.dot(delta, activations[-l-1].transpose())
 
         return weight_gradient, bias_gradient
 
 
     #def compute_cost_derivative(self, aggregation, activation, target):
-    def compute_cost_derivative(self, activation, target):
+    def compute_loss_derivative(self, activation, target):
         """    
-        # Calcule Grad_E_a pour la dernière couche, en utilisant
-        # la sortie du réseau (aggregation et activation) et la valeur cible.
+        # Calcule Grad_E_a pour la dernière couche donc la dérivée de la loss, 
+        # en utilisant la sortie du réseau (aggregation et activation) et la valeur cible.
         # a= aggregation, h=activation, target = cible = y
+        # Avec la fonction de coût quadratique, la dérivée est simplement activation - target
         """
         return  activation - target
 

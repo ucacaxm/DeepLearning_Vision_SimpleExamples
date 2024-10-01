@@ -263,7 +263,7 @@ class Network:
 
         # Calcul de delta pour la dernière couche (gradient de l'erreur par rapport à l'activation)
         target = to_one_hot(int(y), 10)
-        #delta = self.compute_cost_derivative(activations[-1], target)    # delta de la dernière couche: cette ligne ne marchera que quand le code de forward 3 lignes au dessus sera ok
+        #delta = self.compute_loss_derivative(activations[-1], target)    # delta de la dernière couche: cette ligne ne marchera que quand le code de forward 3 lignes au dessus sera ok
         weight_gradient = []
         bias_gradient = []
 
@@ -276,11 +276,12 @@ class Network:
 
 
     #def compute_cost_derivative(self, aggregation, activation, target):
-    def compute_cost_derivative(self, activation, target):
+    def compute_loss_derivative(self, activation, target):
         """    
-        # Calcule Grad_E_a pour la dernière couche, en utilisant
-        # la sortie du réseau (aggregation et activation) et la valeur cible.
+        # Calcule Grad_E_a pour la dernière couche donc la dérivée de la loss, 
+        # en utilisant la sortie du réseau (aggregation et activation) et la valeur cible.
         # a= aggregation, h=activation, target = cible = y
+        # Avec la fonction de coût quadratique, la dérivée est simplement activation - target
         """
         return  activation - target
 
