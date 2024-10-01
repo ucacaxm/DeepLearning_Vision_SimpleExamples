@@ -250,11 +250,11 @@ class Network:
             aggregations.append(aggregation)
             activation = layer.activation(aggregation)
             activations.append(activation)
-        #print("backprop: agg=",len(aggregations), " acti=", len(activations))
 
         # Calcul pour la dernière couche (gradient de l'erreur par rapport à l'activation)
         target = to_one_hot(int(y), 10)
-        delta = self.compute_loss_derivative(activations[-1], target) 
+        delta = self.compute_loss_derivative(activations[-1], target)       # Grad_E_a pour la dernière couche, avec pas de fonction d'activation est plus efficace (???)
+        #delta = self.compute_loss_derivative(activations[-1], target) * self.layers[-1].activation_prime(aggregations[-1])  # Grad_E_z pour la dernière couche
         bias_gradient = [ delta ]
         delta2d = delta[:, np.newaxis]                          # (dim_output) => (1,dim_output)
         prev_activation = activations[-2][np.newaxis,:]         # (dim_prev_activation) => (dim_prev_activation,1)
