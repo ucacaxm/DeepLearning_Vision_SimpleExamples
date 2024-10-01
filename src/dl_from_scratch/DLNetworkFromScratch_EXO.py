@@ -227,7 +227,7 @@ class Network:
         bias_gradient = [np.zeros(layer.bias.shape) for layer in self.layers]
 
         # On fait tourner l'algo de rétropropagation pour calculer les
-        # gradients un certain nombre de fois. On fera la moyenne ensuite.
+        # gradients sur tous les exemples du batch. On fera la moyenne ensuite.
         for (x, y) in zip(X, Y):            # zip produit un tableau de couple (x,y) à partir de 2 tableaux
             new_weight_gradient, new_bias_gradient = self.backprop(x, y)
             weight_gradient = [wg + nwg for wg, nwg in zip(weight_gradient, new_weight_gradient)]
