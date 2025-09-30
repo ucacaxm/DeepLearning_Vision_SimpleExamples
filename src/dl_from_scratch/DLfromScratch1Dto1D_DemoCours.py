@@ -8,12 +8,12 @@ import matplotlib.pyplot as plt
 # -----------------------------
 # Jeu de données en dur
 # -----------------------------
-x_max = 5.0
-x_data = np.array([[0.0],[0.55],[0.8],[1.0],[1.4],[2.0],[2.6],[3.1],[3.7],[4.1],[4.3],[5.0]])
+#x_max = 5.0
+#x_data = np.array([[0.0],[0.55],[0.8],[1.0],[1.4],[2.0],[2.6],[3.1],[3.7],[4.1],[4.3],[5.0]])
 # Plage de données plus large pour cas plus difficile
-#x_max = 10.0
-# x_data = np.array([[0.0],[0.55],[0.8],[1.0],[1.4],[2.0],[2.6],[3.1],[3.7],[4.1],[4.3],
-#                    [5.0],[5.7],[6.0],[6.7],[7.0],[7.4],[8.0],[8.5],[9.0],[9.5]])
+x_max = 10.0
+x_data = np.array([[0.0],[0.55],[0.8],[1.0],[1.4],[2.0],[2.6],[3.1],[3.7],[4.1],[4.3],
+                    [5.0],[5.7],[6.0],[6.7],[7.0],[7.4],[8.0],[8.5],[9.0],[9.5]])
 d_data = np.cos(x_data)
 
 # -----------------------------
@@ -22,7 +22,7 @@ d_data = np.cos(x_data)
 np.random.seed(0)
 
 # N neurones cachés
-N = 1
+N = 10
 w1 = np.random.randn(1, N)   # 1 entrée → 2 neurones cachés
 b1 = np.zeros((1, N))        # un biais par neurone caché
 w2 = np.random.randn(N, 1)   # 2 neurones cachés → 1 sortie
@@ -30,8 +30,8 @@ b2 = np.zeros((1, 1))        # sortie scalaire
 
 
 
-lr = 0.1
-epochs = 5000
+lr = 0.01
+epochs = 50000
 
 # -----------------------------
 # Activation et dérivée
@@ -55,9 +55,6 @@ def mse(y, d):
     return 0.5 * np.mean((y - d)**2)
 
 def mse_prime(y, d):
-    """
-    Dérivée de la MSE par rapport à y
-    """
     N = y.shape[0]
     return (y - d) / N
 

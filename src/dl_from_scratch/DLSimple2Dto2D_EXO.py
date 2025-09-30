@@ -49,7 +49,7 @@ display(X, Y)
 
 # Initialisation des poids et biais
 input_layer_neurons = X.shape[1]  # Nombre de caractéristiques d'entrée
-hidden_layer_neurons = 4  # Nombre de neurones dans la couche cachée
+hidden_layer_neurons = 8  # Nombre de neurones dans la couche cachée
 output_neurons = 2  # Nombre de neurones de sortie
 
 # Poids et biais
@@ -60,10 +60,12 @@ b2 = np.random.uniform(size=(1, output_neurons))
 
 # Paramètres d'apprentissage
 learning_rate = 0.1
-epochs = 100
+epochs = 10000
 
 # Entraînement du réseau
 for epoch in range(epochs):
+    x_data, d_data = next_batch(128)
+
     # TODO Propagation avant : entrée X et calcul de la sortie prédite predicted_output
     # ...
     # predicted_output = ...
@@ -74,9 +76,10 @@ for epoch in range(epochs):
     # error = ...
     
     # TODO Rétropropagation de l'erreur 
-    # d_predicted_output = 
-    # error_hidden_layer = 
-    # d_hidden_layer = 
+    # dw1 =
+    # db1 =
+    # dw2 =
+    # db2 = 
     
     # TODO Mise à jour des poids et biais
     #W2 += 

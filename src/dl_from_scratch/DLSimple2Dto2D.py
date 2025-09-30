@@ -9,8 +9,19 @@ def sigmoid(x):
     return 1 / (1 + np.exp(-x))
 
 # Dérivée de la fonction Sigmoid
+#def sigmoid_derivative(x):
+#    return x * (1 - x)
+
 def sigmoid_derivative(x):
-    return x * (1 - x)
+    return sigmoid(x) * (1 - sigmoid(x))
+
+def mse(y, d):
+    return 0.5 * np.mean((y - d)**2)
+
+def mse_prime(y, d):
+    N = y.shape[0]
+    return (y - d) / N  
+
 
 
 
@@ -43,13 +54,13 @@ def display(X, Y, pred=None):
                 plt.plot(X[i, 0], X[i, 1], 'ro', color='blue')
     plt.show()
 
-X,Y = next_batch(128)
-display(X, Y)
+x_data,d_data = next_batch(128)
+display(x_data, d_data)
 
 
 # Initialisation des poids et biais
-input_layer_neurons = X.shape[1]  # Nombre de caractéristiques d'entrée
-hidden_layer_neurons = 4  # Nombre de neurones dans la couche cachée
+input_layer_neurons = x_data.shape[1]  # Nombre de caractéristiques d'entrée
+hidden_layer_neurons = 8  # Nombre de neurones dans la couche cachée
 output_neurons = 2  # Nombre de neurones de sortie
 
 # Poids et biais
@@ -60,31 +71,39 @@ b2 = np.random.uniform(size=(1, output_neurons))
 
 # Paramètres d'apprentissage
 learning_rate = 0.1
-epochs = 1000
+epochs = 10000
 
 # Entraînement du réseau
 for epoch in range(epochs):
+    x_data, d_data = next_batch(128)
+
     # Propagation avant
-    hidden_layer_input = np.dot(X, W1) + b1
-    hidden_layer_output = sigmoid(hidden_layer_input)
+    a1 = np.dot(x_data, W1) + b1
+    h1 = sigmoid(a1)
     
-    output_layer_input = np.dot(hidden_layer_output, W2) + b2
-    predicted_output = sigmoid(output_layer_input)
+    a2 = np.dot(h1, W2) + b2
+    h2 = sigmoid(a2)
+    predicted_output = h2
     
-    # Calcul de l'erreur
-    error = Y - predicted_output
-    
+    loss = mse(predicted_output, d_data)        # ne sert que pour affichage
+
     # Rétropropagation
-    d_predicted_output = error * sigmoid_derivative(predicted_output)
-    
-    error_hidden_layer = d_predicted_output.dot(W2.T)
-    d_hidden_layer = error_hidden_layer * sigmoid_derivative(hidden_layer_output)
-    
+    delta2 = mse_prime(predicted_output, d_data,) * sigmoid_derivative(a2)
+    dw2 = h1.T.dot(delta2) 
+    db2 = np.sum(delta2, axis=0, keepdims=True)
+
+    delta1 = delta2.dot(W2.T) * sigmoid_derivative(a1)
+    dw1 = x_data.T.dot(delta1)
+    db1 = np.sum(delta1, axis=0, keepdims=True)
+
     # Mise à jour des poids et biais
-    W2 += hidden_layer_output.T.dot(d_predicted_output) * learning_rate
-    b2 += np.sum(d_predicted_output, axis=0, keepdims=True) * learning_rate
-    W1 += X.T.dot(d_hidden_layer) * learning_rate
-    b1 += np.sum(d_hidden_layer, axis=0, keepdims=True) * learning_rate
+    W2 -= dw2 * learning_rate
+    b2 -= db2 * learning_rate
+    W1 -= dw1 * learning_rate
+    b1 -= db1 * learning_rate
+
+    if epoch % 500 == 0:
+        print(f"Epoch {epoch}, Loss: {loss:.6f}")
 
 # Affichage des résultats
 print("Poids après entraînement :")
@@ -96,9 +115,9 @@ print("b2 :", b2)
 
 print("Sortie prédite :")
 #print(predicted_output)
-display(X, Y, pred=predicted_output)
-for i in range(len(predicted_output)):
-    print("Entrée :", X[i], "Sortie prédite :", predicted_output[i], "Sortie attendue :", Y[i])
+display(x_data, d_data, pred=h2)
+for i in range(len(h2)):
+    print("Entrée :", x_data[i], "Sortie prédite :", h2[i], "Sortie attendue :", d_data[i])
     
 
 # for i in range(5):
