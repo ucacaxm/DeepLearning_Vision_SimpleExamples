@@ -56,7 +56,7 @@ display(x_data, d_data)
 
 # Initialisation des poids et biais
 input_layer_neurons = x_data.shape[1]  # Nombre de caractéristiques d'entrée
-hidden_layer_neurons = 8  # Nombre de neurones dans la couche cachée
+hidden_layer_neurons = 4  # Nombre de neurones dans la couche cachée
 output_neurons = 2  # Nombre de neurones de sortie
 
 # Poids et biais
@@ -67,7 +67,7 @@ b2 = np.random.uniform(size=(1, output_neurons))
 
 # Paramètres d'apprentissage
 learning_rate = 0.1
-epochs = 10000
+epochs = 20000
 
 # Entraînement du réseau
 for epoch in range(epochs):
@@ -113,7 +113,7 @@ print("b2 :", b2)
 
 print("Sortie prédite ==> display")
 # nouveau batch pour test
-x_data, d_data = next_batch(128)
+x_data, d_data = next_batch(512)
 # Propagation avant
 a1 = np.dot(x_data, W1) + b1
 h1 = sigmoid(a1)
