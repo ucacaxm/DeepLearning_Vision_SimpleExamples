@@ -8,9 +8,15 @@ import random
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
 
-# Dérivée de la fonction Sigmoid
 def sigmoid_derivative(x):
-    return x * (1 - x)
+    return sigmoid(x) * (1 - sigmoid(x))
+
+def mse(y, d):
+    return 0.5 * np.mean((y - d)**2)
+
+def mse_prime(y, d):
+    N = y.shape[0]
+    return (y - d) / N  
 
 
 
@@ -72,8 +78,8 @@ for epoch in range(epochs):
     # Après ceci vous pouvez lancer le code, il fonctionnera (prediction et affichage) mais le réseau ne s'entraînera pas.
 
 
-    # TODO Calcul de l'erreur
-    # error = ...
+    # TODO Calcul de l'erreur/loss
+    # 
     
     # TODO Rétropropagation de l'erreur 
     # dw1 =
@@ -96,13 +102,15 @@ print("Biais après entraînement :")
 print("b1 :", b1)
 print("b2 :", b2)
 
-print("Sortie prédite :")
-#print(predicted_output)
-display(X, Y, pred=predicted_output)
-for i in range(len(predicted_output)):
-    print("Entrée :", X[i], "Sortie prédite :", predicted_output[i], "Sortie attendue :", Y[i])
-    
-
-# for i in range(5):
-#     X,Y = next_batch(128)
+print("Sortie prédite ==> display")
+# nouveau batch pour test
+x_data, d_data = next_batch(128)
+# Propagation avant
+a1 = np.dot(x_data, W1) + b1
+h1 = sigmoid(a1)
+a2 = np.dot(h1, W2) + b2
+h2 = sigmoid(a2)
+display(x_data, d_data, pred=h2)
+for i in range(len(h2)):
+    print("Entrée :", x_data[i], "Sortie prédite :", h2[i], "Sortie attendue :", d_data[i])
 

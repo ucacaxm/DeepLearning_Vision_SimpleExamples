@@ -8,10 +8,6 @@ import random
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
 
-# Dérivée de la fonction Sigmoid
-#def sigmoid_derivative(x):
-#    return x * (1 - x)
-
 def sigmoid_derivative(x):
     return sigmoid(x) * (1 - sigmoid(x))
 
@@ -88,10 +84,12 @@ for epoch in range(epochs):
     loss = mse(predicted_output, d_data)        # ne sert que pour affichage
 
     # Rétropropagation
+    # étage 2
     delta2 = mse_prime(predicted_output, d_data,) * sigmoid_derivative(a2)
     dw2 = h1.T.dot(delta2) 
     db2 = np.sum(delta2, axis=0, keepdims=True)
 
+    # étage 1
     delta1 = delta2.dot(W2.T) * sigmoid_derivative(a1)
     dw1 = x_data.T.dot(delta1)
     db1 = np.sum(delta1, axis=0, keepdims=True)
@@ -113,8 +111,14 @@ print("Biais après entraînement :")
 print("b1 :", b1)
 print("b2 :", b2)
 
-print("Sortie prédite :")
-#print(predicted_output)
+print("Sortie prédite ==> display")
+# nouveau batch pour test
+x_data, d_data = next_batch(128)
+# Propagation avant
+a1 = np.dot(x_data, W1) + b1
+h1 = sigmoid(a1)
+a2 = np.dot(h1, W2) + b2
+h2 = sigmoid(a2)
 display(x_data, d_data, pred=h2)
 for i in range(len(h2)):
     print("Entrée :", x_data[i], "Sortie prédite :", h2[i], "Sortie attendue :", d_data[i])
