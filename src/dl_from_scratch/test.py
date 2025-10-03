@@ -8,15 +8,9 @@ import random
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
 
+# Dérivée de la fonction Sigmoid
 def sigmoid_derivative(x):
     return sigmoid(x) * (1 - sigmoid(x))
-
-def mse(y, d):
-    return 0.5 * np.mean((y - d)**2)
-
-def mse_prime(y, d):
-    N = y.shape[0]
-    return (y - d) / N  
 
 
 
@@ -55,7 +49,7 @@ display(X, Y)
 
 # Initialisation des poids et biais
 input_layer_neurons = X.shape[1]  # Nombre de caractéristiques d'entrée
-hidden_layer_neurons = 8  # Nombre de neurones dans la couche cachée
+hidden_layer_neurons = 4  # Nombre de neurones dans la couche cachée
 output_neurons = 2  # Nombre de neurones de sortie
 
 # Poids et biais
@@ -64,35 +58,53 @@ b1 = np.zeros((1, hidden_layer_neurons))
 W2 = np.random.uniform(-0.5, 0.5, size=(hidden_layer_neurons, output_neurons))
 b2 = np.zeros((1, output_neurons))
 
-
 # Paramètres d'apprentissage
 learning_rate = 0.1
-epochs = 10000
+epochs = 20000
+
+def mse(y, d):
+    return 0.5 * np.mean((y - d)**2)
+
+def mse_prime(y, d):
+    """
+    Dérivée de la MSE par rapport à y
+    """
+    N = y.shape[0]
+    return (y - d) / N
 
 # Entraînement du réseau
 for epoch in range(epochs):
-    x_data, d_data = next_batch(128)
-
+    X,Y = next_batch(128)
     # TODO Propagation avant : entrée X et calcul de la sortie prédite predicted_output
-    # ...
-    # predicted_output = ...
+    a1 = np.dot(X, W1) + b1
+    h1 = sigmoid(a1)
+    
+    a2 = np.dot(h1, W2) + b2
+    predicted_output = sigmoid(a2)
+    
     # Après ceci vous pouvez lancer le code, il fonctionnera (prediction et affichage) mais le réseau ne s'entraînera pas.
 
 
-    # TODO Calcul de l'erreur/loss
-    # 
+    # TODO Calcul de l'erreur
+    error = mse(predicted_output, Y)
     
-    # TODO Rétropropagation de l'erreur 
-    # dw1 =
-    # db1 =
-    # dw2 =
-    # db2 = 
+    # TODO Rétropropagation de l'erreur     
+    delta2 = mse_prime(predicted_output, Y) * sigmoid_derivative(a2) # δ2 = dL/da2
+    dw2 = np.dot(h1.T, delta2)
+    db2 = np.sum(delta2, axis=0, keepdims=True)
+    delta1 = np.dot(delta2, W2.T) * sigmoid_derivative(a1)
+    dw1 = np.dot(X.T, delta1)
+    db1 = np.sum(delta1, axis=0, keepdims=True)
     
     # TODO Mise à jour des poids et biais
-    #W2 += 
-    #b2 += 
-    #W1 += 
-    #b1 += 
+    W2 -= learning_rate * dw2
+    b2 -= learning_rate * db2
+    W1 -= learning_rate * dw1
+    b1 -= learning_rate * db1
+    
+    if epoch % 500 == 0:
+        print(f"Epoch {epoch}, Loss: {error:.6f}")
+
 
 
 # Affichage des résultats
@@ -103,15 +115,12 @@ print("Biais après entraînement :")
 print("b1 :", b1)
 print("b2 :", b2)
 
-print("Sortie prédite ==> display")
-# nouveau batch pour test
-x_data, d_data = next_batch(128)
-# Propagation avant
-a1 = np.dot(x_data, W1) + b1
-h1 = sigmoid(a1)
-a2 = np.dot(h1, W2) + b2
-h2 = sigmoid(a2)
-display(x_data, d_data, pred=h2)
-for i in range(len(h2)):
-    print("Entrée :", x_data[i], "Sortie prédite :", h2[i], "Sortie attendue :", d_data[i])
+print("Sortie prédite :")
+#print(predicted_output)
+display(X, Y, pred=predicted_output)
+for i in range(len(predicted_output)):
+    print("Entrée :", X[i], "Sortie prédite :", predicted_output[i], "Sortie attendue :", Y[i])
+    
 
+# for i in range(5):
+#     X,Y = next_batch(128)

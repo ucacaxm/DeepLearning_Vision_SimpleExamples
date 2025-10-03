@@ -60,10 +60,10 @@ hidden_layer_neurons = 4  # Nombre de neurones dans la couche cachée
 output_neurons = 2  # Nombre de neurones de sortie
 
 # Poids et biais
-W1 = np.random.uniform(size=(input_layer_neurons, hidden_layer_neurons))
-b1 = np.random.uniform(size=(1, hidden_layer_neurons))
-W2 = np.random.uniform(size=(hidden_layer_neurons, output_neurons))
-b2 = np.random.uniform(size=(1, output_neurons))
+W1 = np.random.uniform(-0.5, 0.5, size=(input_layer_neurons, hidden_layer_neurons))
+b1 = np.zeros((1, hidden_layer_neurons))
+W2 = np.random.uniform(-0.5, 0.5, size=(hidden_layer_neurons, output_neurons))
+b2 = np.zeros((1, output_neurons))
 
 # Paramètres d'apprentissage
 learning_rate = 0.1
