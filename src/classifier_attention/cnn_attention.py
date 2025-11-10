@@ -96,45 +96,72 @@ class CNN_SE(nn.Module):
 
 
 
-class CNN_MHA(nn.Module):
+# --- Bloc d'attention entre canaux ---
+class ChannelAttentionMHA(nn.Module):
+    def __init__(self, num_heads=4):
+        super().__init__()
+        self.num_heads = num_heads
+        self.mha = None  # créé dynamiquement car h*w dépend du niveau
+        self.norm = None
+
+    def forward(self, x):
+        # x : (B, C, H, W)
+        B, C, H, W = x.shape
+        HW = H * W
+
+        # Crée le MHA dynamiquement si pas encore fait
+        if self.mha is None:
+            self.mha = nn.MultiheadAttention(embed_dim=HW, num_heads=self.num_heads, batch_first=True).to(x.device)
+            self.norm = nn.LayerNorm(HW).to(x.device)
+
+        # On traite chaque canal comme un "token"
+        x_flat = x.view(B, C, HW)  # (B, C, HW)
+
+        # Attention entre canaux
+        attn_out, _ = self.mha(x_flat, x_flat, x_flat)  # (B, C, HW)
+
+        # Skip connection + normalisation
+        x_out = self.norm(x_flat + attn_out)
+
+        return x_out.view(B, C, H, W)
+
+
+# --- Modèle principal CNN + MHA ---
+class CNN_ChannelMHA(nn.Module):
     def __init__(self, num_classes=10):
         super().__init__()
-        # Convolutions
+
+        # Convolutions classiques
         self.conv1 = nn.Conv2d(3, 32, kernel_size=3, padding=1)
         self.conv2 = nn.Conv2d(32, 64, kernel_size=3, padding=1)
-        
-        # Multihead Attention parameters
-        self.num_heads1 = 4
-        self.num_heads2 = 4
-        self.mha1 = nn.MultiheadAttention(embed_dim=32, num_heads=self.num_heads1, batch_first=True)
-        self.mha2 = nn.MultiheadAttention(embed_dim=64, num_heads=self.num_heads2, batch_first=True)
-        
-        # Fully connected
-        self.fc = nn.Linear(64*8*8, num_classes)
+
+        # Attention entre canaux après chaque bloc conv
+        self.ca1 = ChannelAttentionMHA(num_heads=4)
+        self.ca2 = ChannelAttentionMHA(num_heads=4)
+
+        # Classifieur final
+        self.fc = nn.Linear(64 * 8 * 8, num_classes)
 
     def forward(self, x):
         # --- Bloc 1 ---
-        x = F.relu(self.conv1(x))  # (B, 32, 28, 28)
-        b, c, h, w = x.size()
-        x_flat = x.view(b, c, h*w).permute(0, 2, 1)  # (B, N, C)
-        x_attn, _ = self.mha1(x_flat, x_flat, x_flat)  # (B, N, C)
-        x = x_attn.permute(0, 2, 1).view(b, c, h, w)
-        x = F.max_pool2d(x, 2)  # (B, 32, 14, 14)
+        x = F.relu(self.conv1(x))  # (B, 32, 32, 32)
+        x = self.ca1(x)
+        x = F.max_pool2d(x, 2)     # (B, 32, 16, 16)
 
         # --- Bloc 2 ---
-        x = F.relu(self.conv2(x))  # (B, 64, 14, 14)
-        b, c, h, w = x.size()
-        x_flat = x.view(b, c, h*w).permute(0, 2, 1)  # (B, N, C)
-        x_attn, _ = self.mha2(x_flat, x_flat, x_flat)  # (B, N, C)
-        x = x_attn.permute(0, 2, 1).view(b, c, h, w)
-        x = F.max_pool2d(x, 2)  # (B, 64, 7, 7)
+        x = F.relu(self.conv2(x))  # (B, 64, 16, 16)
+        x = self.ca2(x)
+        x = F.max_pool2d(x, 2)     # (B, 64, 8, 8)
 
+<<<<<<< HEAD
         # --- Classifier ---
         #x = x.view(b, -1)
         x = x.reshape(b, -1)
+=======
+        # --- Classifieur ---
+        x = x.view(x.size(0), -1)
+>>>>>>> b34a69e2cdcc63ce99ac8ad02b6ec655481844d7
         return self.fc(x)
-
-
 
 
 
