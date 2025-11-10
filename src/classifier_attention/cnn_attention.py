@@ -100,7 +100,7 @@ class CNN_MHA(nn.Module):
     def __init__(self, num_classes=10):
         super().__init__()
         # Convolutions
-        self.conv1 = nn.Conv2d(1, 32, kernel_size=3, padding=1)
+        self.conv1 = nn.Conv2d(3, 32, kernel_size=3, padding=1)
         self.conv2 = nn.Conv2d(32, 64, kernel_size=3, padding=1)
         
         # Multihead Attention parameters
@@ -110,7 +110,7 @@ class CNN_MHA(nn.Module):
         self.mha2 = nn.MultiheadAttention(embed_dim=64, num_heads=self.num_heads2, batch_first=True)
         
         # Fully connected
-        self.fc = nn.Linear(64*7*7, num_classes)
+        self.fc = nn.Linear(64*8*8, num_classes)
 
     def forward(self, x):
         # --- Bloc 1 ---
@@ -179,7 +179,7 @@ def evaluate(model):
 
 if __name__ == "__main__":
     #test = [ False, False, True ]
-    test = [ True, True, False ]
+    test = [ True, True, True ]
     ep = 15
     if test[0]:
         model = CNN_Base()
