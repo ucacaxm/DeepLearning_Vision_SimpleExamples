@@ -96,8 +96,54 @@ class CNN_SE(nn.Module):
 
 
 
-# --- Bloc d'attention entre canaux ---
-class ChannelAttentionMHA(nn.Module):
+
+
+
+
+class CNN_MHA(nn.Module):       # CNN with Multihead Attention after conv layers on Pixel: not very good
+    def __init__(self, num_classes=10):
+        super().__init__()
+        # Convolutions
+        self.conv1 = nn.Conv2d(3, 32, kernel_size=3, padding=1)
+        self.conv2 = nn.Conv2d(32, 64, kernel_size=3, padding=1)
+        
+        # Multihead Attention parameters
+        self.num_heads1 = 4
+        self.num_heads2 = 4
+        self.mha1 = nn.MultiheadAttention(embed_dim=32, num_heads=self.num_heads1, batch_first=True)
+        self.mha2 = nn.MultiheadAttention(embed_dim=64, num_heads=self.num_heads2, batch_first=True)
+        
+        # Fully connected
+        self.fc = nn.Linear(64*8*8, num_classes)
+
+    def forward(self, x):
+        # --- Bloc 1 ---
+        x = F.relu(self.conv1(x))  # (B, 32, 28, 28)
+        b, c, h, w = x.size()
+        x_flat = x.view(b, c, h*w).permute(0, 2, 1)  # (B, N, C)
+        x_attn, _ = self.mha1(x_flat, x_flat, x_flat)  # (B, N, C)
+        x = x_attn.permute(0, 2, 1).view(b, c, h, w)
+        x = F.max_pool2d(x, 2)  # (B, 32, 14, 14)
+
+        # --- Bloc 2 ---
+        x = F.relu(self.conv2(x))  # (B, 64, 14, 14)
+        b, c, h, w = x.size()
+        x_flat = x.view(b, c, h*w).permute(0, 2, 1)  # (B, N, C)
+        x_attn, _ = self.mha2(x_flat, x_flat, x_flat)  # (B, N, C)
+        x = x_attn.permute(0, 2, 1).view(b, c, h, w)
+        x = F.max_pool2d(x, 2)  # (B, 64, 7, 7)
+
+        # --- Classifier ---
+        #x = x.view(b, -1)
+        x = x.reshape(b, -1)
+        return self.fc(x)
+
+
+
+
+
+
+class ChannelAttentionMHA(nn.Module):       # --- Bloc d'attention entre canaux ---
     def __init__(self, num_heads=4):
         super().__init__()
         self.num_heads = num_heads
@@ -126,7 +172,7 @@ class ChannelAttentionMHA(nn.Module):
         return x_out.view(B, C, H, W)
 
 
-# --- Modèle principal CNN + MHA ---
+
 class CNN_ChannelMHA(nn.Module):
     def __init__(self, num_classes=10):
         super().__init__()
@@ -153,15 +199,11 @@ class CNN_ChannelMHA(nn.Module):
         x = self.ca2(x)
         x = F.max_pool2d(x, 2)     # (B, 64, 8, 8)
 
-<<<<<<< HEAD
-        # --- Classifier ---
-        #x = x.view(b, -1)
-        x = x.reshape(b, -1)
-=======
         # --- Classifieur ---
         x = x.view(x.size(0), -1)
->>>>>>> b34a69e2cdcc63ce99ac8ad02b6ec655481844d7
         return self.fc(x)
+
+
 
 
 
@@ -205,10 +247,19 @@ def evaluate(model):
 
 
 
+
+
+
+
+
+
+
 if __name__ == "__main__":
-    test = [ False, False, True ]
-    #test = [ True, True, True ]
-    ep = 15
+    #test = [ False, False, True ]
+    # ep = 15
+    test = [ True, True, True ]
+
+    ep = 30
     if test[0]:
         model = CNN_Base()
         #print(model)
@@ -222,7 +273,7 @@ if __name__ == "__main__":
         evaluate(se_model)
 
     if test[2]:
-        mha_model = CNN_MHA()
+        mha_model = CNN_ChannelMHA()
         #print(mha_model)
         train_model(mha_model, epochs=ep)
         evaluate(mha_model)
