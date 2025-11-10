@@ -109,4 +109,6 @@ for epoch in range(epochs):
         noise_pred = model(x_t, t)
         loss = F.mse_loss(noise_pred, noise)
         optimizer.zero_grad()
-        loss.back
+        loss.backward()
+        optimizer.step()
+    print(f"Epoch {epoch+1}/{epochs} Loss: {loss.item():.4f}")
