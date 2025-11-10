@@ -140,6 +140,33 @@ def show_images(orig, recon, n=8):
     plt.show()
 
 
+
+@torch.no_grad()
+def sample(model, n=8):
+    """
+    Génération d'images par diffusion inversée
+    model : le modèle DDPM entraîné
+    n : nombre d'images à générer
+    """
+    model.eval()
+    x = torch.randn(n, 3, 32, 32).to(device)  # bruit initial
+    for t in reversed(range(T)):
+        t_batch = torch.tensor([t] * n, device=device).long()
+        beta_t = get_index_from_list(betas, t_batch, x.shape)
+        alpha_t = get_index_from_list(alphas, t_batch, x.shape)
+        alpha_bar_t = get_index_from_list(alphas_bar, t_batch, x.shape)
+        
+        noise_pred = model(x, t_batch)
+        coef = 1 / torch.sqrt(alpha_t)
+        x = coef * (x - (1 - alpha_t) / torch.sqrt(1 - alpha_bar_t) * noise_pred)
+        
+        if t > 0:
+            x += torch.sqrt(beta_t) * torch.randn_like(x)
+    return x
+
+
+
+
 # Prendre un batch d'images
 imgs, _ = next(iter(trainloader))
 imgs = imgs.to(device)
