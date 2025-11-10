@@ -112,3 +112,51 @@ for epoch in range(epochs):
         loss.backward()
         optimizer.step()
     print(f"Epoch {epoch+1}/{epochs} Loss: {loss.item():.4f}")
+
+
+
+# =======================
+# 6️ Génération d'images
+# =======================
+def show_images(orig, recon, n=8):
+    """
+    Affiche les images originales et reconstruites côte à côte
+    orig : batch original (B, C, H, W)
+    recon : batch reconstruit (B, C, H, W)
+    """
+    orig_grid = torchvision.utils.make_grid(orig[:n], nrow=n, normalize=True, value_range=(-1,1))
+    recon_grid = torchvision.utils.make_grid(recon[:n], nrow=n, normalize=True, value_range=(-1,1))
+
+    plt.figure(figsize=(16,4))
+    plt.subplot(1,2,1)
+    plt.title("Original Images")
+    plt.imshow(orig_grid.permute(1,2,0).cpu())
+    plt.axis("off")
+
+    plt.subplot(1,2,2)
+    plt.title("Reconstructed / Generated Images")
+    plt.imshow(recon_grid.permute(1,2,0).cpu())
+    plt.axis("off")
+    plt.show()
+
+
+# Prendre un batch d'images
+imgs, _ = next(iter(trainloader))
+imgs = imgs.to(device)
+
+# Ajouter du bruit aléatoire à t fixe
+t = torch.randint(0, T, (imgs.shape[0],), device=device).long()
+x_t, _ = forward_diffusion(imgs, t)
+
+# Reconstruire le bruit via le modèle
+with torch.no_grad():
+    noise_pred = model(x_t, t)
+    recon = x_t - noise_pred  # reconstruction simple
+
+# Visualiser
+show_images(imgs, recon, n=8)
+
+with torch.no_grad():
+    samples = sample(model, n=8)  # sample() est la fonction reverse diffusion
+
+show_images(samples, samples, n=8)  # on affiche juste les échantillons générés
