@@ -79,7 +79,7 @@ class CNN_Base(nn.Module):
 
 
 
-def train_model(model, epochs=5):
+def train_model(model, epochs=20):
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
     criterion = nn.CrossEntropyLoss()
 
