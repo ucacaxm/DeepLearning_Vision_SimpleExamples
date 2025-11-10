@@ -130,7 +130,8 @@ class CNN_MHA(nn.Module):
         x = F.max_pool2d(x, 2)  # (B, 64, 7, 7)
 
         # --- Classifier ---
-        x = x.view(b, -1)
+        #x = x.view(b, -1)
+        x = x.reshape(b, -1)
         return self.fc(x)
 
 
@@ -178,8 +179,8 @@ def evaluate(model):
 
 
 if __name__ == "__main__":
-    #test = [ False, False, True ]
-    test = [ True, True, True ]
+    test = [ False, False, True ]
+    #test = [ True, True, True ]
     ep = 15
     if test[0]:
         model = CNN_Base()
