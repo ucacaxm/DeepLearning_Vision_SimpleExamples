@@ -8,10 +8,17 @@ import matplotlib.pyplot as plt
 
 
 # Dataset preparation
-transform = transforms.Compose([transforms.ToTensor()])
+# transform = transforms.Compose([transforms.ToTensor()])
+# train_data = datasets.FashionMNIST(root="./data", train=True, download=True, transform=transform)
+# test_data  = datasets.FashionMNIST(root="./data", train=False, download=True, transform=transform)
 
-train_data = datasets.FashionMNIST(root="./data", train=True, download=True, transform=transform)
-test_data  = datasets.FashionMNIST(root="./data", train=False, download=True, transform=transform)
+transform = transforms.Compose([
+    transforms.ToTensor(),
+    transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))  # pour les 3 canaux RGB
+])
+train_data = datasets.CIFAR10(root="./data", train=True, download=True, transform=transform)
+test_data  = datasets.CIFAR10(root="./data", train=False, download=True, transform=transform)
+
 
 train_loader = DataLoader(train_data, batch_size=64, shuffle=True)
 test_loader  = DataLoader(test_data, batch_size=64, shuffle=False)
@@ -108,23 +115,14 @@ def evaluate(model):
 if __name__ == "__main__":
     model = CNN_Base()
     print(model)
-    #train_model(model, epochs=5)
+    #train_model(model, epochs=15)
     #evaluate(model)
 
     # se_model = CNN_SE()
     # print(se_model)
-    # train_model(se_model, epochs=5)
+    # train_model(se_model, epochs=15)
     # evaluate(se_model)
 
 
-    # x, _ = next(iter(test_loader))
-    # _ = se_model(x[:1])  # Forward pass
-    # with torch.no_grad():
-    #     se_output = se_model.se1.avg_pool(x[:1]).view(-1)
-    #     plt.bar(range(len(se_output)), se_output.numpy())
-    #     plt.title("Channel-wise importance (SE Block 1)")
-    #     plt.xlabel("Channels")
-    #     plt.ylabel("Weight")
-    #     plt.show()
 
 
