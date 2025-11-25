@@ -12,7 +12,9 @@ latent_dim = 100
 batch_size = 128
 lr = 0.0002
 epochs = 30
-img_size = 28*28
+
+img_size = 28
+flat_dim = img_size * img_size
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -35,16 +37,16 @@ class Generator(nn.Module):
         super().__init__()
         self.net = nn.Sequential(
             nn.Linear(latent_dim, 256),
-            nn.ReLU(),
+            nn.ReLU(True),
             nn.Linear(256, 512),
-            nn.ReLU(),
-            nn.Linear(512, img_size),
+            nn.ReLU(True),
+            nn.Linear(512, flat_dim),
             nn.Tanh()
         )
 
     def forward(self, z):
         img = self.net(z)
-        return img
+        return img.view(-1, 1, img_size, img_size)  # ⬅ reshape correct
 
 # ---------------------------------------------------------
 # Modèle: Discriminateur
@@ -53,7 +55,7 @@ class Discriminator(nn.Module):
     def __init__(self):
         super().__init__()
         self.net = nn.Sequential(
-            nn.Linear(img_size, 512),
+            nn.Linear(flat_dim, 512),
             nn.LeakyReLU(0.2),
             nn.Linear(512, 256),
             nn.LeakyReLU(0.2),
@@ -62,6 +64,7 @@ class Discriminator(nn.Module):
         )
 
     def forward(self, img):
+        img = img.view(img.size(0), -1)  # ⬅ flatten propre
         return self.net(img)
 
 # ---------------------------------------------------------
@@ -80,17 +83,21 @@ opt_D = optim.Adam(D.parameters(), lr=lr)
 for epoch in range(epochs):
     for imgs, _ in loader:
 
-        # Vraies images
-        real_imgs = imgs.view(imgs.size(0), -1).to(device)
+        # -----------------------------
+        # 1) Réelles images
+        # -----------------------------
+        real_imgs = imgs.to(device)
         real_labels = torch.ones(imgs.size(0), 1).to(device)
 
-        # Images générées
+        # -----------------------------
+        # 2) Images générées
+        # -----------------------------
         z = torch.randn(imgs.size(0), latent_dim).to(device)
         fake_imgs = G(z)
         fake_labels = torch.zeros(imgs.size(0), 1).to(device)
 
         # -----------------------------
-        # 1) Entraîner le discriminateur
+        # Train D
         # -----------------------------
         D_real = D(real_imgs)
         loss_real = criterion(D_real, real_labels)
@@ -105,25 +112,25 @@ for epoch in range(epochs):
         opt_D.step()
 
         # -----------------------------
-        # 2) Entraîner le générateur
+        # Train G
         # -----------------------------
         D_fake = D(fake_imgs)
-        loss_G = criterion(D_fake, real_labels)
+        loss_G = criterion(D_fake, real_labels)  # generator wants D(fake)=1
 
         opt_G.zero_grad()
         loss_G.backward()
         opt_G.step()
 
-    print(f"Epoch {epoch+1}/{epochs}  |  Loss_D = {loss_D.item():.4f}  |  Loss_G = {loss_G.item():.4f}")
+    print(f"Epoch {epoch+1}/{epochs} | Loss_D={loss_D.item():.4f}  Loss_G={loss_G.item():.4f}")
 
 # ---------------------------------------------------------
 # Génération finale
 # ---------------------------------------------------------
 z = torch.randn(16, latent_dim).to(device)
-samples = G(z).view(-1, 28, 28).cpu().detach()
+samples = G(z).cpu().detach()
 
 fig, axes = plt.subplots(4, 4, figsize=(5, 5))
 for i, ax in enumerate(axes.flatten()):
-    ax.imshow(samples[i], cmap="gray")
+    ax.imshow(samples[i][0], cmap="gray")  # canal 0 car (1,28,28)
     ax.axis("off")
 plt.show()
